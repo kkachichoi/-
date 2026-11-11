@@ -73,15 +73,15 @@ done
 
 if [ -n "$END_CLIP" ]; then
   split_arg "$END_CLIP"
-  F="[0:v]$(fill $W $H),$LOOK"
+  F="[0:v]$(fill $W $H),$LOOK,vignette=PI/4,eq=brightness=-0.06"   # 엔딩은 살짝 어둡게 해서 로고가 잘 보이게
   INPUTS=(-ss "$START" -t "$END_DUR" -i "$CLIP")
   if [ -n "$LOGO" ]; then
     INPUTS+=(-loop 1 -i "$LOGO")
     F="$F[bg];[1:v]scale=$((W * 45 / 100)):-1,format=rgba,fade=in:st=0.15:d=0.4:alpha=1[lg];[bg][lg]overlay=(W-w)/2:(H-h)/2-80:shortest=1"
   elif [ -n "$TITLE" ]; then
     FF=""; [ -n "$FONT" ] && FF="fontfile='$FONT':"
-    F="$F,drawtext=${FF}text='$TITLE':fontsize=230:fontcolor=white:x=(w-text_w)/2:y=(h-text_h)/2-120:shadowcolor=black@0.25:shadowy=4:alpha='min(1,max(0,(t-0.15)/0.4))'"
-    [ -n "$SUB" ] && F="$F,drawtext=${FF}text='$SUB':fontsize=48:fontcolor=white:x=(w-text_w)/2:y=(h/2)+50:alpha='min(1,max(0,(t-0.3)/0.4))'"
+    F="$F,drawtext=${FF}text='$TITLE':fontsize=320:fontcolor=white:x=(w-text_w)/2:y=(h-text_h)/2-120:shadowcolor=black@0.35:shadowx=2:shadowy=5:alpha='min(1,max(0,(t-0.15)/0.4))'"
+    [ -n "$SUB" ] && F="$F,drawtext=${FF}text='$SUB':fontsize=70:fontcolor=white:x=(w-text_w)/2:y=(h/2)+70:shadowcolor=black@0.35:shadowy=3:alpha='min(1,max(0,(t-0.3)/0.4))'"
   fi
   ffmpeg -v error -y "${INPUTS[@]}" -filter_complex "$F,trim=duration=$END_DUR,setpts=PTS-STARTPTS,format=yuv420p[v]" \
     -map "[v]" -an -c:v libx264 -preset medium -crf 18 "$TMP/end.mp4"
