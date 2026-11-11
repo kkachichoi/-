@@ -1,0 +1,5 @@
+# Downloaded source media and large intermediate files
+original/*.mp4
+original/*.m4a
+analysis/audio.wav
+analysis/frames/
