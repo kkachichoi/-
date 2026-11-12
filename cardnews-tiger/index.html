@@ -128,6 +128,23 @@ img { display: block; }
 .split.short.p7 .text { top: calc(36% + 5.5cqw); }
 .ohaeng { position: absolute; inset: 0; width: 100%; height: 100%; }
 
+
+/* text over full-bleed photos */
+.bleed .ph::after { z-index: 1; }
+.ohaeng { z-index: 2; }
+.bleed .qa { border-bottom-color: rgba(240,160,80,.45); }
+.bleed .qa span { color: #f6b46a; }
+.bleed .qa b { background: #e0823a; color: #231d19; }
+.bleed .ans b { border-color: #f0a050; color: #f0a050; }
+.bleed .em { color: #f6b46a; }
+.bleed .h { text-shadow: 0 .3cqw 1.6cqw rgba(0,0,0,.35); }
+.bleed.top .ph::after { background: linear-gradient(to bottom, #231d19 0, rgba(35,29,25,.94) 30%, rgba(35,29,25,.75) 44%, rgba(35,29,25,0) 62%, rgba(35,29,25,0) 86%, rgba(35,29,25,.6) 100%); }
+.bleed.top .text { top: 12cqw; bottom: auto; }
+.bleed.p7 .ph::after { background: linear-gradient(to bottom, rgba(35,29,25,0) 0, rgba(35,29,25,0) 30%, rgba(35,29,25,.86) 43%, rgba(35,29,25,.96) 60%, #231d19 100%); }
+.bleed:not(.top):not(.p7) .ph::after { background: linear-gradient(to bottom, rgba(35,29,25,.5) 0, rgba(35,29,25,0) 14%, rgba(35,29,25,0) 24%, rgba(35,29,25,.86) 40%, rgba(35,29,25,.96) 56%, #231d19 100%); }
+.bleed .qa span, .bleed .p, .bleed .label { text-shadow: 0 .2cqw 1.2cqw rgba(0,0,0,.45); }
+.bleed .meta, .bleed .no { text-shadow: 0 .2cqw 1cqw rgba(0,0,0,.55); }
+
 /* graphic cards */
 .c5 .text { top: 14cqw; }
 .c6 .text { top: 13cqw; }
@@ -157,8 +174,8 @@ img { display: block; }
     </article>
 
     <!-- 02 now -->
-    <article class="card split short mid" data-n="02">
-      <div class="ph"><img src="img/sketch.jpg" alt="크라프트지에 호랑이 밑그림을 그리는 작가" style="object-position: 50% 58%"></div>
+    <article class="card bleed top" data-n="02">
+      <div class="ph"><img src="img/sketch.jpg" alt="크라프트지에 호랑이 밑그림을 그리는 작가" style="object-position: 50% 100%"></div>
       <div class="no">02 / 08</div>
       <div class="text">
         <p class="qa"><b>Q</b><span>작가님과 지금 진행 중인 작업을 소개해 주세요.</span></p>
@@ -183,8 +200,8 @@ img { display: block; }
     </article>
 
     <!-- 04 paw -->
-    <article class="card split short mid" data-n="04">
-      <div class="ph"><img src="img/paw.jpg" alt="흙바닥을 딛는 호랑이의 앞발" style="object-position: 58% 62%"></div>
+    <article class="card bleed top" data-n="04">
+      <div class="ph"><img src="img/paw.jpg" alt="흙바닥을 딛는 호랑이의 앞발" style="object-position: 62% 40%"></div>
       <div class="no">04 / 08</div>
       <div class="text">
         <p class="qa"><b>Q</b><span>작가님이 표현하는 호랑이는 어떤 존재인가요?</span></p>
@@ -195,8 +212,9 @@ img { display: block; }
     </article>
 
     <!-- 05 samsuni -->
-    <article class="card split short tall5" data-n="05">
-      <div class="ph"><img src="img/samsuni.jpg" alt="작업대 위 흙 호랑이의 몸을 손으로 다듬는 작가" style="object-position: 60% 25%"><span class="cap">작업 중인 虎</span></div>
+    <article class="card bleed" data-n="05">
+      <div class="ph"><img src="img/samsuni.jpg" alt="작업대 위 흙 호랑이의 몸을 손으로 다듬는 작가" style="object-position: 60% 18%"></div>
+      <div class="meta">작업 중인 虎</div>
       <div class="no">05 / 08</div>
       <div class="text">
         <p class="label">입춘 立春</p>
@@ -207,8 +225,8 @@ img { display: block; }
     </article>
 
     <!-- 06 hands -->
-    <article class="card split short" data-n="06">
-      <div class="ph"><img src="img/hands.jpg" alt="흙을 덧붙여 형태를 다듬는 작가의 손" style="object-position: 46% 50%"></div>
+    <article class="card bleed" data-n="06">
+      <div class="ph"><img src="img/hands.jpg" alt="흙을 덧붙여 형태를 다듬는 작가의 손" style="object-position: 48% 40%"></div>
       <div class="no">06 / 08</div>
       <div class="text">
         <p class="qa"><b>Q</b><span>그 힘을 조각에서는 어떻게 표현하고 싶으신가요?</span></p>
@@ -220,17 +238,17 @@ img { display: block; }
     </article>
 
     <!-- 07 people -->
-    <article class="card split short p7" data-n="07">
-      <div class="ph"><img src="img/gathering.jpg" alt="촛불과 가을 꽃으로 꾸민 방에 둘러앉아 웃으며 이야기 나누는 사람들" style="object-position: 50% 19%">
-        <svg class="ohaeng" viewBox="0 0 1080 486" aria-hidden="true">
+    <article class="card bleed p7" data-n="07">
+      <div class="ph"><img src="img/gathering.jpg" alt="촛불과 가을 꽃으로 꾸민 방에 둘러앉아 웃으며 이야기 나누는 사람들" style="object-position: 50% 0%">
+        <svg class="ohaeng" viewBox="0 0 1080 1350" aria-hidden="true">
           <g opacity=".85" font-family="IBM Plex Sans KR, sans-serif">
-            <circle cx="470" cy="225" r="108" fill="none" stroke="#b3561f" stroke-width="3"/>
-            <path d="M470 117 L533 312 L367 192 L573 192 L407 312 L470 117" fill="none" stroke="#b3561f" stroke-width="2" stroke-dasharray="6 8" opacity=".6"/>
-            <circle cx="470" cy="225" r="142" fill="none" stroke="#b3561f" stroke-width="1.5" opacity=".55"/>
-            <g stroke="#b3561f" stroke-width="2" opacity=".65"><line x1="470" y1="83" x2="470" y2="69"/><line x1="507" y1="88" x2="509" y2="80"/><line x1="541" y1="102" x2="548" y2="90"/><line x1="570" y1="125" x2="576" y2="119"/><line x1="593" y1="154" x2="605" y2="147"/><line x1="607" y1="188" x2="615" y2="186"/><line x1="612" y1="225" x2="626" y2="225"/><line x1="607" y1="262" x2="615" y2="264"/><line x1="593" y1="296" x2="605" y2="303"/><line x1="570" y1="325" x2="576" y2="331"/><line x1="541" y1="348" x2="548" y2="360"/><line x1="507" y1="362" x2="509" y2="370"/><line x1="470" y1="367" x2="470" y2="381"/><line x1="433" y1="362" x2="431" y2="370"/><line x1="399" y1="348" x2="392" y2="360"/><line x1="370" y1="325" x2="364" y2="331"/><line x1="347" y1="296" x2="335" y2="303"/><line x1="333" y1="262" x2="325" y2="264"/><line x1="328" y1="225" x2="314" y2="225"/><line x1="333" y1="188" x2="325" y2="186"/><line x1="347" y1="154" x2="335" y2="147"/><line x1="370" y1="125" x2="364" y2="119"/><line x1="399" y1="102" x2="392" y2="90"/><line x1="433" y1="88" x2="431" y2="80"/></g>
-            <line x1="332" y1="225" x2="304" y2="225" stroke="#b3561f" stroke-width="6" stroke-linecap="round"/>
-            <text x="270" y="234" text-anchor="middle" font-size="26" font-weight="700" fill="#8a3f14">立春</text>
-            <circle cx="470" cy="117" r="28" fill="rgba(255,248,236,.55)" stroke="#b3561f" stroke-width="3"/><text x="470" y="127" text-anchor="middle" font-size="28" font-weight="700" fill="#8a3f14">火</text><circle cx="573" cy="192" r="28" fill="rgba(255,248,236,.55)" stroke="#b3561f" stroke-width="3"/><text x="573" y="202" text-anchor="middle" font-size="28" font-weight="700" fill="#8a3f14">土</text><circle cx="533" cy="312" r="28" fill="rgba(255,248,236,.55)" stroke="#b3561f" stroke-width="3"/><text x="533" y="322" text-anchor="middle" font-size="28" font-weight="700" fill="#8a3f14">金</text><circle cx="407" cy="312" r="28" fill="rgba(255,248,236,.55)" stroke="#b3561f" stroke-width="3"/><text x="407" y="322" text-anchor="middle" font-size="28" font-weight="700" fill="#8a3f14">水</text><circle cx="367" cy="192" r="28" fill="#b3561f" stroke="#b3561f" stroke-width="3"/><text x="367" y="202" text-anchor="middle" font-size="28" font-weight="700" fill="#fff">木</text>
+            <circle cx="470" cy="250" r="112" fill="none" stroke="#b3561f" stroke-width="3"/>
+            <path d="M470 138 L536 341 L363 215 L577 215 L404 341 L470 138" fill="none" stroke="#b3561f" stroke-width="2" stroke-dasharray="6 8" opacity=".6"/>
+            <circle cx="470" cy="250" r="148" fill="none" stroke="#b3561f" stroke-width="1.5" opacity=".6"/>
+            <g stroke="#b3561f" stroke-width="2.5" opacity=".7"><line x1="470" y1="102" x2="470" y2="86"/><line x1="508" y1="107" x2="511" y2="98"/><line x1="544" y1="122" x2="552" y2="108"/><line x1="575" y1="145" x2="581" y2="139"/><line x1="598" y1="176" x2="612" y2="168"/><line x1="613" y1="212" x2="622" y2="209"/><line x1="618" y1="250" x2="634" y2="250"/><line x1="613" y1="288" x2="622" y2="291"/><line x1="598" y1="324" x2="612" y2="332"/><line x1="575" y1="355" x2="581" y2="361"/><line x1="544" y1="378" x2="552" y2="392"/><line x1="508" y1="393" x2="511" y2="402"/><line x1="470" y1="398" x2="470" y2="414"/><line x1="432" y1="393" x2="429" y2="402"/><line x1="396" y1="378" x2="388" y2="392"/><line x1="365" y1="355" x2="359" y2="361"/><line x1="342" y1="324" x2="328" y2="332"/><line x1="327" y1="288" x2="318" y2="291"/><line x1="322" y1="250" x2="306" y2="250"/><line x1="327" y1="212" x2="318" y2="209"/><line x1="342" y1="176" x2="328" y2="168"/><line x1="365" y1="145" x2="359" y2="139"/><line x1="396" y1="122" x2="388" y2="108"/><line x1="432" y1="107" x2="429" y2="98"/></g>
+            <line x1="326" y1="250" x2="296" y2="250" stroke="#b3561f" stroke-width="6" stroke-linecap="round"/>
+            <text x="262" y="259" text-anchor="middle" font-size="27" font-weight="700" fill="#8a3f14">立春</text>
+            <circle cx="470" cy="138" r="29" fill="rgba(255,248,236,.55)" stroke="#b3561f" stroke-width="3"/><text x="470" y="148" text-anchor="middle" font-size="29" font-weight="700" fill="#8a3f14">火</text><circle cx="577" cy="215" r="29" fill="rgba(255,248,236,.55)" stroke="#b3561f" stroke-width="3"/><text x="577" y="225" text-anchor="middle" font-size="29" font-weight="700" fill="#8a3f14">土</text><circle cx="536" cy="341" r="29" fill="rgba(255,248,236,.55)" stroke="#b3561f" stroke-width="3"/><text x="536" y="351" text-anchor="middle" font-size="29" font-weight="700" fill="#8a3f14">金</text><circle cx="404" cy="341" r="29" fill="rgba(255,248,236,.55)" stroke="#b3561f" stroke-width="3"/><text x="404" y="351" text-anchor="middle" font-size="29" font-weight="700" fill="#8a3f14">水</text><circle cx="363" cy="215" r="29" fill="#b3561f" stroke="#b3561f" stroke-width="3"/><text x="363" y="225" text-anchor="middle" font-size="29" font-weight="700" fill="#fff">木</text>
           </g>
         </svg>
       </div>
