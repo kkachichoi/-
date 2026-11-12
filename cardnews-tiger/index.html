@@ -141,9 +141,16 @@ img { display: block; }
 .bleed.top .ph::after { background: linear-gradient(to bottom, #231d19 0, rgba(35,29,25,.94) 30%, rgba(35,29,25,.75) 44%, rgba(35,29,25,0) 62%, rgba(35,29,25,0) 86%, rgba(35,29,25,.6) 100%); }
 .bleed.top .text { top: 12cqw; bottom: auto; }
 .bleed.p7 .ph::after { background: linear-gradient(to bottom, rgba(35,29,25,0) 0, rgba(35,29,25,0) 30%, rgba(35,29,25,.86) 43%, rgba(35,29,25,.96) 60%, #231d19 100%); }
-.bleed:not(.top):not(.p7) .ph::after { background: linear-gradient(to bottom, rgba(35,29,25,.5) 0, rgba(35,29,25,0) 14%, rgba(35,29,25,0) 24%, rgba(35,29,25,.86) 40%, rgba(35,29,25,.96) 56%, #231d19 100%); }
+.bleed:not(.top):not(.p7):not(.r3) .ph::after { background: linear-gradient(to bottom, rgba(35,29,25,.5) 0, rgba(35,29,25,0) 14%, rgba(35,29,25,0) 24%, rgba(35,29,25,.86) 40%, rgba(35,29,25,.96) 56%, #231d19 100%); }
 .bleed .qa span, .bleed .p, .bleed .label { text-shadow: 0 .2cqw 1.2cqw rgba(0,0,0,.45); }
 .bleed .meta, .bleed .no { text-shadow: 0 .2cqw 1cqw rgba(0,0,0,.55); }
+
+.bleed.r3 { background: #1d2435; }
+.bleed.r3 .ph::after { background: linear-gradient(to bottom, rgba(29,36,53,.45) 0, rgba(29,36,53,0) 16%, rgba(29,36,53,0) 48%, rgba(29,36,53,.78) 61%, rgba(29,36,53,.95) 74%, #1d2435 100%); }
+.bleed.r3 .text { bottom: 9cqw; }
+.bleed.r3 .label { color: #e08a24; font-size: 2.8cqw; }
+.bleed.r3 .h { font-size: 7.2cqw; }
+.bleed.r3 .p { font-size: 3.4cqw; line-height: 1.75; }
 
 /* graphic cards */
 .c5 .text { top: 14cqw; }
@@ -187,16 +194,15 @@ img { display: block; }
     </article>
 
     <!-- 03 rat -->
-    <article class="card bleed" data-n="03">
-      <div class="ph"><img src="img/rat.jpg" alt="수많은 쥐가 소용돌이처럼 솟아오르는 흙 조각, 나무 받침 위에 작은 쥐 조각들이 놓여 있다" style="object-position: 50% 70%"></div>
+    <article class="card bleed r3" data-n="03">
+      <div class="ph"><img src="img/rat.jpg" alt="수많은 쥐가 소용돌이처럼 솟아오르는 흙 조각, 나무 받침 위에 작은 쥐 조각들이 놓여 있다" style="object-position: 50% 80%"></div>
       <div class="meta">십이지 연작 · 子</div>
       <div class="no">03 / 08</div>
       <div class="text">
         <p class="label">쥐 작업</p>
-        <div class="ans"><b>A</b><h2 class="h">동물마다 고유한<br>몸짓과 성격이 있잖아요</h2></div>
+        <h2 class="h">동물마다 고유한<br>몸짓과 성격이 있잖아요</h2>
         <p class="p">그 특징을 계절 속에서 발견하는<br>여러 가지 힘과 연결하고 있어요.</p>
       </div>
-      <div class="foot">최희원 · 계절을 조각하다</div>
     </article>
 
     <!-- 04 paw -->
