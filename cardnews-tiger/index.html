@@ -4,21 +4,20 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+KR:wght@400;500;600;700&display=swap">
 <style>
-/* Layout: six 4:5 cards (1080×1350). Image-first: each card leads with one large picture or graphic,
-   copy cut to a short headline + at most two lines. Cover is a centred poster on the sculpture's own blue;
-   inner cards sit on warm hanji paper. Sizes in container units so preview and PNG export share one layout. */
+/* Layout: six 4:5 cards (1080×1350) read as one story — cover on the sculpture's blue, then hanji-paper cards.
+   Every card shares the same frame: page count top-right, orange label → gothic headline → short body, series line bottom-left.
+   Photo cards put the picture on top (or full-bleed); the last two use cut-paper graphics. */
 :root {
   --page-bg: #ece6dc;
   --page-fg: #2b2420;
   --page-muted: #6f655b;
 
   --hanji: #efe4d2;
-  --hanji-2: #e4d3ba;
   --ink: #2b2420;
-  --clay: #a9542c;
+  --clay: #b3561f;      /* label + emphasis */
   --sprout: #7f9a58;
-  --studio: #50668a;    /* sculpture photo backdrop */
-  --tiger: #f2a445;     /* sculpture's orange */
+  --studio: #50668a;    /* sculpture backdrop */
+  --night: #231d19;     /* warm dark for photo overlays */
 
   --sans: "IBM Plex Sans KR", "Noto Sans KR", "Apple SD Gothic Neo", sans-serif;
 }
@@ -41,7 +40,7 @@ body { background: var(--page-bg); color: var(--page-fg); font-family: var(--san
 .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(min(100%, 340px), 1fr)); gap: 24px; }
 .dl { margin-top: 28px; font-size: .85rem; color: var(--page-muted); }
 
-/* ---------- card ---------- */
+/* ---------- card frame ---------- */
 .card {
   container-type: inline-size;
   position: relative; overflow: hidden;
@@ -55,66 +54,54 @@ body { background: var(--page-bg); color: var(--page-fg); font-family: var(--san
 }
 .card.export { border-radius: 0; width: 1080px; max-width: none; }
 
-.no { position: absolute; top: 5.5cqw; right: 6.5cqw; font-size: 2.5cqw; font-weight: 500; letter-spacing: .06em; font-variant-numeric: tabular-nums; z-index: 5; opacity: .8; }
-.foot { position: absolute; left: 7.5cqw; bottom: 6cqw; font-size: 2.5cqw; font-weight: 500; z-index: 5; opacity: .8; }
+.no { position: absolute; top: 6cqw; right: 7.5cqw; font-size: 2.5cqw; font-weight: 500; letter-spacing: .08em; font-variant-numeric: tabular-nums; z-index: 5; opacity: .85; }
+.foot { position: absolute; left: 8cqw; bottom: 6.5cqw; font-size: 2.5cqw; font-weight: 500; z-index: 5; opacity: .8; }
+.tag { position: absolute; left: 8cqw; top: 5cqw; z-index: 5; font-size: 2.5cqw; font-weight: 600; letter-spacing: .04em;
+  color: #fff; background: rgba(35,29,25,.6); padding: 1.3cqw 2.6cqw; border-radius: 99px; }
 
-.label { font-size: 2.7cqw; font-weight: 600; letter-spacing: .08em; color: var(--clay); margin: 0 0 2.2cqw; }
-.h { font-weight: 700; font-size: 7cqw; line-height: 1.28; letter-spacing: -.035em; margin: 0; word-break: keep-all; }
-.p { font-size: 3.7cqw; line-height: 1.6; margin: 3.2cqw 0 0; word-break: keep-all; opacity: .86; letter-spacing: -.01em; }
+.text { position: absolute; left: 8cqw; right: 8cqw; z-index: 4; }
+.label { font-size: 2.7cqw; font-weight: 700; letter-spacing: .06em; color: var(--clay); margin: 0 0 2.4cqw; }
+.h { font-weight: 700; font-size: 7cqw; line-height: 1.3; letter-spacing: -.035em; margin: 0; word-break: keep-all; }
+.p { font-size: 3.5cqw; line-height: 1.65; margin: 3.6cqw 0 0; word-break: keep-all; opacity: .86; letter-spacing: -.01em; }
+.p + .p { margin-top: 2.2cqw; }
 .em { color: var(--clay); }
-.text { position: absolute; left: 7.5cqw; right: 7.5cqw; z-index: 4; }
 
 svg.art { position: absolute; inset: 0; width: 100%; height: 100%; pointer-events: none; }
 img { display: block; }
 
-/* 01 cover: centred poster on the sculpture's blue */
-.c1 { background: var(--studio); color: var(--hanji); }
-.c1 .text { top: 12.5cqw; text-align: center; }
-.c1 .h { font-size: 7.6cqw; line-height: 1.24; }
-.c1 .h .em { color: var(--tiger); }
-.c1 .sub { font-size: 3.2cqw; font-weight: 500; margin: 2.6cqw 0 0; opacity: .85; letter-spacing: .02em; }
-.c1 .shot { position: absolute; left: 50%; bottom: 0; width: 64cqw; transform: translateX(-50%); z-index: 1;
-  -webkit-mask-image: linear-gradient(to bottom, transparent 0, #000 8%), linear-gradient(to right, transparent 0, #000 8%, #000 92%, transparent 100%);
+/* 01 cover */
+.c1 { background: var(--studio); color: #fff; }
+.c1 .text { top: 18cqw; }
+.c1 .meta { position: absolute; left: 8cqw; right: 7.5cqw; top: 6cqw; display: flex; justify-content: space-between; font-size: 2.5cqw; font-weight: 500; letter-spacing: .08em; z-index: 5; opacity: .9; }
+.c1 .h { font-size: 9.4cqw; line-height: 1.15; }
+.c1 .sub { font-size: 3.6cqw; font-weight: 500; margin: 3cqw 0 0; opacity: .92; }
+.c1 .shot { position: absolute; right: 0; bottom: 0; width: 64cqw; z-index: 1;
+  -webkit-mask-image: linear-gradient(to right, transparent 0, #000 10%), linear-gradient(to bottom, transparent 0, #000 8%);
   -webkit-mask-composite: source-in;
-  mask-image: linear-gradient(to bottom, transparent 0, #000 8%), linear-gradient(to right, transparent 0, #000 8%, #000 92%, transparent 100%);
+  mask-image: linear-gradient(to right, transparent 0, #000 10%), linear-gradient(to bottom, transparent 0, #000 8%);
   mask-composite: intersect; }
 .c1 .shot img { width: 100%; height: auto; }
-.c1 .foot, .c1 .no { color: var(--hanji); }
-.c1 .foot { top: 5.5cqw; bottom: auto; left: 6.5cqw; font-size: 2.5cqw; }
-.c1 .swipe { position: absolute; right: 6.5cqw; bottom: 6cqw; z-index: 5; font-size: 2.6cqw; font-weight: 600; color: var(--hanji);
-  background: rgba(29,36,53,.45); padding: 1.2cqw 2.6cqw; border-radius: 99px; }
+.c1 .swipe { position: absolute; left: 8cqw; bottom: 6.5cqw; z-index: 5; font-size: 2.7cqw; font-weight: 600; color: #fff; }
 
-/* 02 zodiac ring with the rat work in its centre */
-.c2 { background-color: #f8ead6; }
-.c2 .text { top: 10cqw; }
-.c2 .ring { position: absolute; left: 50%; top: 32cqw; width: 86cqw; transform: translateX(-50%); }
-.c2 .ring > img { width: 100%; height: auto;
-  -webkit-mask-image: radial-gradient(circle at 50% 50%, #000 62%, transparent 72%); mask-image: radial-gradient(circle at 50% 50%, #000 62%, transparent 72%); }
-.c2 .core { position: absolute; left: 50%; top: 47%; width: 33cqw; transform: translate(-50%, -50%); text-align: center; }
-.c2 .core img { width: 33cqw; height: 33cqw; object-fit: cover; object-position: 50% 38%; border-radius: 50%; box-shadow: 0 0 0 .8cqw #f8ead6; }
-.c2 .core span { display: block; margin-top: 1.4cqw; font-size: 2.4cqw; font-weight: 600; color: var(--clay); }
+/* photo on top, text below */
+.split .ph { position: absolute; left: 0; right: 0; top: 0; height: 46%; overflow: hidden; }
+.split .ph img { width: 100%; height: 100%; object-fit: cover; }
+.split .text { top: calc(46% + 6.5cqw); }
+.split .no { color: #fff; }
 
-/* 03 earth */
-.c3 .text { top: 13cqw; }
+/* full-bleed photo, text on a warm-dark fade */
+.bleed { background: var(--night); color: #fff; }
+.bleed .ph { position: absolute; inset: 0; }
+.bleed .ph img { width: 100%; height: 100%; object-fit: cover; }
+.bleed .ph::after { content: ""; position: absolute; inset: 0;
+  background: linear-gradient(to bottom, rgba(35,29,25,.45) 0, rgba(35,29,25,0) 16%, rgba(35,29,25,0) 46%, rgba(35,29,25,.8) 60%, rgba(35,29,25,.96) 74%, #231d19 100%); }
+.bleed .text { bottom: 15cqw; }
+.bleed .label { color: #f0a050; }
+.bleed .p { opacity: .9; }
+.bleed .meta { position: absolute; left: 8cqw; top: 6cqw; font-size: 2.5cqw; font-weight: 500; letter-spacing: .08em; z-index: 5; opacity: .9; }
 
-/* 04 process: edge-to-edge photo pair on top, copy below */
-.c4 .pair { position: absolute; left: 0; right: 0; top: 0; height: 64cqw; display: grid; grid-template-columns: 1fr 1fr; gap: .8cqw; }
-.c4 .pair img { width: 100%; height: 100%; object-fit: cover; }
-.c4 .pair figure { margin: 0; position: relative; }
-.c4 .pair figcaption { position: absolute; left: 3cqw; bottom: 3cqw; font-size: 2.4cqw; font-weight: 600; color: #fff; background: rgba(43,36,32,.55); padding: .9cqw 2.2cqw; border-radius: 99px; }
-.c4 .text { top: 72cqw; }
-.c4 .no { color: #fff; }
-
-/* 05 people */
-.c5 .text { top: 13cqw; }
-.gifts { display: flex; gap: 2cqw; margin-top: 4.4cqw; }
-.gifts span { font-size: 3.2cqw; font-weight: 600; color: var(--clay); border: 2px solid var(--clay); border-radius: 99px; padding: 1.1cqw 3.4cqw; }
-
-/* 06 closing: centred */
-.c6 .text { top: 17cqw; text-align: center; }
-.c6 .h { font-size: 7.6cqw; }
-.c6 .cta { display: inline-block; margin: 5cqw 0 0; font-size: 3.1cqw; font-weight: 600; color: var(--hanji); background: var(--clay); padding: 1.7cqw 4cqw; border-radius: 99px; }
-
+/* graphic cards */
+.c5 .text, .c6 .text { top: 14cqw; }
 </style>
 
 <div class="wrap">
@@ -127,105 +114,95 @@ img { display: block; }
 
     <!-- 01 cover -->
     <article class="card c1" data-n="01">
-      <div class="no">01 / 06</div>
+      <div class="meta"><span>십이지 조각 · 작가 인터뷰</span><span>立春 · 寅</span></div>
       <div class="text">
-        <h2 class="h">제가 만드는 호랑이는<br><span class="em">봄을 깨웁니다</span></h2>
-        <p class="sub">2월 · 대지를 깨우는 호랑이</p>
+        <h2 class="h">대지를 깨우는 호랑이</h2>
+        <p class="sub">조각가 최희원이 입춘에서 떠올린 호랑이</p>
       </div>
       <div class="shot"><img src="img/sculpture.jpg" alt="호랑이 다섯 마리가 크기 순으로 겹겹이 올라선 조각"></div>
-      <div class="foot">조각가 최희원</div>
       <div class="swipe">넘겨 보기 →</div>
     </article>
 
-    <!-- 02 series -->
-    <article class="card c2" data-n="02">
+    <!-- 02 now -->
+    <article class="card split" data-n="02">
+      <div class="ph"><img src="img/sketch.jpg" alt="크라프트지에 호랑이 밑그림을 그리는 작가" style="object-position: 50% 58%"></div>
+      <div class="tag">Q. 지금 진행 중인 작업은?</div>
       <div class="no">02 / 06</div>
       <div class="text">
         <p class="label">십이지 × 계절</p>
-        <h2 class="h">계절의 움직임에<br>동물의 몸을 부여합니다</h2>
-      </div>
-      <div class="ring">
-        <img src="img/zodiac.jpg" alt="쥐부터 돼지까지 열두 동물이 사계절 풍경을 따라 원을 이루는 그림">
-        <div class="core"><img src="img/rat.jpg" alt="수많은 쥐가 소용돌이처럼 솟아오르는 흙 조각"><span>子 · 쥐 작업</span></div>
+        <h2 class="h">열두 동물로 계절의<br>움직임을 조각합니다</h2>
+        <p class="p">십이지의 동물을 통해 계절의 변화와 생명의 움직임을 조각으로 표현하는 최희원입니다.</p>
+        <p class="p">지금은 <span class="em">2월, 입춘에서 떠올린 호랑이</span>를 만들고 있습니다.</p>
       </div>
       <div class="foot">최희원 · 계절을 조각하다</div>
     </article>
 
-    <!-- 03 earth -->
-    <article class="card c3" data-n="03">
+    <!-- 03 rat -->
+    <article class="card bleed" data-n="03">
+      <div class="ph"><img src="img/rat.jpg" alt="수많은 쥐가 소용돌이처럼 솟아오르는 흙 조각, 나무 받침 위에 작은 쥐 조각들이 놓여 있다" style="object-position: 50% 70%"></div>
+      <div class="meta">십이지 연작 · 子</div>
+      <div class="no">03 / 06</div>
+      <div class="text">
+        <p class="label">쥐 작업</p>
+        <h2 class="h">동물마다 고유한<br>몸짓과 성격이 있잖아요</h2>
+        <p class="p">그 특징을 계절 속에서 발견하는<br>여러 가지 힘과 연결하고 있어요.</p>
+      </div>
+      <div class="foot">최희원 · 계절을 조각하다</div>
+    </article>
+
+    <!-- 04 paw -->
+    <article class="card split" data-n="04">
+      <div class="ph"><img src="img/paw.jpg" alt="흙바닥을 딛는 호랑이의 앞발" style="object-position: 58% 62%"></div>
+      <div class="tag">Q. 작가님의 호랑이는 어떤 존재인가요?</div>
+      <div class="no">04 / 06</div>
+      <div class="text">
+        <p class="label">힘의 방향</p>
+        <h2 class="h">날카로운 이빨보다 그 힘이<br><span class="em">무엇을 향하는지</span>에 주목했어요</h2>
+        <p class="p">호랑이라고 하면 보통 날카로운 이빨이나<br>위엄 있는 모습, 강한 힘을 떠올리죠.<br>저는 그 힘이 무엇을 향하는지에 관심이 있었어요.</p>
+      </div>
+      <div class="foot">최희원 · 계절을 조각하다</div>
+    </article>
+
+    <!-- 05 earth -->
+    <article class="card c5" data-n="05">
       <svg class="art" viewBox="0 0 1080 1350" aria-hidden="true">
-        <path d="M0 760 C160 730 300 780 460 755 C620 730 780 770 1080 740 L1080 1350 L0 1350Z" fill="#c9925c" fill-opacity=".85"/>
-        <path d="M0 900 C200 875 380 925 560 895 C740 865 900 915 1080 890 L1080 1350 L0 1350Z" fill="#b0703f" fill-opacity=".8"/>
-        <path d="M0 1050 C220 1025 420 1075 620 1045 C800 1020 940 1065 1080 1040 L1080 1350 L0 1350Z" fill="#8e5532" fill-opacity=".78"/>
+        <path d="M0 800 C160 770 300 820 460 795 C620 770 780 810 1080 780 L1080 1350 L0 1350Z" fill="#c9925c" fill-opacity=".85"/>
+        <path d="M0 930 C200 905 380 955 560 925 C740 895 900 945 1080 920 L1080 1350 L0 1350Z" fill="#b0703f" fill-opacity=".8"/>
+        <path d="M0 1070 C220 1045 420 1095 620 1065 C800 1040 940 1085 1080 1060 L1080 1350 L0 1350Z" fill="#8e5532" fill-opacity=".78"/>
         <g fill="none" stroke="#efe4d2" stroke-opacity=".6" stroke-width="3" stroke-linecap="round">
-          <path d="M540 880 C515 950 455 975 405 1045 M540 880 C565 960 635 985 675 1060 M540 880 C548 980 528 1060 540 1160"/>
+          <path d="M540 910 C515 980 455 1005 405 1075 M540 910 C565 990 635 1015 675 1090 M540 910 C548 1010 528 1090 540 1180"/>
         </g>
         <g fill="none" stroke="#efe4d2" stroke-width="2.5">
-          <ellipse cx="540" cy="1170" rx="70" ry="16" opacity=".45"/><ellipse cx="540" cy="1170" rx="150" ry="34" opacity=".28"/><ellipse cx="540" cy="1170" rx="240" ry="54" opacity=".15"/>
+          <ellipse cx="540" cy="1190" rx="70" ry="16" opacity=".45"/><ellipse cx="540" cy="1190" rx="150" ry="34" opacity=".28"/><ellipse cx="540" cy="1190" rx="240" ry="54" opacity=".15"/>
         </g>
-        <path d="M540 880 C540 820 540 780 540 735" stroke="#7f9a58" stroke-width="7" fill="none" stroke-linecap="round"/>
-        <path d="M540 772 C506 740 478 733 452 738 C470 770 506 784 540 772Z" fill="#7f9a58"/>
-        <path d="M540 750 C572 718 602 711 628 716 C610 748 574 762 540 750Z" fill="#7f9a58"/>
+        <path d="M540 910 C540 850 540 810 540 770" stroke="#7f9a58" stroke-width="7" fill="none" stroke-linecap="round"/>
+        <path d="M540 806 C506 774 478 767 452 772 C470 804 506 818 540 806Z" fill="#7f9a58"/>
+        <path d="M540 784 C572 752 602 745 628 750 C610 782 574 796 540 784Z" fill="#7f9a58"/>
       </svg>
-      <div class="no">03 / 06</div>
+      <div class="no">05 / 06</div>
       <div class="text">
         <p class="label">입춘 立春</p>
         <h2 class="h">제가 만드는 호랑이는<br><span class="em">대지를 깨우는 존재</span>입니다</h2>
-        <p class="p">아직 차가운 땅 아래에서<br>새로운 생명이 움직일 준비를 합니다.</p>
+        <p class="p">입춘, 아직 차가운 땅 아래에서<br>새로운 생명이 움직일 준비를 합니다.</p>
       </div>
       <div class="foot" style="color:#efe4d2">최희원 · 계절을 조각하다</div>
     </article>
 
-    <!-- 04 process -->
-    <article class="card c4" data-n="04">
-      <div class="pair">
-        <figure><img src="img/sketch.jpg" alt="크라프트지에 호랑이 밑그림을 그리는 작가" style="object-position: 40% 62%"><figcaption>밑그림</figcaption></figure>
-        <figure><img src="img/hands.jpg" alt="흙을 덧붙여 형태를 다듬는 작가의 손" style="object-position: 46% 50%"><figcaption>흙 다듬기</figcaption></figure>
-      </div>
-      <div class="no">04 / 06</div>
-      <div class="text">
-        <p class="label">땅을 딛는 한 걸음</p>
-        <h2 class="h">하나의 동작에<br>겨울과 <span class="em">봄의 시작</span>을 담습니다</h2>
-        <p class="p">몸의 무게가 대지로 전해지고,<br>그 울림이 잠든 생명에 닿습니다.</p>
-      </div>
-      <div class="foot">최희원 · 계절을 조각하다</div>
-    </article>
-
-    <!-- 05 people -->
-    <article class="card c5" data-n="05">
-      <svg class="art" viewBox="0 0 1080 1350" aria-hidden="true">
-        <g fill="none" stroke-width="3">
-          <g stroke="#a9542c"><circle cx="420" cy="1040" r="50"/><circle cx="420" cy="1040" r="120" opacity=".55"/><circle cx="420" cy="1040" r="200" opacity=".28"/></g>
-          <g stroke="#7f9a58"><circle cx="660" cy="1040" r="50"/><circle cx="660" cy="1040" r="120" opacity=".55"/><circle cx="660" cy="1040" r="200" opacity=".28"/></g>
-        </g>
-        <circle cx="420" cy="1040" r="16" fill="#a9542c"/><circle cx="660" cy="1040" r="16" fill="#7f9a58"/>
-      </svg>
-      <div class="no">05 / 06</div>
-      <div class="text">
-        <p class="label">사람 사이의 힘</p>
-        <h2 class="h">사람에게도<br>그런 힘이 있습니다</h2>
-        <p class="p">누군가를 만나고 나면 멈춰 있던 마음이<br>움직이고, 다시 시작할 용기가 생깁니다.</p>
-        <div class="gifts"><span>열정</span><span>영감</span><span>생명력</span></div>
-      </div>
-      <div class="foot">최희원 · 계절을 조각하다</div>
-    </article>
-
-    <!-- 06 closing -->
+    <!-- 06 people -->
     <article class="card c6" data-n="06">
       <svg class="art" viewBox="0 0 1080 1350" aria-hidden="true">
-        <g fill="none" stroke="#a9542c" stroke-width="3">
-          <path d="M240 1350 A300 300 0 0 1 840 1350" opacity=".55"/>
-          <path d="M140 1350 A400 400 0 0 1 940 1350" opacity=".32"/>
-          <path d="M40 1350 A500 500 0 0 1 1040 1350" opacity=".16"/>
+        <path d="M0 1130 C240 1090 420 1110 540 1105 C700 1100 860 1080 1080 1115 L1080 1350 L0 1350Z" fill="#c9925c" fill-opacity=".35"/>
+        <g fill="none" stroke-width="3">
+          <g stroke="#b3561f"><circle cx="420" cy="960" r="50"/><circle cx="420" cy="960" r="120" opacity=".55"/><circle cx="420" cy="960" r="200" opacity=".28"/></g>
+          <g stroke="#7f9a58"><circle cx="660" cy="960" r="50"/><circle cx="660" cy="960" r="120" opacity=".55"/><circle cx="660" cy="960" r="200" opacity=".28"/></g>
         </g>
-        <path d="M540 1350 C540 1290 540 1250 540 1205" stroke="#7f9a58" stroke-width="7" fill="none" stroke-linecap="round"/>
-        <path d="M540 1236 C506 1206 480 1200 456 1205 C474 1236 508 1248 540 1236Z" fill="#7f9a58"/>
-        <path d="M540 1214 C570 1184 598 1178 622 1183 C604 1214 572 1226 540 1214Z" fill="#7f9a58"/>
+        <circle cx="420" cy="960" r="16" fill="#b3561f"/><circle cx="660" cy="960" r="16" fill="#7f9a58"/>
       </svg>
       <div class="no">06 / 06</div>
       <div class="text">
-        <h2 class="h">당신을 다시<br>움직이게 했던<br><span class="em">사람, 혹은 순간</span>이<br>있나요?</h2>
-        <p class="cta">댓글로 들려주세요</p>
+        <p class="label">사람 사이의 힘</p>
+        <h2 class="h">사람에게도<br><span class="em">그런 힘</span>이 있습니다</h2>
+        <p class="p">누군가를 만나고 나면<br>멈춰 있던 마음이 움직이고,<br>다시 시작할 용기가 생깁니다.</p>
       </div>
       <div class="foot">최희원 · 계절을 조각하다</div>
     </article>
