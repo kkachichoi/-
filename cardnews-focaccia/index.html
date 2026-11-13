@@ -1,0 +1,101 @@
+<title>작업실 포카치아</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+KR:wght@400;500;600;700&display=swap">
+<style>
+/* Layout: three 4:5 cards (1080×1350), each a full-bleed photo. Copy sits on a dark fade and reads like a gallery
+   wall label: title, year, medium. Tomato red is the single accent. */
+:root {
+  --page-bg: #ece6dc;
+  --page-fg: #2b2420;
+  --page-muted: #6f655b;
+  --night: #1e1914;
+  --cream: #fbf3e6;
+  --tomato: #ff8a5c;
+  --sans: "IBM Plex Sans KR", "Noto Sans KR", "Apple SD Gothic Neo", sans-serif;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) { --page-bg: #1a1714; --page-fg: #ece4d8; --page-muted: #a3988b; color-scheme: dark; }
+}
+:root[data-theme="dark"] { --page-bg: #1a1714; --page-fg: #ece4d8; --page-muted: #a3988b; color-scheme: dark; }
+
+body { background: var(--page-bg); color: var(--page-fg); font-family: var(--sans); }
+.wrap { max-width: 1180px; margin: 0 auto; padding-left: max(16px, env(safe-area-inset-left, 0px)); padding-right: max(16px, env(safe-area-inset-right, 0px)); padding-block: 40px 64px; }
+.intro { display: grid; gap: 6px; margin-bottom: 28px; }
+.intro h1 { font-size: 1.5rem; font-weight: 700; margin: 0; text-wrap: balance; }
+.intro p { margin: 0; color: var(--page-muted); font-size: .9rem; }
+.grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(min(100%, 340px), 1fr)); gap: 24px; }
+
+.card { container-type: inline-size; position: relative; overflow: hidden; aspect-ratio: 4 / 5; width: 100%; max-width: 100%;
+  font-family: var(--sans); color: var(--cream); background: var(--night); border-radius: 6px; }
+.card.export { border-radius: 0; width: 1080px; max-width: none; }
+.ph { position: absolute; inset: 0; }
+.ph img { display: block; width: 100%; height: 100%; object-fit: cover; }
+.ph::after { content: ""; position: absolute; inset: 0;
+  background: linear-gradient(to bottom, rgba(30,25,20,.55) 0, rgba(30,25,20,0) 15%, rgba(30,25,20,0) 46%, rgba(30,25,20,.78) 64%, rgba(30,25,20,.94) 80%, #1e1914 100%); }
+
+.top { position: absolute; left: 8cqw; right: 7.5cqw; top: 6cqw; display: flex; justify-content: space-between; z-index: 3;
+  font-size: 2.5cqw; font-weight: 500; letter-spacing: .08em; text-shadow: 0 .2cqw 1cqw rgba(0,0,0,.5); }
+.text { position: absolute; left: 8cqw; right: 8cqw; bottom: 8.5cqw; z-index: 3; }
+.label { margin: 0 0 2.4cqw; font-size: 2.8cqw; font-weight: 700; letter-spacing: .06em; color: var(--tomato); }
+.h { margin: 0; font-size: 7.6cqw; font-weight: 700; line-height: 1.26; letter-spacing: -.035em; word-break: keep-all; text-shadow: 0 .3cqw 1.6cqw rgba(0,0,0,.35); }
+.h .em { color: var(--tomato); }
+.p { margin: 3.4cqw 0 0; font-size: 3.4cqw; line-height: 1.65; opacity: .9; word-break: keep-all; }
+
+.busy .ph::after { background: linear-gradient(to bottom, rgba(30,25,20,.55) 0, rgba(30,25,20,0) 14%, rgba(30,25,20,0) 30%, rgba(30,25,20,.82) 46%, rgba(30,25,20,.95) 60%, #1e1914 100%); }
+
+/* gallery wall label */
+.wall { margin-top: 4.4cqw; padding-top: 3.2cqw; border-top: 1px solid rgba(251,243,230,.35);
+  display: grid; grid-template-columns: auto 1fr; column-gap: 4cqw; row-gap: 1.2cqw; font-size: 2.7cqw; line-height: 1.5; }
+.wall dt { opacity: .6; letter-spacing: .04em; }
+.wall dd { margin: 0; font-weight: 500; word-break: keep-all; }
+</style>
+
+<div class="wrap">
+  <header class="intro">
+    <h1>작업실 포카치아 · 카드 3장</h1>
+    <p>어니언 토마토 포카치아 · 1080×1350 (4:5) 인스타그램 규격</p>
+  </header>
+
+  <div class="grid">
+
+    <!-- 01 baked -->
+    <article class="card" data-n="01">
+      <div class="ph"><img src="img/baked.jpg" alt="양파, 방울토마토, 블랙올리브, 로즈마리를 올려 구운 네모난 포카치아" style="object-position: 50% 40%"></div>
+      <div class="top"><span>작업실에서 구운 것</span><span>01 / 03</span></div>
+      <div class="text">
+        <p class="label">Onion Tomato Focaccia</p>
+        <h2 class="h">작가가 구운<br><span class="em">포카치아</span></h2>
+        <p class="p">흙 대신 반죽을 만졌어요.<br>오늘의 실험작입니다.</p>
+      </div>
+    </article>
+
+    <!-- 02 dough -->
+    <article class="card busy" data-n="02">
+      <div class="ph"><img src="img/dough.jpg" alt="굽기 전 반죽 위에 양파 곡선, 토마토, 올리브, 로즈마리를 얹은 모습" style="object-position: 50% 30%"></div>
+      <div class="top"><span>굽기 전</span><span>02 / 03</span></div>
+      <div class="text">
+        <p class="label">반죽 위의 드로잉</p>
+        <h2 class="h">양파의 곡선, 토마토의 붉음,<br>올리브의 동그라미</h2>
+        <dl class="wall">
+          <dt>작품</dt><dd>어니언 토마토 포카치아, 2026</dd>
+          <dt>재료</dt><dd>밀가루 반죽, 양파, 방울토마토, 블랙올리브, 로즈마리, 오레가노, 올리브유</dd>
+          <dt>제작</dt><dd>발효 후 손가락으로 눌러 굽기</dd>
+        </dl>
+      </div>
+    </article>
+
+    <!-- 03 slice -->
+    <article class="card" data-n="03">
+      <div class="ph"><img src="img/slice.jpg" alt="종이에 싸서 손에 든 포카치아 한 조각, 구운 토마토와 양파가 보인다" style="object-position: 55% 50%"></div>
+      <div class="top"><span>한 조각</span><span>03 / 03</span></div>
+      <div class="text">
+        <p class="label">관람 방법</p>
+        <h2 class="h">드시고,<br><span class="em">영감을 얻으세요</span></h2>
+        <p class="p">작품은 손으로 들고 감상하시면 됩니다.</p>
+      </div>
+    </article>
+
+  </div>
+</div>
