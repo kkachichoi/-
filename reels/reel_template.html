@@ -1,0 +1,92 @@
+<!doctype html>
+<html lang="ko" data-resolution="portrait">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=1080, height=1920" />
+    <script src="https://cdn.jsdelivr.net/npm/gsap@3.15.0/dist/gsap.min.js"></script>
+    <style>
+      @font-face { font-family: "Noto Sans KR"; src: url("fonts/NotoSansKR-sub.ttf") format("truetype"); font-weight: 100 900; }
+      @font-face { font-family: "Gaegu"; src: url("fonts/Gaegu-sub.ttf") format("truetype"); font-weight: 700; }
+      :root {
+        --ground: #14100c;
+        --ink: #fffaf2;
+        --accent: #ffb86b;
+        --kraft: #cdb089;
+        --kraft-ink: #2b2118;
+        --kraft-accent: #a83c22;
+      }
+      * { margin: 0; padding: 0; box-sizing: border-box; }
+      html, body { width: 1080px; height: 1920px; overflow: hidden; background: var(--ground); }
+      #root { position: relative; width: 100%; height: 100%; font-family: "Noto Sans KR", sans-serif; }
+      .scene { position: absolute; inset: 0; overflow: hidden; }
+      .scene img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; transform-origin: 50% 50%; }
+      .shade {
+        position: absolute; inset: 0;
+        background: linear-gradient(180deg, rgba(20,16,12,.15) 0%, rgba(20,16,12,.35) 38%, rgba(20,16,12,.72) 62%, rgba(20,16,12,.45) 100%);
+      }
+      /* 크라프트지: 봉투 색 + 은은한 결 */
+      .paper {
+        position: absolute; inset: -40px;
+        background:
+          radial-gradient(ellipse at 30% 20%, rgba(255,255,255,.18), transparent 60%),
+          radial-gradient(ellipse at 80% 90%, rgba(80,50,20,.18), transparent 55%),
+          repeating-linear-gradient(97deg, rgba(90,60,30,.05) 0 2px, transparent 2px 7px),
+          repeating-linear-gradient(8deg, rgba(255,255,255,.05) 0 1px, transparent 1px 5px),
+          var(--kraft);
+        transform-origin: 50% 50%;
+      }
+      .copy { position: absolute; left: 60px; right: 60px; text-align: center; color: var(--ink); text-shadow: 0 4px 24px rgba(0,0,0,.45); }
+      .kraft .copy { color: var(--kraft-ink); text-shadow: none; }
+      .line { display: block; word-break: keep-all; font-size: 84px; font-weight: 800; line-height: 1.28; letter-spacing: -0.035em; }
+      .line.small { font-size: 52px; font-weight: 500; letter-spacing: -0.02em; opacity: .92; margin-bottom: 12px; }
+      .line.hand { font-family: "Gaegu", sans-serif; font-weight: 700; font-size: 130px; line-height: 1.1; letter-spacing: 0; }
+      .line.num { font-size: 210px; font-weight: 900; line-height: 1.05; letter-spacing: -0.04em; }
+      .line.list { font-size: 80px; line-height: 1.5; }
+      .line.xl { font-size: 132px; line-height: 1.15; }
+      .line.gap { margin-top: 48px; }
+      .hl { color: var(--accent); }
+      .kraft .hl, .kraft .line.num { color: var(--kraft-accent); }
+      .tag {
+        position: absolute; top: 300px; left: 0; right: 0; text-align: center;
+        font-size: 42px; font-weight: 600; letter-spacing: .06em; color: var(--ink); opacity: .9;
+        text-shadow: 0 2px 12px rgba(0,0,0,.5);
+      }
+      .kraft .tag { color: var(--kraft-ink); text-shadow: none; opacity: .75; }
+    </style>
+  </head>
+  <body>
+    <div id="root" data-composition-id="main" data-start="0" data-duration="{{TOTAL}}" data-width="1080" data-height="1920">
+{{SECTIONS}}
+      <audio id="music" class="clip" src="assets/music.wav" data-start="0" data-duration="{{TOTAL}}" data-volume="0.9" data-fade-out="1.5" data-track-index="1"></audio>
+    </div>
+    <script>
+      window.__timelines = window.__timelines || {};
+      var tl = gsap.timeline({ paused: true });
+      var scenes = [
+        {{SCENES}}
+      ];
+      scenes.forEach(function (sc) {
+        var el = document.querySelector(sc[0]);
+        var start = sc[1], dur = sc[2], dir = sc[3];
+        var bg = el.querySelector("img, .paper");
+        var from = dir === "in" ? 1.0 : 1.1, to = dir === "in" ? 1.1 : 1.0;
+        if (el.classList.contains("kraft")) { from = 1.0; to = 1.04; }
+        tl.fromTo(bg, { scale: from }, { scale: to, duration: dur, ease: "none" }, start);
+        var parts = el.querySelectorAll(".tag, .line");
+        parts.forEach(function (p, k) {
+          tl.fromTo(p, { opacity: 0, y: 36 }, { opacity: 1, y: 0, duration: 0.5, ease: "power3.out" }, start + 0.1 + k * 0.28);
+        });
+        el.querySelectorAll(".counter").forEach(function (c) {
+          var target = Number(c.getAttribute("data-to"));
+          var obj = { v: 0 };
+          tl.to(obj, {
+            v: target, duration: Math.min(1.6, dur * 0.6), ease: "power2.out",
+            onUpdate: function () { c.textContent = Math.round(obj.v).toLocaleString("en-US"); }
+          }, start + 0.2);
+        });
+      });
+      window.__timelines["main"] = tl;
+      tl.seek(0);
+    </script>
+  </body>
+</html>
