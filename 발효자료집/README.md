@@ -13,5 +13,6 @@
 | 막장 수업 노트 (2026-11-10) | https://claude.ai/artifact/ABW1TwHtysnyLPvPhoS7qJ | pages/05_막장_수업_노트.html, pdf/막장_수업정리_2026-11-10.pdf |
 | 작가의 테이블 (까치카페 원데이) | https://claude.ai/artifact/Vc2hTzx9GHoHvPN9bQQuzv | pages/06_작가의_테이블_원데이.html (2회차 버전: 06b) |
 | 우리 집 찬밥 막걸리 (넷제로 에너지 카페) | https://claude.ai/artifact/GMBT81Eobp54Z6PwJSAbrc | pages/07_우리집_찬밥_막걸리.html |
+| 2027 심화과정 대시보드 (장맛 디자인 · 식초 마스터, 어린이 눈높이) | https://claude.ai/artifact/B8bSFuiexhbzc2HNF54oFq | pages/08_2027_심화과정_대시보드.html |
 
 2027 식초·장류 심화과정 원본 모집 안내 PDF는 개인 연락처와 계좌가 들어 있어 이 저장소에는 넣지 않았습니다. 내용은 발효 자료집 페이지에 정리되어 있습니다.

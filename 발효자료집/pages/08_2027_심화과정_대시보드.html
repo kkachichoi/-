@@ -1,0 +1,291 @@
+<title>2027 발효 심화과정 한눈에</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Jua&family=Gowun+Dodum&family=IBM+Plex+Sans+KR:wght@400;600&display=swap">
+<style>
+/* Layout: 어린이도 읽는 대시보드. 위에 숫자 타일 → 두 과정 패널(항아리 vs 식초병) 나란히 → 달력 띠 → 맛을 재는 세 자(게이지) → 쉬운 낱말. */
+:root{
+  --bg:#eef3f1;--card:#ffffff;--ink:#1e2a36;--muted:#5d6b78;--line:#d3ddd9;
+  --jang:#b8641e;--jang-soft:#f8e4cf;   /* 된장빛: 장맛 디자인 */
+  --vin:#2f8a5f;--vin-soft:#d9f0e3;     /* 사과식초빛: 식초 마스터 */
+  --sweet:#d0567a;--sweet-soft:#fbe0e8; /* 단맛 */
+  --sour:#c79a12;--sour-soft:#fbf0cc;   /* 신맛 */
+  --salt:#2f6fb0;--salt-soft:#dce9f7;   /* 짠맛 */
+  --display:"Jua","Gowun Dodum",system-ui,sans-serif;
+  --body:"Gowun Dodum","Apple SD Gothic Neo","Malgun Gothic",system-ui,sans-serif;
+  --data:"IBM Plex Sans KR","Apple SD Gothic Neo","Malgun Gothic",system-ui,sans-serif;
+}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
+  --bg:#121a1f;--card:#1b252c;--ink:#e8eef0;--muted:#9fb0b9;--line:#2c3a42;
+  --jang:#f0a35c;--jang-soft:#3d2a17;--vin:#6fd09d;--vin-soft:#183427;
+  --sweet:#f08aa8;--sweet-soft:#3d1d28;--sour:#f0c752;--sour-soft:#3a3214;--salt:#7db4ec;--salt-soft:#17293d;color-scheme:dark}}
+:root[data-theme="dark"]{
+  --bg:#121a1f;--card:#1b252c;--ink:#e8eef0;--muted:#9fb0b9;--line:#2c3a42;
+  --jang:#f0a35c;--jang-soft:#3d2a17;--vin:#6fd09d;--vin-soft:#183427;
+  --sweet:#f08aa8;--sweet-soft:#3d1d28;--sour:#f0c752;--sour-soft:#3a3214;--salt:#7db4ec;--salt-soft:#17293d;color-scheme:dark}
+*{box-sizing:border-box}
+body{background:var(--bg);color:var(--ink);font-family:var(--body);font-size:16px;line-height:1.65;
+  padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));padding-block:0 56px}
+.wrap{max-width:68rem;margin:0 auto;display:grid;gap:18px}
+h1,h2,h3{font-family:var(--display);font-weight:400;line-height:1.25;text-wrap:balance;margin:0}
+h1{font-size:clamp(1.9rem,5.5vw,2.8rem)}
+h2{font-size:1.45rem}
+h3{font-size:1.15rem}
+p{margin:0}
+ul{margin:0;padding-left:1.2em;display:grid;gap:3px}
+.eyebrow{font-family:var(--data);font-size:.75rem;letter-spacing:.08em;color:var(--muted);font-weight:600}
+header{display:grid;gap:8px;padding-block:36px 4px}
+.lead{color:var(--muted);font-size:1.05rem;max-width:44rem}
+.panel{background:var(--card);border:1px solid var(--line);border-radius:18px;padding:18px;display:grid;gap:14px;min-width:0}
+.ph{display:flex;align-items:baseline;justify-content:space-between;gap:10px;flex-wrap:wrap}
+.ph small{font-family:var(--data);font-size:.75rem;color:var(--muted);font-weight:600}
+
+/* 숫자 타일 */
+.kpis{display:grid;grid-template-columns:repeat(auto-fit,minmax(9.5rem,1fr));gap:12px}
+.kpi{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:14px 16px;display:grid;gap:2px;min-width:0}
+.kpi .k{font-family:var(--data);font-size:.72rem;font-weight:600;color:var(--muted);letter-spacing:.04em}
+.kpi .v{font-family:var(--display);font-size:2rem;line-height:1.1;font-variant-numeric:tabular-nums}
+.kpi .s{font-size:.85rem;color:var(--muted)}
+.kpi.j .v{color:var(--jang)}.kpi.v2 .v{color:var(--vin)}
+
+/* 두 과정 */
+.duo{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px}
+@media (max-width:760px){.duo{grid-template-columns:1fr}}
+.course{border-top:8px solid var(--jang)}
+.course.vin{border-top-color:var(--vin)}
+.chead{display:grid;grid-template-columns:76px minmax(0,1fr);gap:14px;align-items:center}
+.chead svg{width:76px;height:76px}
+.ctag{font-family:var(--data);font-size:.72rem;font-weight:600;color:var(--muted)}
+.course h2 small{display:block;font-family:var(--body);font-size:.95rem;color:var(--muted)}
+.kid{border-radius:12px;padding:10px 14px;font-size:1rem}
+.course .kid{background:var(--jang-soft)}
+.course.vin .kid{background:var(--vin-soft)}
+.kid b{font-family:var(--display);font-weight:400}
+.mini{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px}
+.mini div{background:var(--bg);border-radius:10px;padding:8px 10px;display:grid;min-width:0}
+.mini .k{font-family:var(--data);font-size:.68rem;color:var(--muted);font-weight:600}
+.mini .v{font-family:var(--display);font-size:1rem}
+
+/* 여정 단계 */
+.steps{display:grid;gap:8px;margin:0;padding:0;list-style:none}
+.step{display:grid;grid-template-columns:2.3rem minmax(0,1fr) auto;gap:10px;align-items:center;background:var(--bg);border-radius:12px;padding:8px 12px}
+.step .dot{width:2.3rem;height:2.3rem;border-radius:50%;display:grid;place-items:center;font-family:var(--display);color:var(--card);background:var(--jang)}
+.course.vin .step .dot{background:var(--vin)}
+.step b{font-family:var(--display);font-weight:400;font-size:1.02rem;display:block}
+.step span.t{font-size:.88rem;color:var(--muted)}
+.step .lv{font-family:var(--data);font-size:.72rem;font-weight:600;color:var(--muted);white-space:nowrap;font-variant-numeric:tabular-nums}
+.makes{display:flex;flex-wrap:wrap;gap:6px}
+.makes span{border-radius:999px;padding:3px 11px;font-size:.88rem;border:1.5px solid var(--line);background:var(--card)}
+
+/* 달력 */
+.months{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px}
+@media (max-width:640px){.months{grid-template-columns:repeat(2,minmax(0,1fr))}}
+.month{background:var(--bg);border-radius:12px;padding:10px 12px;display:grid;gap:6px;align-content:start;min-width:0}
+.month .m{font-family:var(--display);font-size:1.1rem}
+.days{display:flex;flex-wrap:wrap;gap:6px}
+.d{display:grid;place-items:center;width:3rem;height:3rem;border-radius:12px;font-family:var(--data);font-weight:600;font-size:.85rem;line-height:1.1;text-align:center;font-variant-numeric:tabular-nums}
+.d small{display:block;font-size:.62rem;font-weight:600}
+.d.j{background:var(--jang);color:var(--card)}
+.d.v{background:var(--vin);color:var(--card)}
+.legend{display:flex;flex-wrap:wrap;gap:14px;font-size:.88rem;color:var(--muted)}
+.legend i{display:inline-block;width:12px;height:12px;border-radius:4px;margin-right:6px;vertical-align:middle}
+
+/* 게이지 */
+.gauges{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px}
+@media (max-width:820px){.gauges{grid-template-columns:1fr}}
+.gauge{border-radius:16px;padding:16px;display:grid;gap:10px;min-width:0}
+.g-sweet{background:var(--sweet-soft)}.g-sour{background:var(--sour-soft)}.g-salt{background:var(--salt-soft)}
+.gauge .gt{display:flex;justify-content:space-between;align-items:baseline;gap:8px}
+.gauge .unit{font-family:var(--data);font-size:.75rem;font-weight:600;color:var(--muted)}
+.meter{padding-inline:2.2rem;display:grid;gap:6px}
+.bar{position:relative;height:16px;border-radius:999px;background:var(--card);border:1px solid var(--line)}
+.bar .fill{position:absolute;inset:0;border-radius:999px;opacity:.35}
+.g-sweet .fill{background:linear-gradient(90deg,transparent,var(--sweet))}
+.g-sour .fill{background:linear-gradient(90deg,var(--sour),transparent)}
+.g-salt .fill{background:linear-gradient(90deg,transparent,var(--salt))}
+.marks{position:relative;height:7.6rem}
+.mk{position:absolute;top:0;transform:translateX(-50%);display:grid;justify-items:center;gap:2px;font-size:.7rem;text-align:center;line-height:1.2;width:4.4rem}
+.mk::before{content:"";width:2px;height:10px;background:var(--ink)}
+.mk b{font-family:var(--data);font-weight:600;font-variant-numeric:tabular-nums}
+.mk.low{top:2.7rem}
+.mk.low::before{height:2.6rem;opacity:.35}
+.scale{display:flex;justify-content:space-between;font-family:var(--data);font-size:.7rem;color:var(--muted);font-variant-numeric:tabular-nums}
+.gauge .kidline{font-size:.95rem}
+.gauge .kidline b{font-family:var(--display);font-weight:400}
+.who{font-family:var(--data);font-size:.72rem;font-weight:600}
+
+/* 낱말 */
+.words{display:grid;grid-template-columns:repeat(auto-fill,minmax(14rem,1fr));gap:10px}
+.word{border-radius:12px;padding:10px 14px;background:var(--bg);display:grid;gap:2px;min-width:0}
+.word b{font-family:var(--display);font-weight:400;font-size:1.08rem}
+.word .c{font-family:var(--data);font-size:.68rem;font-weight:600}
+.word.j .c{color:var(--jang)}.word.v .c{color:var(--vin)}
+.adult{font-size:.9rem;color:var(--muted)}
+.adult table{border-collapse:collapse;width:100%;font-size:.9rem}
+.adult th,.adult td{border-bottom:1px solid var(--line);padding:7px 10px;text-align:left}
+.adult th{font-family:var(--data);font-size:.72rem;font-weight:600}
+.tbl{overflow-x:auto}
+footer{color:var(--muted);font-size:.82rem;padding-top:8px}
+</style>
+
+<div class="wrap">
+<header>
+  <span class="eyebrow">생활발효지도사 · 2027 심화과정 대시보드</span>
+  <h1>장 요리사와 식초 박사가 되는 두 가지 수업</h1>
+  <p class="lead">2027년 겨울부터 봄까지 열리는 두 발효 수업을 한 화면에 모았어요. 무엇을 만들고, 언제 가고, 무엇을 재는지 그림과 숫자로 보세요.</p>
+</header>
+
+<div class="kpis" aria-label="숫자로 보는 두 과정">
+  <div class="kpi j"><span class="k">장맛 디자인</span><span class="v">8강</span><span class="s">토요일 4번, 하루 2강씩</span></div>
+  <div class="kpi v2"><span class="k">식초 마스터</span><span class="v">8강</span><span class="s">2주에 한 번 화요일</span></div>
+  <div class="kpi"><span class="k">함께 배우는 친구</span><span class="v">20명</span><span class="s">과정마다 선착순</span></div>
+  <div class="kpi"><span class="k">첫 수업</span><span class="v">1월 5일</span><span class="s">식초 마스터부터 시작</span></div>
+  <div class="kpi"><span class="k">마지막 수업</span><span class="v">4월 13일</span><span class="s">식초 맛보기 잔치와 수료식</span></div>
+</div>
+
+<div class="duo">
+  <section class="panel course" aria-labelledby="jangTitle">
+    <div class="chead">
+      <svg viewBox="0 0 80 80" role="img" aria-label="장 항아리 그림">
+        <ellipse cx="40" cy="15" rx="17" ry="5" style="fill:var(--ink)"/>
+        <path d="M24 18 Q8 30 12 52 Q16 72 40 72 Q64 72 68 52 Q72 30 56 18 Z" style="fill:var(--jang)"/>
+        <path d="M17 40 Q40 46 63 40" style="fill:none;stroke:var(--card);stroke-width:3;opacity:.6"/>
+        <rect x="29" y="47" width="22" height="14" rx="3" style="fill:var(--card)"/>
+        <text x="40" y="58" text-anchor="middle" style="font-family:var(--display);font-size:10px;fill:var(--jang)">장</text>
+      </svg>
+      <div><span class="ctag">장류 심화과정 2기</span><h2 id="jangTitle">장맛 디자인<small>장 요리사가 되어 맛을 설계해요</small></h2></div>
+    </div>
+    <p class="kid"><b>쉽게 말하면</b> 감으로 담그던 된장·간장·고추장을, 단맛·신맛·짠맛을 숫자로 재고 적어서 <b>나만의 장 레시피 책</b>을 만드는 수업이에요.</p>
+    <div class="mini"><div><span class="k">언제</span><span class="v">1월 토요일 4번</span></div><div><span class="k">하루</span><span class="v">6시간</span></div><div><span class="k">재는 것</span><span class="v">당도·pH·염도</span></div></div>
+    <h3>배움 여정</h3>
+    <ol class="steps">
+      <li class="step"><span class="dot">1</span><div><b>미생물 알기</b><span class="t">메주 속 곰팡이와 세균이 맛을 어떻게 바꿀까?</span></div><span class="lv">1강</span></li>
+      <li class="step"><span class="dot">2</span><div><b>메주 만들기</b><span class="t">주먹메주, 고구마·감자 메주, 밀·보리 메주, 알메주</span></div><span class="lv">2·3·5강</span></li>
+      <li class="step"><span class="dot">3</span><div><b>장 담그기</b><span class="t">생선 넣은 어간장·어육장, 여러 가지 고추장</span></div><span class="lv">4·6강</span></li>
+      <li class="step"><span class="dot">4</span><div><b>섞고 발표하기</b><span class="t">메주를 섞어 나만의 장맛을 설계하고 발표</span></div><span class="lv">7·8강</span></li>
+    </ol>
+    <h3>만들어 보는 것</h3>
+    <div class="makes"><span>주먹메주</span><span>감저장 메주</span><span>밀·보리 메주</span><span>알메주</span><span>가루메주</span><span>백간장 메주</span><span>어간장</span><span>어육장</span><span>보리·밀 고추장</span><span>감자·고구마 고추장</span><span>블렌딩 장</span></div>
+  </section>
+
+  <section class="panel course vin" aria-labelledby="vinTitle">
+    <div class="chead">
+      <svg viewBox="0 0 80 80" role="img" aria-label="식초병 그림">
+        <rect x="33" y="4" width="14" height="9" rx="2" style="fill:var(--ink)"/>
+        <path d="M34 13 L34 24 Q20 32 20 46 L20 70 Q20 75 25 75 L55 75 Q60 75 60 70 L60 46 Q60 32 46 24 L46 13 Z" style="fill:var(--vin)"/>
+        <path d="M20 52 L60 52 L60 70 Q60 75 55 75 L25 75 Q20 75 20 70 Z" style="fill:var(--ink);opacity:.18"/>
+        <rect x="27" y="40" width="26" height="14" rx="3" style="fill:var(--card)"/>
+        <text x="40" y="51" text-anchor="middle" style="font-family:var(--display);font-size:10px;fill:var(--vin)">식초</text>
+        <circle cx="30" cy="64" r="2" style="fill:var(--card);opacity:.7"/><circle cx="46" cy="60" r="1.6" style="fill:var(--card);opacity:.7"/><circle cx="38" cy="68" r="1.3" style="fill:var(--card);opacity:.7"/>
+      </svg>
+      <div><span class="ctag">식초 심화과정 1기</span><h2 id="vinTitle">식초 마스터<small>식초 박사가 되어 처음부터 끝까지 만들어요</small></h2></div>
+    </div>
+    <p class="kid"><b>쉽게 말하면</b> 쌀과 과일로 술을 만들고, 그 술을 식초로 바꾸고, 진하게·맑게·향기롭게 바꾸는 <b>식초 만들기의 모든 방법</b>을 배우는 수업이에요.</p>
+    <div class="mini"><div><span class="k">언제</span><span class="v">2주마다 화요일</span></div><div><span class="k">하루</span><span class="v">3시간</span></div><div><span class="k">재는 것</span><span class="v">산도·pH·당도</span></div></div>
+    <h3>배움 여정</h3>
+    <ol class="steps">
+      <li class="step"><span class="dot">1</span><div><b>식초의 시작</b><span class="t">초산균 깨우기, 현미로 술 빚기, 과일 와인, 신맛 재기</span></div><span class="lv">1·2강</span></li>
+      <li class="step"><span class="dot">2</span><div><b>진한 식초</b><span class="t">얼려서 진하게 만들기, 발사믹 안치기, 살균, 콤부차</span></div><span class="lv">3·4강</span></li>
+      <li class="step"><span class="dot">3</span><div><b>맑은 식초와 응용</b><span class="t">화이트식초, 꽃·과일 우린 식초, 코디얼, 글레이즈</span></div><span class="lv">5·6·7강</span></li>
+      <li class="step"><span class="dot">4</span><div><b>맛보기 잔치</b><span class="t">만든 식초를 모두 맛보고 수료식</span></div><span class="lv">8강</span></li>
+    </ol>
+    <h3>만들어 보는 것</h3>
+    <div class="makes"><span>발아현미식초</span><span>과일 와인</span><span>고산도 식초</span><span>발사믹 식초</span><span>콤부차</span><span>스파클링</span><span>희석식 화이트식초</span><span>증류 화이트식초</span><span>꽃·과일 침출식초</span><span>훈연 멸치 식초</span><span>코디얼·에이드</span><span>발사믹 글레이즈</span></div>
+  </section>
+</div>
+
+<section class="panel" aria-labelledby="calTitle">
+  <div class="ph"><h2 id="calTitle">수업 달력</h2><small>2027년 1월 – 4월</small></div>
+  <div class="legend"><span><i style="background:var(--jang)"></i>장맛 디자인 (토)</span><span><i style="background:var(--vin)"></i>식초 마스터 (화)</span></div>
+  <div class="months">
+    <div class="month"><span class="m">1월</span><div class="days">
+      <span class="d v">5<small>화</small></span><span class="d j">9<small>토</small></span><span class="d j">16<small>토</small></span><span class="d v">19<small>화</small></span><span class="d j">23<small>토</small></span><span class="d j">30<small>토</small></span>
+    </div></div>
+    <div class="month"><span class="m">2월</span><div class="days"><span class="d v">2<small>화</small></span><span class="d v">16<small>화</small></span></div></div>
+    <div class="month"><span class="m">3월</span><div class="days"><span class="d v">2<small>화</small></span><span class="d v">16<small>화</small></span><span class="d v">30<small>화</small></span></div></div>
+    <div class="month"><span class="m">4월</span><div class="days"><span class="d v">13<small>화</small></span></div></div>
+  </div>
+  <p class="adult">요일이 달라서 두 수업을 함께 들을 수 있어요. 1월은 수업이 6번이라 가장 바빠요.</p>
+</section>
+
+<section class="panel" aria-labelledby="gTitle">
+  <div class="ph"><h2 id="gTitle">맛을 재는 세 가지 자</h2><small>두 수업 모두 맛을 숫자로 적어요</small></div>
+  <div class="gauges">
+    <div class="gauge g-sweet">
+      <div class="gt"><h3>단맛 자 · 당도</h3><span class="unit">Brix (브릭스)</span></div>
+      <p class="kidline"><b>숫자가 클수록 더 달아요.</b> 물 100g에 설탕이 몇 g 녹아 있는지예요.</p>
+      <div class="meter"><div class="bar"><span class="fill"></span></div>
+      <div class="marks">
+        <span class="mk" style="left:22%"><b>약 18</b>식혜</span>
+        <span class="mk low" style="left:50%"><b>40</b>고추장물</span>
+        <span class="mk" style="left:62.5%"><b>50</b>청이 되는 선</span>
+        <span class="mk low" style="left:90%"><b>72</b>발사믹용 농축액</span>
+      </div>
+      <div class="scale"><span>0</span><span>40</span><span>80</span></div></div>
+      <span class="who"><span style="color:var(--jang)">장맛: 고추장물</span> · <span style="color:var(--vin)">식초: 발사믹</span></span>
+    </div>
+    <div class="gauge g-sour">
+      <div class="gt"><h3>신맛 자 · pH</h3><span class="unit">0 – 14</span></div>
+      <p class="kidline"><b>숫자가 작을수록 더 셔요.</b> 7은 물처럼 시지도 쓰지도 않은 가운데예요.</p>
+      <div class="meter"><div class="bar"><span class="fill"></span></div>
+      <div class="marks">
+        <span class="mk" style="left:22%"><b>약 3</b>천연식초</span>
+        <span class="mk low" style="left:36%"><b>약 5</b>잘 익은 된장</span>
+        <span class="mk" style="left:50%"><b>7</b>물</span>
+        <span class="mk low" style="left:71%"><b>약 10</b>비누</span>
+      </div>
+      <div class="scale"><span>0 시큼</span><span>7</span><span>14</span></div></div>
+      <span class="who"><span style="color:var(--jang)">장맛</span> · <span style="color:var(--vin)">식초</span> 모두</span>
+    </div>
+    <div class="gauge g-salt">
+      <div class="gt"><h3>짠맛 자 · 염도</h3><span class="unit">%</span></div>
+      <p class="kidline"><b>숫자가 클수록 더 짜요.</b> 100g 속에 소금이 몇 g인지예요.</p>
+      <div class="meter"><div class="bar"><span class="fill"></span></div>
+      <div class="marks">
+        <span class="mk" style="left:8%"><b>1.6</b>보양 막장</span>
+        <span class="mk low" style="left:12.5%"><b>2–3</b>김치 국물</span>
+        <span class="mk" style="left:27.5%"><b>5.5</b>듬뿍장</span>
+        <span class="mk low" style="left:35%"><b>6–8</b>고추장</span>
+      </div>
+      <div class="scale"><span>0</span><span>10</span><span>20</span></div></div>
+      <span class="who" style="color:var(--jang)">장맛에서 매번 재요</span>
+    </div>
+  </div>
+  <p class="adult">게이지의 숫자는 지난 수업 노트와 일반적인 기준이에요. 식초 마스터 과정에서는 신맛을 '총산도(%)'로도 재요. 식초는 4% 이상, 감식초는 2.6% 이상이에요.</p>
+</section>
+
+<section class="panel" aria-labelledby="wTitle">
+  <div class="ph"><h2 id="wTitle">어려운 낱말, 쉬운 말로</h2><small>수업에서 자주 나와요</small></div>
+  <div class="words">
+    <div class="word j"><span class="c">장맛 디자인</span><b>주먹메주</b><span>주먹만 하게 작게 빚은 메주. 빨리 마르고 고르게 떠요.</span></div>
+    <div class="word j"><span class="c">장맛 디자인</span><b>알메주</b><span>콩을 찧지 않고 알 그대로 띄운 메주.</span></div>
+    <div class="word j"><span class="c">장맛 디자인</span><b>제국 (코지 만들기)</b><span>곡물에 좋은 곰팡이를 키우는 일.</span></div>
+    <div class="word j"><span class="c">장맛 디자인</span><b>어간장 · 어육장</b><span>생선이나 고기를 메주와 함께 넣어 담그는 장.</span></div>
+    <div class="word j"><span class="c">장맛 디자인</span><b>블렌딩</b><span>여러 메주를 섞어 원하는 맛을 만드는 것.</span></div>
+    <div class="word v"><span class="c">식초 마스터</span><b>종초</b><span>식초를 만들 때 넣는 씨앗 식초. 초산균이 잔뜩 살아요.</span></div>
+    <div class="word v"><span class="c">식초 마스터</span><b>동결농축</b><span>식초를 얼리면 물이 먼저 얼어요. 녹을 때 진한 식초만 받아요.</span></div>
+    <div class="word v"><span class="c">식초 마스터</span><b>저온살균</b><span>너무 뜨겁지 않게 오래 데워 균을 멈추는 방법.</span></div>
+    <div class="word v"><span class="c">식초 마스터</span><b>콤부차 · SCOBY</b><span>단 차에 균과 효모 덩어리(SCOBY)를 넣어 만든 새콤한 발효차.</span></div>
+    <div class="word v"><span class="c">식초 마스터</span><b>침출식초</b><span>꽃이나 과일을 식초에 담가 색과 향을 우려낸 식초.</span></div>
+    <div class="word j"><span class="c">장맛 디자인</span><b>백간장</b><span>색이 맑고 연한 간장. 맑은 감칠맛을 내요.</span></div>
+    <div class="word v"><span class="c">식초 마스터</span><b>발사믹 글레이즈</b><span>식초와 과일 농축액을 졸여 만든 걸쭉한 소스.</span></div>
+  </div>
+</section>
+
+<section class="panel adult" aria-labelledby="aTitle">
+  <div class="ph"><h2 id="aTitle" style="color:var(--ink)">어른을 위한 신청 정보</h2><small>모집 안내 기준</small></div>
+  <div class="tbl"><table>
+    <thead><tr><th></th><th>장맛 디자인 (장류 2기)</th><th>식초 마스터 (식초 1기)</th></tr></thead>
+    <tbody>
+      <tr><td>일정</td><td>2027.1.9 · 16 · 23 · 30 (토) 10:00–17:00</td><td>2027.1.5 – 4.13 격주 화 10:00–13:00</td></tr>
+      <tr><td>수강료</td><td>75만 원 (재료비·교재비 포함)</td><td>83만 원 (재료비·교재비 포함)</td></tr>
+      <tr><td>대상</td><td colspan="2">생활발효지도사 수료자 · 내일의식탁 회원 · 선착순 20명</td></tr>
+      <tr><td>수료</td><td>공동 명의 수료증</td><td>공동 명의 수료증 + 식초 R&amp;D 연구반 우선 신청</td></tr>
+      <tr><td>신청</td><td colspan="2">지현숙 선생님 (연락처는 원본 모집 안내 참고)</td></tr>
+    </tbody>
+  </table></div>
+</section>
+
+<footer>내일의식탁 &amp; 지현숙생활발효학교 2027 심화과정 모집 안내를 쉬운 말로 정리했어요. 낱말 풀이와 게이지 숫자 일부는 일반적인 기준이라 수업 내용과 다를 수 있어요.</footer>
+</div>
