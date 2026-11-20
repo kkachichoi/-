@@ -6,6 +6,7 @@
 - **대표실 (유일한 업무 창구)**: https://claude.ai/artifact/UmegAzs3TuwPfhXN3Mwtvj
   - db 컬렉션 `items`: 팀이 올린 보고·제안 (결재 서류)
   - db 컬렉션 `orders`: 사장님이 내린 지시
+  - db 컬렉션 `meetings`: 아침 회의록 (문서 id `YYYY-MM-DD`, 필드 `date`, `title`, `attendees[]`, `todo[]`, `waiting[]`, `teams[]`, `reports[]`, `note`). PRJ-10이 승인돼야 쓴다.
 - 옛 결재함(TzSH1pDBzY9nHS3p1Apgq9)은 이사 안내만 남긴 페이지다. 읽거나 쓰지 않는다.
 
 ## 결재 규칙 (가장 중요)
