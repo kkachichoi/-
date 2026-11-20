@@ -1,0 +1,234 @@
+<title>발효 자료집</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Jua&family=Gowun+Dodum&family=IBM+Plex+Sans+KR:wght@400;600&display=swap">
+<style>
+/* Layout: 발효 자료집 허브. 2027 심화과정 안내 → 수업 자료 목록 → 질문 노트. 기존 노트 스타일 재사용. 주제별 단원(원리 → 재료 → 단맛과 소금 → 레시피 카드) + 확인 퀴즈. 출처 배지로 '수업 내용'과 '덧붙인 정보'를 구분. */
+:root{
+  --bg:#f3f6f1;--paper:#ffffff;--ink:#1f2b3a;--muted:#5b6878;--line:#d6ded3;
+  --yeast:#c98a12;--yeast-soft:#f6e7c4;--bubble:#2f7fb8;--bubble-soft:#dcebf6;
+  --sour:#4f8a3c;--sour-soft:#e1efd9;--warn:#b4472f;--warn-soft:#f7e0d9;
+  --display:"Jua","Gowun Dodum",system-ui,sans-serif;
+  --body:"Gowun Dodum","Apple SD Gothic Neo","Malgun Gothic",system-ui,sans-serif;
+  --data:"IBM Plex Sans KR","Apple SD Gothic Neo","Malgun Gothic",system-ui,sans-serif;
+}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
+  --bg:#141a20;--paper:#1c242c;--ink:#e6ecef;--muted:#9aa8b4;--line:#2e3a44;
+  --yeast:#e3a93a;--yeast-soft:#3a2f17;--bubble:#6fb3e6;--bubble-soft:#183245;
+  --sour:#86c06f;--sour-soft:#1f3319;--warn:#ec8a72;--warn-soft:#3d221b;color-scheme:dark}}
+:root[data-theme="dark"]{
+  --bg:#141a20;--paper:#1c242c;--ink:#e6ecef;--muted:#9aa8b4;--line:#2e3a44;
+  --yeast:#e3a93a;--yeast-soft:#3a2f17;--bubble:#6fb3e6;--bubble-soft:#183245;
+  --sour:#86c06f;--sour-soft:#1f3319;--warn:#ec8a72;--warn-soft:#3d221b;color-scheme:dark}
+*{box-sizing:border-box}
+body{background:var(--bg);color:var(--ink);font-family:var(--body);font-size:17px;line-height:1.75;
+  padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));padding-block:0 64px}
+.wrap{max-width:48rem;margin:0 auto}
+h1,h2,h3{font-family:var(--display);font-weight:400;line-height:1.3;text-wrap:balance;margin:0}
+h1{font-size:clamp(2.2rem,7vw,3.2rem)}h2{font-size:1.7rem}h3{font-size:1.2rem}
+p{margin:0}
+a{color:var(--bubble)}
+ul,ol{margin:0;padding-left:1.25em;display:grid;gap:4px}
+.eyebrow{font-family:var(--data);font-size:.78rem;letter-spacing:.08em;color:var(--muted);font-weight:600}
+header{display:grid;gap:14px;padding-block:48px 24px}
+.lead{font-size:1.1rem;color:var(--muted)}
+.legend{display:flex;flex-wrap:wrap;gap:8px;font-size:.88rem;align-items:center}
+nav.toc{display:flex;flex-wrap:wrap;gap:6px}
+nav.toc a{font-size:.9rem;text-decoration:none;color:var(--ink);border:1.5px solid var(--line);background:var(--paper);border-radius:999px;padding:4px 12px}
+nav.toc a:focus-visible{outline:3px solid var(--bubble);outline-offset:2px}
+section{display:grid;gap:16px;padding-block:40px;border-top:1px dashed var(--line);scroll-margin-top:12px}
+.num-h{display:flex;gap:12px;align-items:baseline}
+.num-h .n{font-family:var(--data);font-size:.85rem;font-weight:600;color:var(--paper);background:var(--ink);border-radius:999px;padding:2px 10px;flex:none}
+
+.src{font-family:var(--data);font-size:.68rem;font-weight:600;padding:1px 8px;border-radius:999px;white-space:nowrap;vertical-align:middle}
+.s-class{background:var(--yeast-soft);color:var(--ink)}
+.s-book{background:var(--sour-soft);color:var(--ink)}
+.s-add{background:var(--bubble-soft);color:var(--ink)}
+.s-check{background:var(--warn-soft);color:var(--ink)}
+
+.point{background:var(--paper);border:1px solid var(--line);border-radius:12px;padding:16px 18px;display:grid;gap:8px}
+.point h3{display:flex;flex-wrap:wrap;gap:8px;align-items:center}
+.say{border-left:4px solid var(--yeast);padding:2px 0 2px 14px}
+.say::before{content:"수업에서 이렇게 말해요 · ";font-family:var(--data);font-size:.75rem;font-weight:600;color:var(--yeast)}
+.formula{display:flex;flex-wrap:wrap;align-items:center;gap:8px;font-family:var(--display);font-size:1.15rem;background:var(--paper);border:2px solid var(--ink);border-radius:14px;padding:14px 16px}
+.chip{padding:3px 12px;border-radius:999px;white-space:nowrap}
+.c1{background:var(--yeast-soft)}.c2{background:var(--bubble-soft)}.c3{background:var(--sour-soft)}.c4{background:var(--bg);border:1.5px dashed var(--muted)}
+.op{color:var(--muted)}
+
+.tbl{overflow-x:auto}
+table{border-collapse:collapse;width:100%;font-size:.94rem;background:var(--paper)}
+th,td{border-bottom:1px solid var(--line);padding:9px 12px;text-align:left;vertical-align:top}
+th{font-family:var(--data);font-size:.75rem;color:var(--muted);font-weight:600;letter-spacing:.04em}
+td.num{font-family:var(--data);font-variant-numeric:tabular-nums;white-space:nowrap;font-weight:600}
+tr.total td{font-weight:600;border-top:2px solid var(--ink)}
+.wide table{min-width:32rem}
+
+.story{background:var(--paper);border:2px solid var(--ink);border-radius:14px;padding:18px 20px;display:grid;gap:12px}
+.steps{display:grid;gap:10px;margin:0;padding:0;list-style:none;counter-reset:s}
+.steps li{counter-increment:s;display:grid;grid-template-columns:1.9rem 1fr;gap:10px}
+.steps li::before{content:counter(s);font-family:var(--display);width:1.9rem;height:1.9rem;border-radius:50%;background:var(--ink);color:var(--paper);display:grid;place-items:center}
+
+.calcline{font-family:var(--data);font-size:.92rem;background:var(--bg);border-radius:8px;padding:10px 12px;font-variant-numeric:tabular-nums}
+
+.cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(18rem,1fr));gap:14px}
+.card{background:var(--paper);border:1px solid var(--line);border-radius:12px;padding:16px 18px;display:grid;gap:10px;align-content:start;min-width:0}
+.card h3{display:flex;flex-wrap:wrap;gap:8px;align-items:center}
+.card .meta{font-family:var(--data);font-size:.8rem;color:var(--muted)}
+.card table{font-size:.9rem}
+.card.y{border-top:4px solid var(--yeast)}.card.r{border-top:4px solid var(--warn)}.card.g{border-top:4px solid var(--sour)}.card.b{border-top:4px solid var(--bubble)}
+
+.check{display:grid;gap:8px;margin:0;padding:0;list-style:none}
+.check li{background:var(--paper);border:1px solid var(--line);border-radius:10px;padding:10px 14px;display:flex;gap:10px}
+.check li::before{content:"?";font-family:var(--display);color:var(--warn);flex:none}
+
+.quiz{display:grid;gap:10px}
+.q{background:var(--paper);border:1px solid var(--line);border-radius:10px;padding:14px 16px;display:grid;gap:10px}
+.opts{display:flex;flex-wrap:wrap;gap:8px}
+.opts button{font:inherit;font-size:.95rem;border:1.5px solid var(--line);background:var(--bg);color:var(--ink);border-radius:999px;padding:4px 14px;cursor:pointer}
+.opts button:focus-visible{outline:3px solid var(--bubble);outline-offset:2px}
+.opts button.right{background:var(--sour-soft);border-color:var(--sour)}
+.opts button.wrong{background:var(--warn-soft);border-color:var(--warn)}
+.fb{font-size:.92rem;color:var(--muted);min-height:1.5em}
+.links{display:flex;flex-wrap:wrap;gap:10px}
+.links a{background:var(--paper);border:1px solid var(--line);border-radius:10px;padding:10px 14px;text-decoration:none;color:var(--ink);display:grid}
+.links a small{color:var(--muted);font-size:.82rem}
+footer{padding-top:28px;color:var(--muted);font-size:.85rem}
+
+.course{background:var(--paper);border:2px solid var(--ink);border-radius:16px;padding:20px;display:grid;gap:14px}
+.course.v{border-top:6px solid var(--sour)}.course.j{border-top:6px solid var(--yeast)}
+.course .slogan{font-family:var(--display);font-size:1.1rem}
+.facts{display:grid;grid-template-columns:repeat(auto-fit,minmax(10rem,1fr));gap:8px}
+.fact{background:var(--bg);border-radius:8px;padding:8px 12px;display:grid;gap:0;min-width:0}
+.fact .k{font-family:var(--data);font-size:.7rem;color:var(--muted);font-weight:600}
+.fact .v{font-family:var(--display);font-size:1rem}
+.curr td:first-child{font-family:var(--data);font-weight:600;white-space:nowrap;color:var(--muted)}
+.curr td b{font-family:var(--display);font-weight:400}
+.lib{display:grid;grid-template-columns:repeat(auto-fit,minmax(15rem,1fr));gap:12px}
+.item{background:var(--paper);border:1px solid var(--line);border-radius:12px;padding:14px 16px;display:grid;gap:6px;text-decoration:none;color:var(--ink);align-content:start}
+.item:hover{border-color:var(--ink)}
+.item:focus-visible{outline:3px solid var(--bubble);outline-offset:2px}
+.item .ty{font-family:var(--data);font-size:.7rem;font-weight:600;color:var(--muted);letter-spacing:.05em}
+.item b{font-family:var(--display);font-weight:400;font-size:1.15rem}
+.item small{color:var(--muted);font-size:.88rem}
+details.qa{background:var(--paper);border:1px solid var(--line);border-radius:10px}
+details.qa+details.qa{margin-top:-8px}
+details.qa summary{cursor:pointer;padding:12px 16px;font-family:var(--display);font-size:1.05rem;list-style:none}
+details.qa summary::-webkit-details-marker{display:none}
+details.qa summary::before{content:"Q  ";color:var(--yeast)}
+details.qa summary:focus-visible{outline:3px solid var(--bubble);outline-offset:-3px;border-radius:10px}
+details.qa .a{padding:0 16px 14px 16px;font-size:.95rem;display:grid;gap:6px}
+</style>
+<div class="wrap">
+<header>
+  <span class="eyebrow">생활발효지도사 · 까치카페</span>
+  <h1>발효 자료집</h1>
+  <p class="lead">지금까지 함께 만든 발효 수업 자료와 질문 노트, 그리고 2027년 심화과정 안내를 한곳에 모았어요. 새 자료가 생기면 이 페이지에 계속 더해요.</p>
+  <nav class="toc" aria-label="차례">
+    <a href="#courses">2027 심화과정</a><a href="#library">수업 자료</a><a href="#qa">질문 노트</a>
+  </nav>
+</header>
+
+<section id="courses">
+  <div class="num-h"><span class="n">1</span><h2>2027 심화과정 안내</h2></div>
+  <p>내일의식탁 &amp; 지현숙생활발효학교의 생활발효지도사 수료자 대상 심화과정 두 가지예요. 원본 모집 안내 PDF 내용을 정리했어요.</p>
+
+  <div class="tbl wide"><table>
+    <thead><tr><th></th><th>식초 심화과정 1기</th><th>장류 심화과정 2기</th></tr></thead>
+    <tbody>
+      <tr><td>과정 이름</td><td>생활발효지도사 식초 마스터 과정</td><td>장맛 디자인</td></tr>
+      <tr><td>일정</td><td>2027.1.5(화) – 4.13(화), 격주 8강</td><td>2027.1.9 · 16 · 23 · 30 (토), 4주 8강 집중</td></tr>
+      <tr><td>시간</td><td>10:00 – 13:00 (3시간)</td><td>10:00 – 17:00 (6시간)</td></tr>
+      <tr><td>수강료</td><td>83만 원 (재료비·교재비 포함)</td><td>75만 원 (재료비·교재비 포함)</td></tr>
+      <tr><td>대상</td><td colspan="2">생활발효지도사 수료자이면서 내일의식탁 회원, 선착순 20명</td></tr>
+      <tr><td>수료 혜택</td><td>공동 명의 수료증 + 〈식초 R&amp;D 연구반〉 우선 신청</td><td>공동 명의 수료증</td></tr>
+      <tr><td>신청</td><td colspan="2">지현숙 선생님 (연락처·입금 계좌는 원본 모집 안내 참고)</td></tr>
+    </tbody>
+  </table></div>
+  <p class="hint" style="font-size:.88rem;color:var(--muted)">1월 9일(토) 장류 과정과 1월 5일·19일(화) 식초 과정은 요일이 달라 두 과정을 함께 들을 수 있어요.</p>
+
+  <div class="course v">
+    <h3>식초 심화과정 1기 · 식초 마스터 과정 <span class="src s-book">모집 안내</span></h3>
+    <p class="slogan">"초산 발효의 원리부터 동결농축, 증류, 콤부차와 발사믹 글레이즈까지! 식초 제조의 전 공정을 마스터합니다."</p>
+    <ul>
+      <li><b>전통과 현대 공법:</b> 발아현미식초, 동결농축, 증류 화이트식초</li>
+      <li><b>응용 레시피:</b> 희석식 vs 증류식 화이트식초, 꽃·과일·훈연 멸치 침출식초, 콤부차, 스파클링 와인, 한방 코디얼, 발사믹 글레이즈</li>
+      <li><b>기본기:</b> 종초 배양, 중화적정법 산도 체크, 파스퇴르 저온살균</li>
+    </ul>
+    <div class="tbl"><table class="curr">
+      <thead><tr><th>회차</th><th>주제와 실습</th></tr></thead>
+      <tbody>
+        <tr><td>1강 1/5</td><td><b>식초의 시작:</b> 식초 발효 원리·종초 관리, 초산균 활성화 배양, 한번 빚어 이양주 효과 내는 발아현미식초술 빚기</td></tr>
+        <tr><td>2강 1/19</td><td><b>과일 와인과 산도 체크:</b> 과일 와인 제조, 발아현미식초 안치기, 중화적정법으로 총산도(%)·pH 측정</td></tr>
+        <tr><td>3강 2/2</td><td><b>고산도 식초와 발사믹:</b> 동결 식초 거꾸로 드립 추출(산도 8% 이상), 과일 농축액(72 Brix)과 배합해 발사믹 안치기</td></tr>
+        <tr><td>4강 2/16</td><td><b>저온살균과 콤부차 1차:</b> 파스퇴르 저온살균 실습, 홍차·녹차와 SCOBY로 콤부차 1차 발효</td></tr>
+        <tr><td>5강 3/2</td><td><b>희석식 화이트식초와 콤부차 2차:</b> 시판 양조식초 원리, 소주 도수 계산·종초 배합 속성 화이트식초, 과일·허브 2차 탄산 병입</td></tr>
+        <tr><td>6강 3/16</td><td><b>증류 화이트식초와 침출:</b> 발효식초 증류로 화이트식초 추출, 희석식 vs 증류식 비교 관능, 꽃·과일·훈연 멸치 침출식초</td></tr>
+        <tr><td>7강 3/30</td><td><b>식초 응용:</b> 화이트식초 베이스 과일·한방 코디얼과 에이드, 즉석 발사믹 글레이즈(50+ Brix)</td></tr>
+        <tr><td>8강 4/13</td><td><b>종합 테이스팅과 수료식:</b> 직접 만든 식초·콤부차·60일 숙성 발사믹 관능 평가</td></tr>
+      </tbody>
+    </table></div>
+  </div>
+
+  <div class="course j">
+    <h3>장류 심화과정 2기 · 장맛 디자인 <span class="src s-book">모집 안내</span></h3>
+    <p class="slogan">"단순히 장을 담그는 법을 넘어, 미생물과 데이터를 읽어 나만의 맛을 설계합니다."</p>
+    <ul>
+      <li><b>실전 데이터화:</b> Brix(당도), pH, 염도, 원물 비율을 측정·기록해 나만의 장맛 공식 정립</li>
+      <li><b>메주 라인업:</b> 전통메주, 감저장메주, 알메주, 황증가루메주, 백간장용 메주</li>
+      <li><b>밀착 피드백:</b> 매 회차 이론, 실습, R&amp;D 데이터 점검</li>
+    </ul>
+    <div class="tbl"><table class="curr">
+      <thead><tr><th>회차</th><th>주제와 실습</th></tr></thead>
+      <tbody>
+        <tr><td>1강</td><td><b>메주 속 미생물과 장맛 디자인:</b> 참발효 수상 장맛 관능 테이스팅, 메주 미생물 구조 관찰, 나만의 장맛 설계지</td></tr>
+        <tr><td>2강</td><td><b>주먹메주 &amp; 감저장 메주:</b> 고구마·감자 혼합 메주 빚기, 원물 비율별 품온·건조·표면 균주 기록</td></tr>
+        <tr><td>3강</td><td><b>고추장 메주 띄우기:</b> 밀·보리 황증 제국(코지) 세팅, 온·습도와 황국균 착생률 모니터링</td></tr>
+        <tr><td>4강</td><td><b>어간장 &amp; 어육장 안치기:</b> 단백질 자가분해 원리, 어패류·메주·염수 비율, 초기 염도·pH 기록</td></tr>
+        <tr><td>5강</td><td><b>백간장 메주와 알메주·가루메주:</b> 맑은 감칠맛 백간장 메주 스펙, 색도·당화도 측정</td></tr>
+        <tr><td>6강</td><td><b>고추장 담그기:</b> 엿기름 삭히기, 곡물 풀, 당산 밸런스, 보리·밀·감자·고구마 고추장, 초기 Brix·pH·염도</td></tr>
+        <tr><td>7강</td><td><b>맞춤형 블렌딩 장담그기:</b> 메주 미생물 분포 기반 블렌딩 비율, 염수 세팅, 데이터 통합 분석</td></tr>
+        <tr><td>8강</td><td><b>나만의 장맛 디자인 발표:</b> 수강생별 염수 세팅과 블렌딩 기획안 발표</td></tr>
+      </tbody>
+    </table></div>
+  </div>
+
+  <div class="point">
+    <h3>지금까지 공부와 이어지는 부분 <span class="src s-add">연결 메모</span></h3>
+    <ul>
+      <li><b>장류 과정</b>은 공부 모임에서 이야기한 "데이터를 만들기 위해 함께 공부" (제주 푸른콩장 실험, Brix·염도)와 같은 방향이에요. 알메주, 고추장 40브릭스, 막장 염도 계산이 바로 이어져요.</li>
+      <li><b>식초 과정</b>은 감식초, 막걸리 식초(씨초), 교재 '천연발효식초와 발사믹식초' 단원을 깊게 다뤄요.</li>
+    </ul>
+  </div>
+</section>
+
+<section id="library">
+  <div class="num-h"><span class="n">2</span><h2>수업 자료</h2></div>
+  <div class="lib">
+    <a class="item" href="https://claude.ai/artifact/CcH5TYTAxarnUEavDzMKcB" target="_blank" rel="noopener"><span class="ty">초등 눈높이 · 알코올 발효</span><b>효모의 설탕 잔치</b><small>효모 병 실험실, 풍선 실험, 퀴즈, 40분 수업 흐름</small></a>
+    <a class="item" href="https://claude.ai/artifact/MCeLxBynDYz8D2AqnMdPbM" target="_blank" rel="noopener"><span class="ty">용어 정리</span><b>발효 낱말 사전</b><small>낱말 32개, 헷갈리는 짝꿍, 낱말 퀴즈</small></a>
+    <a class="item" href="https://claude.ai/artifact/AZKo5hRfPaPwNLVRfBDM7h" target="_blank" rel="noopener"><span class="ty">성인 체험 · 2회차</span><b>막걸리 빚기 교실</b><small>재료 계산기, 관찰일지, 거르기, 물 타기 계산</small></a>
+    <a class="item" href="https://claude.ai/artifact/Xw8kubKpDKDEsyQnu7eMXG" target="_blank" rel="noopener"><span class="ty">성인 체험 · 120분</span><b>나만의 막장 교실</b><small>보양 막장 실습, 듬뿍장 시연, 소금 계산기</small></a>
+    <a class="item" href="https://claude.ai/artifact/ABW1TwHtysnyLPvPhoS7qJ" target="_blank" rel="noopener"><span class="ty">공부 모임 노트 · PDF 있음</span><b>막장 수업 노트</b><small>11월 10일 수업 메모 정리, 레시피 카드, 확인 퀴즈</small></a>
+    <a class="item" href="https://claude.ai/artifact/Vc2hTzx9GHoHvPN9bQQuzv" target="_blank" rel="noopener"><span class="ty">까치카페 원데이</span><b>작가의 테이블</b><small>작가의 술상, 내 막걸리 빚기, 흙으로 잔 빚기</small></a>
+    <a class="item" href="https://claude.ai/artifact/GMBT81Eobp54Z6PwJSAbrc" target="_blank" rel="noopener"><span class="ty">넷제로 에너지 카페</span><b>우리 집 찬밥 막걸리</b><small>찬밥 막걸리, 순환 고리, 찬밥 계산기</small></a>
+  </div>
+</section>
+
+<section id="qa">
+  <div class="num-h"><span class="n">3</span><h2>질문 노트</h2></div>
+  <p>수업 준비하며 나눈 질문과 짧은 답이에요. <span class="src s-add">일반 정보</span> 숫자는 재료와 환경에 따라 달라요.</p>
+  <details class="qa"><summary>쌀코지와 누룩은 뭐가 달라요?</summary><div class="a"><p>누룩은 여러 미생물이 섞인 '동네 축구팀'(곰팡이+효모+세균), 쌀코지는 곰팡이 한 종류만 골라 키운 '골라 뽑은 선수'예요. 쌀코지로 술을 빚으려면 효모를 따로 넣어요.</p></div></details>
+  <details class="qa"><summary>산국과 병국은요?</summary><div class="a"><p>산국은 낱알로 흩어 띄운 누룩(쌀누룩, 쌀코지), 병국은 떡처럼 빚어 띄운 누룩(전통누룩)이에요.</p></div></details>
+  <details class="qa"><summary>탁주와 막걸리는 달라요?</summary><div class="a"><p>탁주는 '흐린 술'(모양), 막걸리는 '막 거른 술'(방법). 거의 같은 술이고, 법에서는 탁주로 분류해요. 맑은 윗술을 떠내면 청주예요.</p></div></details>
+  <details class="qa"><summary>막걸리는 몇 도에서 걸러요?</summary><div class="a"><p>도수가 아니라 신호로 걸러요. 소리가 멎고, 맑은 층이 생기고, 단맛이 사라지면(22–25℃에서 7–10일). 이때 원주는 단양주 약 12–15%, 이양주 약 15–18%.</p></div></details>
+  <details class="qa"><summary>찬밥 막걸리가 시어요</summary><div class="a"><p>찬밥에 붙은 세균, 느린 당화, 많은 물이 원인일 수 있어요. 다음엔 찬밥을 데웠다가 25℃ 아래로 식혀 쓰고, 22–25℃, 젓기는 처음 2–3일만.</p></div></details>
+  <details class="qa"><summary>거른 막걸리를 더 달게 하려면?</summary><div class="a"><p>잔에 따른 뒤 꿀, 조청, 식혜, 코디얼을 타요. 병째 넣으면 효모가 먹어 탄산이 차요. 식혜 블렌딩 비율은 막걸리 : 식혜 = 3:1, 2:1, 1:1.</p></div></details>
+  <details class="qa"><summary>막걸리를 증류하면 소주가 돼요?</summary><div class="a"><p>네, 증류식 소주예요. 알코올(78℃)이 물(100℃)보다 먼저 끓는 원리. 초류는 버리고 본류를 받아 숙성해요. 초록병 소주(희석식)는 주정을 물로 희석한 것이라 달라요.</p></div></details>
+  <details class="qa"><summary>막장과 된장은?</summary><div class="a"><p>된장은 간장을 빼고 남은 건더기, 막장은 간장을 빼지 않고 메주가루로 바로 담가 빨리 먹는 장이에요.</p></div></details>
+  <details class="qa"><summary>조청의 당도와 고추장물은?</summary><div class="a"><p>조청은 보통 70–80브릭스. 조청과 물을 1:1로 섞으면 약 40브릭스로, 수업에서 배운 고추장물 당도와 맞아요. 소금은 맹물에 먼저 녹이고 조청을 섞어요.</p></div></details>
+  <details class="qa"><summary>감식초는 어떻게 만들어요?</summary><div class="a"><p>꼭지 뗀 잘 익은 감을 씻지 않고 닦아 으깨 담고 면포로 덮어 3–6개월 두는 자연발효, 또는 효모로 술을 만든 뒤 씨초를 넣는 2단계 방식. 감식초는 총산도 2.6% 이상이면 식초로 인정돼요.</p></div></details>
+</section>
+
+<footer>발효 자료집 · 새 자료와 수업 기록이 생기면 계속 더해 갑니다.</footer>
+</div>

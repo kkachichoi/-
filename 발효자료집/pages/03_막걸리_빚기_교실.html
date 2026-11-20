@@ -1,0 +1,368 @@
+<title>막걸리 빚기 교실</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Jua&family=Gowun+Dodum&family=IBM+Plex+Sans+KR:wght@400;600&display=swap">
+<style>
+/* Layout: 2회차 수업 지도안. 개요 → 재료 계산 → 1회차 시간표 → 관찰일지 → 2회차 → 문제 해결 → 초등 버전. 같은 시리즈 색·글꼴. */
+:root{
+  --bg:#f3f6f1;--paper:#ffffff;--ink:#1f2b3a;--muted:#5b6878;--line:#d6ded3;
+  --yeast:#c98a12;--yeast-soft:#f6e7c4;--bubble:#2f7fb8;--bubble-soft:#dcebf6;
+  --sour:#4f8a3c;--sour-soft:#e1efd9;--warn:#b4472f;--warn-soft:#f7e0d9;
+  --display:"Jua","Gowun Dodum",system-ui,sans-serif;
+  --body:"Gowun Dodum","Apple SD Gothic Neo","Malgun Gothic",system-ui,sans-serif;
+  --data:"IBM Plex Sans KR","Apple SD Gothic Neo","Malgun Gothic",system-ui,sans-serif;
+}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
+  --bg:#141a20;--paper:#1c242c;--ink:#e6ecef;--muted:#9aa8b4;--line:#2e3a44;
+  --yeast:#e3a93a;--yeast-soft:#3a2f17;--bubble:#6fb3e6;--bubble-soft:#183245;
+  --sour:#86c06f;--sour-soft:#1f3319;--warn:#ec8a72;--warn-soft:#3d221b;color-scheme:dark}}
+:root[data-theme="dark"]{
+  --bg:#141a20;--paper:#1c242c;--ink:#e6ecef;--muted:#9aa8b4;--line:#2e3a44;
+  --yeast:#e3a93a;--yeast-soft:#3a2f17;--bubble:#6fb3e6;--bubble-soft:#183245;
+  --sour:#86c06f;--sour-soft:#1f3319;--warn:#ec8a72;--warn-soft:#3d221b;color-scheme:dark}
+*{box-sizing:border-box}
+body{background:var(--bg);color:var(--ink);font-family:var(--body);font-size:17px;line-height:1.7;
+  padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));padding-block:0 64px}
+.wrap{max-width:52rem;margin:0 auto}
+h1,h2,h3{font-family:var(--display);font-weight:400;line-height:1.3;text-wrap:balance;margin:0}
+h1{font-size:clamp(2.2rem,7vw,3.4rem)}h2{font-size:1.75rem}h3{font-size:1.2rem}
+p{margin:0}
+a{color:var(--bubble)}
+.eyebrow{font-family:var(--data);font-size:.78rem;letter-spacing:.08em;color:var(--muted);font-weight:600}
+header{display:grid;gap:14px;padding-block:48px 24px}
+.lead{font-size:1.12rem;color:var(--muted);max-width:42rem}
+nav.toc{display:flex;flex-wrap:wrap;gap:6px}
+nav.toc a{font-size:.9rem;text-decoration:none;color:var(--ink);border:1.5px solid var(--line);background:var(--paper);border-radius:999px;padding:4px 12px}
+nav.toc a:focus-visible{outline:3px solid var(--bubble);outline-offset:2px}
+section{display:grid;gap:18px;padding-block:40px;border-top:1px dashed var(--line);scroll-margin-top:12px}
+
+.overview{display:grid;grid-template-columns:repeat(auto-fit,minmax(11rem,1fr));gap:12px}
+.ov{background:var(--paper);border:1px solid var(--line);border-radius:10px;padding:14px 16px;display:grid;gap:2px;min-width:0}
+.ov .k{font-family:var(--data);font-size:.75rem;color:var(--muted);font-weight:600;letter-spacing:.04em}
+.ov .v{font-family:var(--display);font-size:1.2rem}
+.goals{display:grid;gap:8px;margin:0;padding:0;list-style:none}
+.goals li{background:var(--paper);border:1px solid var(--line);border-radius:10px;padding:10px 14px}
+.goals b{font-family:var(--display);font-weight:400;color:var(--yeast);margin-right:6px}
+
+/* 계산기 */
+.calc{background:var(--paper);border:2px solid var(--ink);border-radius:16px;padding:20px;display:grid;gap:16px}
+.inputs{display:flex;flex-wrap:wrap;gap:14px 22px}
+.field{display:grid;gap:4px}
+.field label{font-family:var(--display);font-size:1rem}
+.field input{font:inherit;font-family:var(--data);width:8rem;padding:6px 10px;border:1.5px solid var(--line);border-radius:8px;background:var(--bg);color:var(--ink);font-variant-numeric:tabular-nums}
+.field input:focus-visible{outline:3px solid var(--bubble);outline-offset:1px}
+.field small{color:var(--muted);font-size:.8rem}
+.tbl{overflow-x:auto}
+table{border-collapse:collapse;width:100%;font-size:.95rem;background:var(--paper)}
+th,td{border-bottom:1px solid var(--line);padding:9px 12px;text-align:left;vertical-align:top}
+th{font-family:var(--data);font-size:.75rem;color:var(--muted);font-weight:600;letter-spacing:.04em}
+td.num{font-family:var(--data);font-variant-numeric:tabular-nums;white-space:nowrap;font-weight:600}
+.wide table{min-width:34rem}
+
+/* 시간표 */
+.timeline{display:grid;gap:0;border-left:3px solid var(--ink);margin-left:6px}
+.slot{display:grid;grid-template-columns:6.4rem minmax(0,1fr);gap:14px;padding:0 0 22px 18px;position:relative}
+.slot::before{content:"";position:absolute;left:-9px;top:6px;width:15px;height:15px;border-radius:50%;background:var(--paper);border:3px solid var(--ink)}
+.slot.hands::before{background:var(--yeast);border-color:var(--yeast)}
+.slot .t{font-family:var(--data);font-size:.85rem;font-weight:600;color:var(--muted);font-variant-numeric:tabular-nums;padding-top:2px}
+.slot .body{display:grid;gap:6px;min-width:0}
+.slot h3{font-size:1.15rem}
+.slot .kind{font-family:var(--data);font-size:.7rem;font-weight:600;padding:1px 8px;border-radius:999px;margin-left:6px;vertical-align:middle}
+.k-talk{background:var(--bubble-soft)}.k-hand{background:var(--yeast-soft)}.k-wait{background:var(--sour-soft)}
+.script{border-left:4px solid var(--yeast);padding:2px 0 2px 12px;font-size:.98rem}
+.script::before{content:"이렇게 말해요 · ";font-family:var(--data);font-size:.75rem;font-weight:600;color:var(--yeast)}
+.parallel{font-size:.88rem;color:var(--bubble);font-family:var(--data)}
+@media (max-width:520px){.slot{grid-template-columns:1fr;gap:2px}}
+
+.note{background:var(--paper);border:1px solid var(--line);border-radius:10px;padding:14px 16px;display:grid;gap:6px}
+.note .tag{font-family:var(--data);font-size:.75rem;font-weight:600;letter-spacing:.06em;color:var(--bubble)}
+.note.warn .tag{color:var(--warn)}
+.note ul{margin:0;padding-left:1.2em}
+
+/* 관찰일지 */
+.diary{display:grid;grid-template-columns:repeat(auto-fill,minmax(10.5rem,1fr));gap:10px}
+.day{background:var(--paper);border:1px solid var(--line);border-radius:10px;padding:12px 14px;display:grid;gap:4px;align-content:start;min-width:0}
+.day .d{font-family:var(--display);font-size:1.15rem}
+.day .act{font-family:var(--data);font-size:.72rem;font-weight:600;color:var(--yeast)}
+.day p{font-size:.9rem}
+.day.stir{border-top:4px solid var(--yeast)}
+.day.rest{border-top:4px solid var(--sour)}
+.day.done{border-top:4px solid var(--bubble)}
+
+/* 문제 해결 */
+details{background:var(--paper);border:1px solid var(--line);border-radius:10px}
+details+details{margin-top:-8px}
+summary{cursor:pointer;padding:12px 16px;font-family:var(--display);font-size:1.05rem;list-style:none}
+summary::-webkit-details-marker{display:none}
+summary::before{content:"＋ ";color:var(--yeast)}
+details[open] summary::before{content:"－ "}
+summary:focus-visible{outline:3px solid var(--bubble);outline-offset:-3px;border-radius:10px}
+details .a{padding:0 16px 14px 16px;display:grid;gap:6px;font-size:.96rem}
+.a b{font-family:var(--display);font-weight:400}
+
+.result{font-family:var(--display);font-size:1.3rem}
+.links{display:flex;flex-wrap:wrap;gap:10px}
+.links a{background:var(--paper);border:1px solid var(--line);border-radius:10px;padding:10px 14px;text-decoration:none;color:var(--ink);display:grid}
+.links a small{color:var(--muted);font-size:.82rem}
+footer{padding-top:28px;color:var(--muted);font-size:.85rem}
+</style>
+
+<div class="wrap">
+<header>
+  <span class="eyebrow">생활발효지도사 체험 수업 지도안 · 2회차</span>
+  <h1>막걸리 빚기 교실</h1>
+  <p class="lead">누룩과 쌀로 한 사람당 막걸리 한 병을 빚는 수업이에요. 1회차에 빚어서 집에 가져가고, 7–10일 뒤 2회차에 함께 걸러 맛보고 활용해요. 설명은 초등학생도 알아듣는 말로 썼어요.</p>
+  <nav class="toc" aria-label="차례">
+    <a href="#overview">한눈에</a><a href="#calc">재료 계산</a><a href="#prep">수업 전 준비</a><a href="#day1">1회차</a><a href="#diary">관찰일지</a><a href="#day2">2회차</a><a href="#trouble">문제 해결</a><a href="#kids">초등 버전</a>
+  </nav>
+</header>
+
+<section id="overview">
+  <span class="eyebrow">프로그램 한눈에</span>
+  <h2>무엇을, 얼마나</h2>
+  <div class="overview">
+    <div class="ov"><span class="k">대상</span><span class="v">성인 8–15명</span></div>
+    <div class="ov"><span class="k">회차</span><span class="v">2회 (빚기 · 거르기)</span></div>
+    <div class="ov"><span class="k">시간</span><span class="v">120분 + 90분</span></div>
+    <div class="ov"><span class="k">간격</span><span class="v">7–10일</span></div>
+    <div class="ov"><span class="k">1인 결과물</span><span class="v">막걸리 약 1L</span></div>
+    <div class="ov"><span class="k">방식</span><span class="v">단양주 (한 번 빚기)</span></div>
+  </div>
+  <h3>수업 목표</h3>
+  <ul class="goals">
+    <li><b>알기</b>누룩 속 곰팡이와 효모가 쌀을 단맛으로, 단맛을 술로 바꾼다는 것을 설명할 수 있어요.</li>
+    <li><b>해 보기</b>고두밥 찌기, 물누룩 만들기, 치대기, 거르기를 직접 해요.</li>
+    <li><b>이어 가기</b>남은 술지게미와 막걸리로 식초, 모주까지 만들 수 있다는 것을 알아요.</li>
+  </ul>
+</section>
+
+<section id="calc">
+  <span class="eyebrow">재료 계산기</span>
+  <h2>몇 명이 오나요?</h2>
+  <p>사람 수와 한 사람 쌀 양을 넣으면 필요한 재료가 나와요. 비율은 <b>쌀 1 : 누룩 0.2 : 물 1.5</b>예요(누룩은 교재 기준 밥 양의 10–20% 중 넉넉한 쪽).</p>
+  <div class="calc">
+    <div class="inputs">
+      <div class="field"><label for="people">참가 인원</label><input id="people" type="number" min="1" max="40" value="12"><small>명</small></div>
+      <div class="field"><label for="rice">1인 쌀 양</label><input id="rice" type="number" min="200" max="2000" step="100" value="500"><small>g (멥쌀)</small></div>
+      <div class="field"><label for="nuruk">누룩 비율</label><input id="nuruk" type="number" min="10" max="25" value="20"><small>% (쌀 무게 기준)</small></div>
+    </div>
+    <div class="tbl"><table>
+      <thead><tr><th>재료</th><th>1인분</th><th>전체</th><th>메모</th></tr></thead>
+      <tbody id="calcBody"></tbody>
+    </table></div>
+  </div>
+</section>
+
+<section id="prep">
+  <span class="eyebrow">수업 전 준비</span>
+  <h2>전날과 당일 아침</h2>
+  <div class="tbl wide"><table>
+    <thead><tr><th>언제</th><th>할 일</th><th>이유</th></tr></thead>
+    <tbody>
+      <tr><td>1주 전</td><td>누룩 구입, 햇볕에 2–3일 펼쳐 말리기(법제)</td><td>잡냄새가 빠지고 누룩이 깨끗해져요.</td></tr>
+      <tr><td>전날 밤</td><td>쌀 씻어 불리기 (맑은 물 나올 때까지)</td><td>수업 중에는 불릴 시간이 없어요.</td></tr>
+      <tr><td>전날</td><td>물 끓여 식혀 두기, 1인용 2L 유리병 준비</td><td>수돗물 소독약과 잡균을 없애요.</td></tr>
+      <tr><td>수업 1시간 전</td><td>불린 쌀 물 빼기 → 찜기에 안치기</td><td>수업 시작과 함께 바로 찌기 시작해요.</td></tr>
+      <tr><td>책상마다</td><td>큰 볼, 위생장갑, 주걱, 라벨, 면포(2회차)</td><td></td></tr>
+    </tbody>
+  </table></div>
+  <div class="note">
+    <span class="tag">선생님 도구</span>
+    <p>찜기(또는 대형 찜솥)와 면보, 온도계, 저울, 용기 소독용 끓는 물이나 소독용 알코올, 천 덮개와 고무줄을 챙겨요. 2회차에는 면포·체·깔때기, 당도계가 있으면 좋아요.</p>
+  </div>
+</section>
+
+<section id="day1">
+  <span class="eyebrow">1회차 · 120분</span>
+  <h2>빚는 날</h2>
+  <p>고두밥이 쪄지고 물누룩이 불어나는 동안 이론과 소독을 끼워 넣어서, 기다리는 시간이 없게 짰어요. <span style="color:var(--yeast)">●</span> 표시는 손으로 하는 활동이에요.</p>
+  <div class="timeline">
+    <div class="slot hands"><span class="t">0–10분</span><div class="body">
+      <h3>시작: 고두밥 찌기 시작<span class="kind k-hand">실습</span></h3>
+      <p>인사 후 바로 불을 켜요. 고두밥은 김 오르고 40–50분.</p>
+      <p class="parallel">→ 이 시간부터 50분 동안 쌀이 쪄져요</p>
+    </div></div>
+    <div class="slot"><span class="t">10–30분</span><div class="body">
+      <h3>이야기 1: 막걸리는 누가 만들까?<span class="kind k-talk">이론</span></h3>
+      <p>효모가 설탕을 먹고 술과 이산화탄소를 만드는 원리, 쌀은 그냥은 달지 않아서 누룩 속 곰팡이가 먼저 단맛으로 바꿔 준다는 것(당화).</p>
+      <p class="script">"누룩 안에는 두 팀이 살아요. 곰팡이 팀이 밥을 달게 만들면, 효모 팀이 그 단맛을 먹고 술을 만들어요. 한 항아리에서 둘이 동시에 일해요."</p>
+    </div></div>
+    <div class="slot hands"><span class="t">30–40분</span><div class="body">
+      <h3>누룩 만나기 · 물누룩 만들기<span class="kind k-hand">실습</span></h3>
+      <p>누룩 냄새 맡고 쪼개 보기(흰 균사, 노란 포자 찾기). 1인분 누룩을 물 1.5배 분량에 담가 불려요.</p>
+      <p class="script">"자다 깬 미생물한테 물 마시고 기지개 켤 시간을 주는 거예요."</p>
+      <p class="parallel">→ 물누룩은 30분 이상 불어요</p>
+    </div></div>
+    <div class="slot hands"><span class="t">40–55분</span><div class="body">
+      <h3>병 소독<span class="kind k-hand">실습</span></h3>
+      <p>교재의 용기 소독법대로 해요. 유리병은 찬물에서부터 함께 끓이거나 뜨거운 물로 헹군 뒤 엎어서 말려요. 뜨거운 병에 찬물을 바로 붓지 않기.</p>
+      <p class="script">"우리가 키우고 싶은 건 누룩 속 미생물뿐이에요. 다른 균이 먼저 자리 잡지 못하게 집을 깨끗이 해 줘요."</p>
+    </div></div>
+    <div class="slot"><span class="t">55–65분</span><div class="body">
+      <h3>이야기 2: 청주, 탁주, 막걸리<span class="kind k-talk">이론</span></h3>
+      <p>맑은 윗술을 떠내면 청주, 막 걸러 내면 막걸리(탁주). 한 번 빚으면 단양주, 덧술을 하면 이양주. 『임원경제지』 정조지 권7에 술 빚는 법이 모여 있다는 것도 소개해요.</p>
+    </div></div>
+    <div class="slot hands"><span class="t">65–75분</span><div class="body">
+      <h3>고두밥 확인 · 식히기<span class="kind k-hand">실습</span></h3>
+      <p>밥알을 눌러 속까지 익었는지 확인. 쟁반에 넓게 펴서 <b>25℃ 아래</b>까지 식혀요. 온도계로 꼭 재기.</p>
+      <p class="script">"뜨거운 밥에 누룩을 넣으면 미생물이 다 익어 버려요. 손등에 대 봐서 미지근하면 OK."</p>
+    </div></div>
+    <div class="slot hands"><span class="t">75–95분</span><div class="body">
+      <h3>치대기 · 담기<span class="kind k-hand">실습</span></h3>
+      <p>고두밥 + 물누룩을 위생장갑 끼고 10분 이상 주물러 섞어요. 병에 <b>70%까지만</b> 담고 천으로 덮어 고무줄. 라벨에 이름, 날짜, 쌀 양 쓰기.</p>
+      <p class="script">"밥알 하나하나에 누룩이 묻도록 꼭꼭 주물러요. 병을 꽉 채우면 거품이 넘쳐요."</p>
+    </div></div>
+    <div class="slot"><span class="t">95–110분</span><div class="body">
+      <h3>집에서 돌보는 법<span class="kind k-talk">안내</span></h3>
+      <p>관찰일지 나눠 주기. 22–25℃, 직사광선 피하기. 처음 2–3일은 하루 1–2번 저어 주고, 그 뒤엔 가만히 두기. 2회차에 병째 가져오기.</p>
+    </div></div>
+    <div class="slot"><span class="t">110–120분</span><div class="body">
+      <h3>마무리 퀴즈 · 질문<span class="kind k-talk">정리</span></h3>
+      <p>"누룩 속 두 팀은?", "왜 밥을 식혀야 할까?", "왜 70%만 담을까?"</p>
+    </div></div>
+  </div>
+</section>
+
+<section id="diary">
+  <span class="eyebrow">집에서 쓰는 관찰일지</span>
+  <h2>병 속에서 무슨 일이?</h2>
+  <p>참가자에게 나눠 줄 날짜별 안내예요. 매일 <b>소리 · 냄새 · 모양</b> 세 가지를 적게 해요.</p>
+  <div class="diary">
+    <div class="day stir"><span class="d">0일째</span><span class="act">빚은 날</span><p>밥알이 물을 머금어 뻑뻑해요. 누룩 냄새.</p></div>
+    <div class="day stir"><span class="d">1일째</span><span class="act">하루 1–2번 젓기</span><p>뽀글뽀글 소리 시작. 밥이 물러지고 달큰한 냄새. 효모가 늘어나는 중.</p></div>
+    <div class="day stir"><span class="d">2–3일째</span><span class="act">하루 1–2번 젓기</span><p>가장 활발해요. 밥알이 떠오르고 거품이 많아요. 병이 따뜻해요.</p></div>
+    <div class="day rest"><span class="d">4–6일째</span><span class="act">젓지 않기</span><p>소리가 줄고 밥알이 가라앉기 시작. 단맛이 줄고 술 냄새가 진해져요.</p></div>
+    <div class="day rest"><span class="d">7–8일째</span><span class="act">젓지 않기</span><p>위에 맑은 노란 층이 생겨요. 거품이 거의 없어요.</p></div>
+    <div class="day done"><span class="d">9–10일째</span><span class="act">거를 때</span><p>맑은 층이 뚜렷하고 조용해요. 2회차에 가져오세요. 날이 더우면 더 빨리 끝나요.</p></div>
+  </div>
+  <div class="note">
+    <span class="tag">왜 처음에만 젓나요?</span>
+    <p>처음 며칠은 공기를 넣어 효모 수를 늘리고, 그 뒤엔 공기를 막아 효모가 술을 만들게 해요. 계속 저으면 초산균이 끼어 시큼해질 수 있어요.</p>
+  </div>
+</section>
+
+<section id="day2">
+  <span class="eyebrow">2회차 · 90분</span>
+  <h2>거르고 맛보는 날</h2>
+  <div class="timeline">
+    <div class="slot"><span class="t">0–15분</span><div class="body">
+      <h3>병 비교하기<span class="kind k-talk">관찰</span></h3>
+      <p>각자 병을 책상에 모아 색, 맑은 층 두께, 냄새를 비교. 관찰일지 이야기 나누기. 집 온도가 높았던 사람의 술이 더 빨리 익은 이유를 함께 찾아요.</p>
+    </div></div>
+    <div class="slot hands"><span class="t">15–25분</span><div class="body">
+      <h3>청주 떠내기<span class="kind k-hand">실습</span></h3>
+      <p>국자로 맑은 윗술만 살짝 떠서 작은 컵에. "이게 청주예요."</p>
+    </div></div>
+    <div class="slot hands"><span class="t">25–45분</span><div class="body">
+      <h3>막걸리 거르기<span class="kind k-hand">실습</span></h3>
+      <p>남은 술덧에 물을 조금씩 넣으며 면포로 주물러 짜요. 짜고 남은 건 <b>술지게미</b>로 따로 모아요.</p>
+      <p class="script">"막 걸러서 막걸리예요. 이름에 만드는 방법이 들어 있어요."</p>
+    </div></div>
+    <div class="slot hands"><span class="t">45–60분</span><div class="body">
+      <h3>도수 맞추기 · 맛보기<span class="kind k-hand">실습</span></h3>
+      <p>원주는 도수가 높아서 물을 타요. 아래 계산기로 물 양을 정하고, 조금씩 맛보며 조절. 시음은 성인만, 소량으로.</p>
+    </div></div>
+    <div class="slot"><span class="t">60–80분</span><div class="body">
+      <h3>남김없이 쓰기<span class="kind k-talk">활용</span></h3>
+      <p>교재 내용과 연결해요.</p>
+      <ul style="margin:0;padding-left:1.2em">
+        <li><b>막걸리 식초 씨초</b>: 현미식초 300g + 막걸리 1병. 초산균은 공기를 좋아하니 천으로만 덮어요.</li>
+        <li><b>모주</b>: 술지게미 + 한약재를 3시간 이상 끓이기. 간편하게는 쌍화차 2팩, 도라지배즙 1팩, 막걸리 1병을 밥솥에 넣고 뚜껑 연 채 취사.</li>
+        <li><b>코디얼 막걸리</b>: 과일 코디얼 + 따뜻한 막걸리.</li>
+      </ul>
+    </div></div>
+    <div class="slot"><span class="t">80–90분</span><div class="body">
+      <h3>정리 · 소감<span class="kind k-talk">정리</span></h3>
+      <p>다음 단계로 이양주(밑술 + 덧술) 소개, 소감 나누기.</p>
+    </div></div>
+  </div>
+
+  <div class="calc">
+    <h3>물 타기 계산기</h3>
+    <p>교재의 가수 공식과 같은 원리예요: <b>더할 물 = (지금 도수 − 원하는 도수) ÷ 원하는 도수 × 술 양</b></p>
+    <div class="inputs">
+      <div class="field"><label for="abvNow">지금 도수</label><input id="abvNow" type="number" min="1" max="20" step="0.5" value="14"><small>% (원주는 보통 12–16%로 추정)</small></div>
+      <div class="field"><label for="abvWant">원하는 도수</label><input id="abvWant" type="number" min="1" max="20" step="0.5" value="7"><small>% (시판 막걸리 6–8%)</small></div>
+      <div class="field"><label for="vol">술 양</label><input id="vol" type="number" min="100" max="5000" step="50" value="700"><small>ml</small></div>
+    </div>
+    <p class="result" id="dilute" aria-live="polite"></p>
+    <p style="font-size:.88rem;color:var(--muted)">주정계가 없으면 정확한 도수를 알 수 없어서 추정치예요. 계산 양의 절반쯤 먼저 넣고 맛보며 맞추세요.</p>
+  </div>
+</section>
+
+<section id="trouble">
+  <span class="eyebrow">문제 해결</span>
+  <h2>이럴 땐 이렇게</h2>
+  <details><summary>거품이 넘쳐흘렀어요</summary><div class="a"><p>병을 너무 많이 채웠거나 따뜻한 곳에 두었어요. <b>70%까지만</b> 담고, 넘친 건 닦아 내면 술은 괜찮아요.</p></div></details>
+  <details><summary>이틀이 지나도 조용해요</summary><div class="a"><p>방이 너무 춥거나(18℃ 아래), 밥이 뜨거울 때 누룩을 넣어 미생물이 약해졌을 수 있어요. 따뜻한 곳(22–25℃)으로 옮기고 하루 더 지켜봐요.</p></div></details>
+  <details><summary>너무 시큼해요</summary><div class="a"><p>온도가 높았거나(30℃ 가까이) 너무 오래 저어 공기가 많이 들어가 초산균이 일했어요. 시큼해진 술은 식초 만들기에 쓰면 좋아요.</p></div></details>
+  <details><summary>위에 하얀 막이 생겼어요</summary><div class="a"><p>얇고 하얀 막은 골마지(산막효모)인 경우가 많아요. 걷어 내면 돼요. <b>파랗거나 검거나 털이 보송한 곰팡이</b>는 잡균이니 버려요.</p></div></details>
+  <details><summary>술맛이 쓰고 독해요</summary><div class="a"><p>누룩이 많았거나 발효가 다 끝난 원주예요. 물을 타서 도수를 낮추고, 다음엔 누룩 비율을 15% 정도로 줄여 봐요.</p></div></details>
+  <details><summary>달기만 하고 술맛이 없어요</summary><div class="a"><p>아직 덜 익었어요. 이틀쯤 더 두고 맑은 층이 생기는지 봐요.</p></div></details>
+</section>
+
+<section id="kids">
+  <span class="eyebrow">초등 수업으로 바꿀 때</span>
+  <h2>아이들은 술 대신 이렇게</h2>
+  <p>아이들은 술을 빚거나 맛볼 수 없으니, 같은 원리를 보여 주는 활동으로 바꿔요.</p>
+  <div class="tbl wide"><table>
+    <thead><tr><th>어른 수업</th><th>초등 수업</th><th>같은 원리</th></tr></thead>
+    <tbody>
+      <tr><td>누룩으로 고두밥 당화</td><td>엿기름으로 식혜 만들기</td><td>밥이 달아지는 당화</td></tr>
+      <tr><td>효모의 알코올 발효</td><td>풍선 불어 주는 효모 실험</td><td>효모가 설탕 먹고 이산화탄소</td></tr>
+      <tr><td>막걸리 빚기</td><td>선생님이 빚어 온 병 관찰 (냄새·소리·층)</td><td>발효가 진행되는 모습</td></tr>
+      <tr><td>막걸리 식초</td><td>식초 맛보고 pH 시험지 색 보기</td><td>초산균이 만드는 신맛</td></tr>
+    </tbody>
+  </table></div>
+  <div class="note warn">
+    <span class="tag">안전 · 알아 둘 것</span>
+    <ul>
+      <li>시음은 성인만, 소량으로. 운전할 분은 맛보지 않게 안내해요.</li>
+      <li>집에서 빚은 술은 직접 마시는 것까지만 돼요. 판매하려면 주류 제조 면허가 필요해요.</li>
+      <li>고두밥 찔 때 뜨거운 김에 데지 않게 조심해요.</li>
+    </ul>
+  </div>
+</section>
+
+<section>
+  <span class="eyebrow">함께 쓰는 자료</span>
+  <h2>수업에 띄워 쓰세요</h2>
+  <div class="links">
+    <a href="https://claude.ai/artifact/CcH5TYTAxarnUEavDzMKcB" target="_blank" rel="noopener">효모의 설탕 잔치<small>1회차 이야기 1에서 효모 병 실험실</small></a>
+    <a href="https://claude.ai/artifact/MCeLxBynDYz8D2AqnMdPbM" target="_blank" rel="noopener">발효 낱말 사전<small>누룩, 당화, 숙성 등 낱말 정리와 퀴즈</small></a>
+  </div>
+</section>
+
+<footer>분량은 요즘 가정에서 많이 쓰는 단양주 기준이에요. 『임원경제지』 정조지의 원문 분량은 아니에요. 소독, 술지게미, 씨초, 가수 공식은 생활발효지도사 교재 내용을 따랐어요.</footer>
+</div>
+
+<script>
+(function(){
+  const $=id=>document.getElementById(id);
+  const fmt=(n,u)=>{if(u==='g'&&n>=1000)return (n/1000).toFixed(n%1000?2:0).replace(/\.?0+$/,'')+'kg';if(u==='ml'&&n>=1000)return (n/1000).toFixed(2).replace(/\.?0+$/,'')+'L';return Math.round(n)+u};
+  function calc(){
+    const p=Math.max(1,+$('people').value||1),r=Math.max(0,+$('rice').value||0),k=Math.max(0,+$('nuruk').value||0)/100;
+    const rows=[
+      ['멥쌀',r,'g','전날 밤 씻어 불리기'],
+      ['누룩',r*k,'g','법제해서 빻은 것'],
+      ['물누룩용 물',r*k*1.5,'ml','누룩을 불리는 물 (아래 물에 포함)'],
+      ['물 (전체)',r*1.5,'ml','끓여 식힌 물. 물누룩용 포함'],
+      ['유리병',Math.ceil(r*4/500)*500,'ml','쌀 500g이면 2L 병 (70% 채움)'],
+      ['예상 막걸리',r*2,'ml','물 타기 후 대략, 사람마다 달라요']
+    ];
+    $('calcBody').innerHTML=rows.map(([n,v,u,m])=>'<tr><td>'+n+'</td><td class="num">'+fmt(v,u)+'</td><td class="num">'+(n==='유리병'?p+'개':fmt(v*p,u))+'</td><td>'+m+'</td></tr>').join('');
+  }
+  function dil(){
+    const a=+$('abvNow').value,b=+$('abvWant').value,v=+$('vol').value;
+    const out=$('dilute');
+    if(!(a>0&&b>0&&v>0)){out.textContent='숫자를 넣어 주세요.';return}
+    if(b>=a){out.textContent='원하는 도수가 지금보다 낮아야 물을 탈 수 있어요.';return}
+    const w=(a-b)/b*v;
+    out.textContent='물 '+Math.round(w)+'ml를 더하면 약 '+Math.round(v+w)+'ml, '+b+'%가 돼요.';
+  }
+  ['people','rice','nuruk'].forEach(i=>$(i).addEventListener('input',calc));
+  ['abvNow','abvWant','vol'].forEach(i=>$(i).addEventListener('input',dil));
+  calc();dil();
+})();
+</script>

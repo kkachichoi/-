@@ -1,0 +1,228 @@
+<title>발효 낱말 사전</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Jua&family=Gowun+Dodum&family=IBM+Plex+Sans+KR:wght@400;600&display=swap">
+<style>
+/* Layout: 단원별 낱말 카드 격자 + 아래에 수업용 낱말 퀴즈. '효모의 설탕 잔치'와 같은 색·글꼴로 시리즈를 맞춘다. */
+:root{
+  --bg:#f3f6f1;--paper:#ffffff;--ink:#1f2b3a;--muted:#5b6878;--line:#d6ded3;
+  --yeast:#c98a12;--yeast-soft:#f6e7c4;--bubble:#2f7fb8;--bubble-soft:#dcebf6;
+  --sour:#4f8a3c;--sour-soft:#e1efd9;--warn:#b4472f;--warn-soft:#f7e0d9;
+  --display:"Jua","Gowun Dodum",system-ui,sans-serif;
+  --body:"Gowun Dodum","Apple SD Gothic Neo","Malgun Gothic",system-ui,sans-serif;
+  --data:"IBM Plex Sans KR","Apple SD Gothic Neo","Malgun Gothic",system-ui,sans-serif;
+}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
+  --bg:#141a20;--paper:#1c242c;--ink:#e6ecef;--muted:#9aa8b4;--line:#2e3a44;
+  --yeast:#e3a93a;--yeast-soft:#3a2f17;--bubble:#6fb3e6;--bubble-soft:#183245;
+  --sour:#86c06f;--sour-soft:#1f3319;--warn:#ec8a72;--warn-soft:#3d221b;color-scheme:dark}}
+:root[data-theme="dark"]{
+  --bg:#141a20;--paper:#1c242c;--ink:#e6ecef;--muted:#9aa8b4;--line:#2e3a44;
+  --yeast:#e3a93a;--yeast-soft:#3a2f17;--bubble:#6fb3e6;--bubble-soft:#183245;
+  --sour:#86c06f;--sour-soft:#1f3319;--warn:#ec8a72;--warn-soft:#3d221b;color-scheme:dark}
+*{box-sizing:border-box}
+body{background:var(--bg);color:var(--ink);font-family:var(--body);font-size:17px;line-height:1.7;
+  padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));padding-block:0 64px}
+.wrap{max-width:60rem;margin:0 auto}
+h1,h2,h3{font-family:var(--display);font-weight:400;line-height:1.3;text-wrap:balance;margin:0}
+h1{font-size:clamp(2.2rem,7vw,3.4rem)}
+h2{font-size:1.75rem}
+p{margin:0}
+.eyebrow{font-family:var(--data);font-size:.78rem;letter-spacing:.08em;color:var(--muted);font-weight:600}
+header{display:grid;gap:14px;padding-block:48px 28px}
+.lead{font-size:1.12rem;color:var(--muted);max-width:42rem}
+section{display:grid;gap:18px;padding-block:36px;border-top:1px dashed var(--line)}
+
+.toolbar{display:flex;flex-wrap:wrap;gap:14px 24px;align-items:center}
+.seg{display:flex;flex-wrap:wrap;gap:6px}
+.seg input{position:absolute;opacity:0;pointer-events:none}
+.seg label{border:1.5px solid var(--line);border-radius:999px;padding:5px 13px;cursor:pointer;font-size:.95rem;background:var(--paper)}
+.seg input:checked+label{border-color:var(--ink);background:var(--ink);color:var(--paper)}
+.seg input:focus-visible+label{outline:3px solid var(--bubble);outline-offset:2px}
+.count{font-family:var(--data);font-size:.85rem;color:var(--muted)}
+
+.group{display:grid;gap:12px}
+.group h3{font-size:1.3rem;display:flex;align-items:baseline;gap:10px}
+.group h3 small{font-family:var(--body);font-size:.9rem;color:var(--muted)}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(17rem,1fr));gap:12px}
+.card{background:var(--paper);border:1px solid var(--line);border-radius:12px;padding:16px 18px;display:grid;gap:8px;align-content:start;min-width:0}
+.card .top{display:flex;justify-content:space-between;align-items:baseline;gap:8px}
+.card .w{font-family:var(--display);font-size:1.5rem}
+.card .w small{font-family:var(--data);font-size:.75rem;color:var(--muted);margin-left:6px}
+.lv{font-family:var(--data);font-size:.7rem;font-weight:600;padding:2px 8px;border-radius:999px;white-space:nowrap}
+.lv1{background:var(--yeast-soft);color:var(--ink)}
+.lv2{background:var(--bg);color:var(--muted);border:1px solid var(--line)}
+.card .d{font-size:1.08rem}
+.card .ex{font-size:.93rem;color:var(--muted)}
+.card .ex b{color:var(--ink);font-weight:400;font-family:var(--display)}
+.card details{border-top:1px solid var(--line);padding-top:6px}
+.card summary{cursor:pointer;font-family:var(--data);font-size:.78rem;font-weight:600;color:var(--bubble);letter-spacing:.04em}
+.card summary:focus-visible{outline:3px solid var(--bubble);outline-offset:2px;border-radius:4px}
+.card details p{font-size:.92rem;margin-top:6px}
+.c-micro{border-top:4px solid var(--yeast)}
+.c-starter{border-top:4px solid var(--sour)}
+.c-make{border-top:4px solid var(--bubble)}
+.c-cond{border-top:4px solid var(--ink)}
+.c-tool{border-top:4px solid var(--muted)}
+
+.pair{display:grid;grid-template-columns:repeat(auto-fit,minmax(16rem,1fr));gap:12px}
+.pair .box{background:var(--paper);border:1px solid var(--line);border-radius:12px;padding:16px 18px;display:grid;gap:6px}
+.pair .vs{font-family:var(--display);font-size:1.15rem}
+
+.quiz{background:var(--paper);border:2px solid var(--ink);border-radius:16px;padding:22px;display:grid;gap:16px}
+.qdef{font-family:var(--display);font-size:clamp(1.3rem,4vw,1.8rem);line-height:1.45}
+.qhint{font-size:.95rem;color:var(--muted)}
+.opts{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
+.opts button{font:inherit;font-family:var(--display);font-size:1.2rem;border:2px solid var(--line);background:var(--bg);color:var(--ink);border-radius:12px;padding:12px;cursor:pointer}
+.opts button:focus-visible,.btn:focus-visible{outline:3px solid var(--bubble);outline-offset:2px}
+.opts button.right{background:var(--sour-soft);border-color:var(--sour)}
+.opts button.wrong{background:var(--warn-soft);border-color:var(--warn)}
+.qfoot{display:flex;flex-wrap:wrap;gap:12px;align-items:center;justify-content:space-between}
+.score{font-family:var(--data);font-size:.9rem;color:var(--muted);font-variant-numeric:tabular-nums}
+.btn{font:inherit;font-family:var(--display);border:2px solid var(--ink);background:var(--ink);color:var(--paper);border-radius:999px;padding:6px 18px;cursor:pointer}
+.fb{min-height:1.6em}
+footer{padding-top:28px;color:var(--muted);font-size:.85rem}
+</style>
+
+<div class="wrap">
+<header>
+  <span class="eyebrow">생활발효지도사 수업 자료 · 용어 정리</span>
+  <h1>발효 낱말 사전</h1>
+  <p class="lead">발효 수업에 나오는 낱말을 초등학생 말로 풀었어요. <b>1단계</b>는 첫 수업에서 꼭 알려 줄 낱말, <b>2단계</b>는 실습하면서 차차 알려 줄 낱말이에요. 카드마다 '선생님 메모'를 열면 교재 내용과 연결해 볼 수 있어요.</p>
+</header>
+
+<section>
+  <div class="toolbar">
+    <div class="seg" role="group" aria-label="단계 고르기">
+      <input type="radio" name="lv" id="lvAll" value="all" checked><label for="lvAll">전체 낱말</label>
+      <input type="radio" name="lv" id="lv1" value="1"><label for="lv1">1단계만 (첫 수업)</label>
+    </div>
+    <span class="count" id="count"></span>
+  </div>
+  <div id="groups" style="display:grid;gap:32px"></div>
+</section>
+
+<section>
+  <span class="eyebrow">자주 헷갈리는 짝꿍</span>
+  <h2>둘이 뭐가 달라요?</h2>
+  <div class="pair">
+    <div class="box"><span class="vs">발효 ↔ 부패</span><p>둘 다 미생물이 음식을 바꾸는 일이에요. 사람에게 <b>좋으면 발효</b>, <b>나쁘면 부패</b>예요.</p></div>
+    <div class="box"><span class="vs">누룩 ↔ 쌀코지</span><p>누룩은 여러 미생물이 섞인 <b>동네 축구팀</b>, 쌀코지는 곰팡이 한 종류만 키운 <b>골라 뽑은 선수</b>예요.</p></div>
+    <div class="box"><span class="vs">누룩 ↔ 메주</span><p>누룩은 <b>곡물</b>에 곰팡이를 키운 것, 메주는 <b>콩</b>에 곰팡이와 세균을 키운 것이에요.</p></div>
+    <div class="box"><span class="vs">누룩 ↔ 엿기름</span><p>둘 다 밥을 달게 만들어요. 엿기름은 <b>보리 싹</b>이 하고, 누룩은 <b>곰팡이</b>가 해요. 엿기름은 식혜, 누룩은 단술·막걸리.</p></div>
+    <div class="box"><span class="vs">효모 ↔ 효소</span><p>효모는 <b>살아 있는 작은 생물</b>, 효소는 생물이 쓰는 <b>가위 같은 도구</b>예요. 효모가 효소를 써서 일해요.</p></div>
+    <div class="box"><span class="vs">발효액 ↔ 청</span><p>너무 달면(50브릭스 넘게) 미생물이 살 수 없어서 발효가 안 된 <b>설탕 절임 '청'</b>이 돼요.</p></div>
+  </div>
+</section>
+
+<section>
+  <span class="eyebrow">수업 마무리 놀이</span>
+  <h2>무슨 낱말일까?</h2>
+  <p>뜻을 읽어 주고 아이들이 낱말을 맞혀요. 위에서 고른 단계(전체 / 1단계만)의 낱말로 문제가 나와요.</p>
+  <div class="quiz">
+    <p class="qdef" id="qdef"></p>
+    <p class="qhint" id="qhint"></p>
+    <div class="opts" id="opts"></div>
+    <p class="fb" id="fb" aria-live="polite"></p>
+    <div class="qfoot"><span class="score" id="score"></span><button class="btn" id="next" type="button">다음 문제</button></div>
+  </div>
+</section>
+
+<footer>생활발효지도사 교재의 '생활발효', '메주와 장', '천연발효식초', '잠자는 발효액 깨우기' 단원 용어를 바탕으로 정리했어요.</footer>
+</div>
+
+<script>
+(function(){
+const G=[
+ {id:'micro',cls:'c-micro',name:'발효를 하는 친구들',sub:'미생물'},
+ {id:'starter',cls:'c-starter',name:'발효를 시작시키는 것',sub:'발효제'},
+ {id:'make',cls:'c-make',name:'발효로 생기는 것',sub:'부산물'},
+ {id:'cond',cls:'c-cond',name:'발효가 잘되는 조건',sub:'환경'},
+ {id:'tool',cls:'c-tool',name:'실습에서 만나는 말',sub:'도구와 현상'}
+];
+const W=[
+ // 미생물
+ {g:'micro',lv:1,w:'미생물',en:'微生物',d:'눈으로는 안 보이고 현미경으로만 보이는 아주 작은 생물이에요.',ex:'효모, 곰팡이, 세균이 모두 미생물이에요.',t:'교재의 주요 발효 미생물은 세균(초산균, 유산균, 고초균), 효모, 곰팡이(누룩곰팡이, 코오지곰팡이) 세 무리예요.'},
+ {g:'micro',lv:1,w:'발효',en:'醱酵',d:'미생물이 음식을 먹고 우리에게 좋은 새 맛과 향으로 바꿔 주는 일이에요.',ex:'<b>콩</b> → 된장, <b>배추</b> → 김치, <b>우유</b> → 요구르트',t:'교재 정의: "미생물이 자신의 효소로 유기물을 분해 또는 변화시켜 유용한 물질을 만드는 것." 핵심 낱말은 \'유용한\'이에요.'},
+ {g:'micro',lv:1,w:'부패',en:'腐敗',d:'미생물이 음식을 바꿨는데, 냄새가 고약하고 먹으면 배가 아파지는 것이에요.',ex:'상한 우유, 썩은 과일',t:'발효와 부패는 같은 원리이고, 사람에게 좋으냐 나쁘냐로 나눠요. 발효음식이 오래가는 이유는 좋은 균이 먼저 자리 잡아 부패균이 못 자라서예요.'},
+ {g:'micro',lv:1,w:'효모',en:'yeast',d:'설탕을 먹고 술과 거품(이산화탄소)을 만드는 작은 친구예요. 곰팡이와 같은 집안이에요.',ex:'빵을 부풀리고, 막걸리를 뽀글뽀글하게 해요.',t:'알코올 발효의 일꾼. 좋아하는 온도 22–25℃. 공기가 없을 때 알코올을 만들어요(통성혐기성).'},
+ {g:'micro',lv:1,w:'곰팡이',en:'mold',d:'실처럼 뻗으며 자라는 미생물이에요. 좋은 곰팡이는 곡물과 콩을 달고 맛있게 바꿔요.',ex:'누룩, 쌀코지, 메주 겉에 핀 곰팡이',t:'누룩곰팡이(황국·백국·흑국·홍국)는 녹말을 당으로, 단백질을 감칠맛(아미노산)으로 쪼개요. 흰 균사일 때 당화력이 좋고, 황녹색 포자가 날리면 단백질 분해력이 높아요.'},
+ {g:'micro',lv:1,w:'세균',en:'bacteria',d:'미생물 중에서도 가장 작은 친구들이에요. 좋은 세균도 많아요.',ex:'유산균(김치), 초산균(식초), 고초균(청국장)',t:'메주는 겉에 곰팡이가, 속에 세균이 자리 잡아요. 그래서 우리 장은 곰팡이·효모·세균이 함께 하는 복합발효예요.'},
+ {g:'micro',lv:1,w:'유산균',en:'젖산균',d:'단맛을 먹고 새콤한 맛(젖산)을 만드는 세균이에요. 공기를 싫어해요.',ex:'김치, 요구르트가 새콤한 이유',t:'혐기성. 김치는 1–4℃, 요구르트는 35–42℃에서 발효. 유산균은 막(초막)을 만들지 않아요.'},
+ {g:'micro',lv:2,w:'초산균',en:'아세토박터',d:'술(알코올)을 먹고 시큼한 식초를 만드는 세균이에요. 공기를 아주 좋아해요.',ex:'막걸리를 열어 두면 시큼해지는 이유',t:'호기성, 최적 30–32℃. 공기와 닿는 표면에 하얀 초막을 만들어요.'},
+ {g:'micro',lv:2,w:'고초균',en:'枯草菌',d:'마른 볏짚에 사는 세균이에요. 삶은 콩을 끈적끈적한 청국장으로 바꿔요.',ex:'청국장, 메주 속',t:'\'고초\'는 마른 풀이라는 뜻. 교재 저장법 중 \'접종법\'(된장·청국장·고추장)의 주인공이에요.'},
+ // 발효제
+ {g:'starter',lv:1,w:'누룩',en:'麴',d:'밀이나 쌀에 여러 미생물이 자연스럽게 모여 자라게 한 덩어리예요. 술과 단술을 만드는 씨앗이에요.',ex:'막걸리, 단술, 제주 쉰다리',t:'곰팡이 위주에 효모·세균이 섞여 있어서 당화와 알코올 발효를 함께 해요. 밥 양의 10–20%만 넣어요.'},
+ {g:'starter',lv:1,w:'쌀코지',en:'입국·개량누룩',d:'찐 쌀에 좋은 곰팡이 한 종류만 골라 키운 것이에요. 쌀을 달고 맛있게 바꾸는 일을 잘해요.',ex:'누룩소금, 누룩간장, 아마자케',t:'효모가 거의 없어서 술을 만들려면 효모를 따로 넣어요. 교재의 \'누룩소금\'은 쌀코지로 만든다는 점을 짚어 주세요.'},
+ {g:'starter',lv:1,w:'메주',en:'',d:'삶은 콩을 찧어 덩어리로 만들고, 곰팡이와 세균을 키운 것이에요. 된장과 간장의 시작이에요.',ex:'된장, 간장, 막장, 고추장',t:'좋은 메주: 속이 초콜릿색, 중간층 곰팡이가 많고, 가운데가 꺼지고, 꺼진 곳이 흰색. 지역마다 미생물이 달라요.'},
+ {g:'starter',lv:2,w:'엿기름',en:'麥芽',d:'보리에 싹을 틔워 말린 가루예요. 밥을 달콤하게 바꿔 줘요.',ex:'식혜',t:'미생물이 아니라 보리 싹 속 효소(아밀라아제)가 일해요. 엿기름 70g, 밥 150g, 물 1L를 보온솥에 6–8시간.'},
+ {g:'starter',lv:2,w:'씨초',en:'초모',d:'식초를 만들 때 처음에 넣는 \'씨앗 식초\'예요. 초산균이 잔뜩 들어 있어요.',ex:'현미식초 + 막걸리로 씨초 만들기',t:'과일식초는 알코올 발효가 끝난 술에 씨초를 10–30% 넣어요.'},
+ // 생기는 것
+ {g:'make',lv:1,w:'당',en:'糖',d:'단맛을 내는 성분이에요. 미생물이 가장 좋아하는 먹이예요.',ex:'설탕, 꿀, 과일의 단맛',t:'효모와 유산균의 먹이. 당이 너무 많으면(50브릭스 이상) 오히려 미생물이 못 살아요.'},
+ {g:'make',lv:1,w:'알코올',en:'alcohol',d:'효모가 설탕을 먹고 만드는 술 성분이에요. 물보다 가볍고 금방 날아가요.',ex:'막걸리, 포도주',t:'알코올 발효 끝 신호: 맑은 액이 위로 뜸. 초산균의 먹이가 돼요.'},
+ {g:'make',lv:1,w:'이산화탄소',en:'탄산가스',d:'효모가 뀌는 방귀예요. 뽀글뽀글 거품이 되어 올라와요.',ex:'빵이 부푸는 이유, 풍선 실험',t:'알코올 발효의 또 다른 부산물. 에어락으로 빠져나가요.'},
+ {g:'make',lv:2,w:'젖산',en:'유산',d:'유산균이 만드는 새콤한 맛이에요.',ex:'김치의 새콤함, 요구르트의 새콤함',t:'산도 6 기준 pH 3.5 이상이면 식초보다 유산이 많다고 봐요.'},
+ {g:'make',lv:2,w:'초산',en:'아세트산',d:'초산균이 만드는 시큼한 맛이에요. 식초의 맛이 바로 이거예요.',ex:'식초',t:'총산도 4% 이상이어야 식초(감식초는 2.6% 이상). 물보다 무거워 가라앉아요.'},
+ {g:'make',lv:2,w:'감칠맛',en:'아미노산',d:'콩이나 곡물이 발효되며 생기는 깊고 맛있는 맛이에요.',ex:'된장, 간장이 맛있는 이유',t:'곰팡이가 단백질을 아미노산으로 쪼개서 생겨요. 고추장 맛 = 매운맛 + 감칠맛 + 단맛 + 짠맛.'},
+ // 조건
+ {g:'cond',lv:1,w:'효소',en:'enzyme',d:'미생물이 쓰는 \'가위\'예요. 큰 음식을 작게 잘라서 먹기 좋게 만들어요.',ex:'침 속 효소가 밥을 달게 만들어요(오래 씹으면 달아지는 이유).',t:'효모와 효소는 달라요. 효소는 12℃ 이하에선 쉬고, 40℃가 넘으면 망가지기 시작해요.'},
+ {g:'cond',lv:2,w:'당화',en:'糖化',d:'곡물의 녹말을 단맛(당)으로 바꾸는 일이에요.',ex:'식혜가 달아지는 것',t:'곡물은 바로 술이 안 돼요. 누룩·엿기름으로 당화 → 효모로 알코올 → 초산균으로 식초.'},
+ {g:'cond',lv:2,w:'호기성',en:'',d:'공기(산소)가 있어야 일하는 성질이에요.',ex:'초산균',t:'초산 발효는 호기성이라 용기 입구를 천으로 덮어 공기가 통하게 해요.'},
+ {g:'cond',lv:2,w:'혐기성',en:'',d:'공기가 없어야 일하는 성질이에요.',ex:'유산균(김치를 꾹꾹 눌러 담는 이유)',t:'장(醬)은 염발효로 혐기성, 당발효는 호기성이라는 교재 설명과 연결돼요.'},
+ {g:'cond',lv:2,w:'통성혐기성',en:'',d:'공기가 있어도 없어도 살 수 있는 성질이에요. 대신 하는 일이 달라져요.',ex:'효모: 공기 있으면 쑥쑥 자라고, 없으면 술을 만들어요.',t:'발효액 초기에 저어 주면 술이 안 생기는 이유예요.'},
+ {g:'cond',lv:2,w:'브릭스',en:'Brix',d:'물이 얼마나 단지 나타내는 숫자예요. 100g 안에 설탕이 몇 g 녹아 있는지 알려 줘요.',ex:'20브릭스 = 100g 속에 설탕 20g',t:'당도계로 재요. 발효액 50브릭스 미만, 과일식초 알코올 발효는 20브릭스, 음료는 16–24브릭스.'},
+ {g:'cond',lv:2,w:'삼투압',en:'',d:'싱거운 쪽의 물이 진한 쪽으로 빠져나가는 힘이에요.',ex:'배추를 소금에 절이면 물이 빠지는 것',t:'발효액에서 설탕이 과일 속 물과 영양분을 끌어내요. 너무 진하면 미생물 몸의 물까지 빠져서 못 살아요.'},
+ {g:'cond',lv:2,w:'품온',en:'品溫',d:'방 온도가 아니라 발효하는 음식 자체의 온도예요.',ex:'누룩 띄울 때 속에 온도계를 꽂아 재요.',t:'누룩은 품온 45℃를 넘지 않게 하루 2번 확인해요. 미생물이 일하면 스스로 열이 나요.'},
+ {g:'cond',lv:2,w:'숙성',en:'aging',d:'발효가 끝난 뒤 천천히 기다리며 맛과 향이 깊어지는 시간이에요.',ex:'오래 묵은 간장(청장 → 중장 → 진장)',t:'교재: 숙성도 발효의 한 과정(2차 발효). 발효액 숙성은 5–15℃ 저온에서. 색이 짙어지는 건 마이야르 반응.'},
+ // 도구·현상
+ {g:'tool',lv:2,w:'에어락',en:'airlock',d:'거품(이산화탄소)은 빠져나가고 바깥 공기는 못 들어오게 하는 마개예요.',ex:'술 담글 때 병 뚜껑에 꽂아요.',t:'알코올 발효는 공기를 막아야 해서 써요. 식초 단계에서는 쓰지 않아요.'},
+ {g:'tool',lv:2,w:'초막',en:'',d:'초산균이 식초를 만들 때 위에 생기는 하얀 막이에요. 잘되고 있다는 신호예요.',ex:'식초 병 위의 하얀 막',t:'초산균이 알코올이 날아가지 않게 덮는 막. 초막 없이 식초가 되면 산도가 낮을 가능성이 커요.'},
+ {g:'tool',lv:2,w:'골마지',en:'산막·장꽃',d:'김치나 장 위에 생기는 하얀 막이에요. 공기와 닿아서 생겨요.',ex:'오래된 김치 국물 위 하얀 막',t:'교재: 산막 = 장꽃 = 김치 골마지. 걷어내고 공기가 덜 닿게 해 줘요.'}
+];
+
+const groupsEl=document.getElementById('groups'),countEl=document.getElementById('count');
+function lvSel(){return document.querySelector('input[name=lv]:checked').value}
+function pool(){const v=lvSel();return v==='all'?W:W.filter(x=>x.lv===1)}
+function render(){
+  const list=pool();groupsEl.innerHTML='';
+  G.forEach(g=>{
+    const items=list.filter(x=>x.g===g.id);if(!items.length)return;
+    const sec=document.createElement('div');sec.className='group';
+    sec.innerHTML='<h3>'+g.name+' <small>'+g.sub+' · '+items.length+'개</small></h3><div class="grid"></div>';
+    const grid=sec.querySelector('.grid');
+    items.forEach(x=>{
+      const c=document.createElement('article');c.className='card '+g.cls;
+      c.innerHTML='<div class="top"><span class="w">'+x.w+(x.en?'<small>'+x.en+'</small>':'')+'</span><span class="lv lv'+x.lv+'">'+x.lv+'단계</span></div>'+
+        '<p class="d">'+x.d+'</p><p class="ex">예: '+x.ex+'</p>'+
+        '<details><summary>선생님 메모</summary><p>'+x.t+'</p></details>';
+      grid.appendChild(c);
+    });
+    groupsEl.appendChild(sec);
+  });
+  countEl.textContent='낱말 '+list.length+'개';
+}
+
+// 퀴즈
+let cur=null,answered=false,right=0,total=0;
+const qdef=document.getElementById('qdef'),qhint=document.getElementById('qhint'),opts=document.getElementById('opts'),fb=document.getElementById('fb'),score=document.getElementById('score');
+function shuffle(a){a=a.slice();for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]]}return a}
+function nextQ(){
+  const p=pool();let c;do{c=p[Math.floor(Math.random()*p.length)]}while(p.length>1&&cur&&c.w===cur.w);
+  cur=c;answered=false;
+  qdef.textContent=c.d;qhint.textContent='힌트: '+G.find(g=>g.id===c.g).name;
+  const wrongs=shuffle(p.filter(x=>x.w!==c.w)).slice(0,3);
+  opts.innerHTML='';fb.textContent='';
+  shuffle([c,...wrongs]).forEach((o,i)=>{const b=document.createElement('button');b.type='button';b.id='opt'+i;b.textContent=o.w;
+    b.onclick=()=>{if(answered)return;answered=true;total++;
+      if(o.w===c.w){right++;b.className='right';fb.textContent='정답! 예: '+c.ex.replace(/<[^>]+>/g,'')}
+      else{b.className='wrong';[...opts.children].find(x=>x.textContent===c.w).className='right';fb.textContent='정답은 \''+c.w+'\'이에요.'}
+      score.textContent='맞힌 문제 '+right+' / '+total};
+    opts.appendChild(b)});
+  score.textContent='맞힌 문제 '+right+' / '+total;
+}
+document.getElementById('next').onclick=nextQ;
+document.querySelectorAll('input[name=lv]').forEach(i=>i.addEventListener('change',()=>{render();nextQ()}));
+render();nextQ();
+})();
+</script>

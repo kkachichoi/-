@@ -1,0 +1,397 @@
+<title>막장 수업 노트</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Jua&family=Gowun+Dodum&family=IBM+Plex+Sans+KR:wght@400;600&display=swap">
+<style>
+/* Layout: 강사용 수업 노트. 주제별 단원(원리 → 재료 → 단맛과 소금 → 레시피 카드) + 확인 퀴즈. 출처 배지로 '수업 내용'과 '덧붙인 정보'를 구분. */
+:root{
+  --bg:#f3f6f1;--paper:#ffffff;--ink:#1f2b3a;--muted:#5b6878;--line:#d6ded3;
+  --yeast:#c98a12;--yeast-soft:#f6e7c4;--bubble:#2f7fb8;--bubble-soft:#dcebf6;
+  --sour:#4f8a3c;--sour-soft:#e1efd9;--warn:#b4472f;--warn-soft:#f7e0d9;
+  --display:"Jua","Gowun Dodum",system-ui,sans-serif;
+  --body:"Gowun Dodum","Apple SD Gothic Neo","Malgun Gothic",system-ui,sans-serif;
+  --data:"IBM Plex Sans KR","Apple SD Gothic Neo","Malgun Gothic",system-ui,sans-serif;
+}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
+  --bg:#141a20;--paper:#1c242c;--ink:#e6ecef;--muted:#9aa8b4;--line:#2e3a44;
+  --yeast:#e3a93a;--yeast-soft:#3a2f17;--bubble:#6fb3e6;--bubble-soft:#183245;
+  --sour:#86c06f;--sour-soft:#1f3319;--warn:#ec8a72;--warn-soft:#3d221b;color-scheme:dark}}
+:root[data-theme="dark"]{
+  --bg:#141a20;--paper:#1c242c;--ink:#e6ecef;--muted:#9aa8b4;--line:#2e3a44;
+  --yeast:#e3a93a;--yeast-soft:#3a2f17;--bubble:#6fb3e6;--bubble-soft:#183245;
+  --sour:#86c06f;--sour-soft:#1f3319;--warn:#ec8a72;--warn-soft:#3d221b;color-scheme:dark}
+*{box-sizing:border-box}
+body{background:var(--bg);color:var(--ink);font-family:var(--body);font-size:17px;line-height:1.75;
+  padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));padding-block:0 64px}
+.wrap{max-width:48rem;margin:0 auto}
+h1,h2,h3{font-family:var(--display);font-weight:400;line-height:1.3;text-wrap:balance;margin:0}
+h1{font-size:clamp(2.2rem,7vw,3.2rem)}h2{font-size:1.7rem}h3{font-size:1.2rem}
+p{margin:0}
+a{color:var(--bubble)}
+ul,ol{margin:0;padding-left:1.25em;display:grid;gap:4px}
+.eyebrow{font-family:var(--data);font-size:.78rem;letter-spacing:.08em;color:var(--muted);font-weight:600}
+header{display:grid;gap:14px;padding-block:48px 24px}
+.lead{font-size:1.1rem;color:var(--muted)}
+.legend{display:flex;flex-wrap:wrap;gap:8px;font-size:.88rem;align-items:center}
+nav.toc{display:flex;flex-wrap:wrap;gap:6px}
+nav.toc a{font-size:.9rem;text-decoration:none;color:var(--ink);border:1.5px solid var(--line);background:var(--paper);border-radius:999px;padding:4px 12px}
+nav.toc a:focus-visible{outline:3px solid var(--bubble);outline-offset:2px}
+section{display:grid;gap:16px;padding-block:40px;border-top:1px dashed var(--line);scroll-margin-top:12px}
+.num-h{display:flex;gap:12px;align-items:baseline}
+.num-h .n{font-family:var(--data);font-size:.85rem;font-weight:600;color:var(--paper);background:var(--ink);border-radius:999px;padding:2px 10px;flex:none}
+
+.src{font-family:var(--data);font-size:.68rem;font-weight:600;padding:1px 8px;border-radius:999px;white-space:nowrap;vertical-align:middle}
+.s-class{background:var(--yeast-soft);color:var(--ink)}
+.s-book{background:var(--sour-soft);color:var(--ink)}
+.s-add{background:var(--bubble-soft);color:var(--ink)}
+.s-check{background:var(--warn-soft);color:var(--ink)}
+
+.point{background:var(--paper);border:1px solid var(--line);border-radius:12px;padding:16px 18px;display:grid;gap:8px}
+.point h3{display:flex;flex-wrap:wrap;gap:8px;align-items:center}
+.say{border-left:4px solid var(--yeast);padding:2px 0 2px 14px}
+.say::before{content:"수업에서 이렇게 말해요 · ";font-family:var(--data);font-size:.75rem;font-weight:600;color:var(--yeast)}
+.formula{display:flex;flex-wrap:wrap;align-items:center;gap:8px;font-family:var(--display);font-size:1.15rem;background:var(--paper);border:2px solid var(--ink);border-radius:14px;padding:14px 16px}
+.chip{padding:3px 12px;border-radius:999px;white-space:nowrap}
+.c1{background:var(--yeast-soft)}.c2{background:var(--bubble-soft)}.c3{background:var(--sour-soft)}.c4{background:var(--bg);border:1.5px dashed var(--muted)}
+.op{color:var(--muted)}
+
+.tbl{overflow-x:auto}
+table{border-collapse:collapse;width:100%;font-size:.94rem;background:var(--paper)}
+th,td{border-bottom:1px solid var(--line);padding:9px 12px;text-align:left;vertical-align:top}
+th{font-family:var(--data);font-size:.75rem;color:var(--muted);font-weight:600;letter-spacing:.04em}
+td.num{font-family:var(--data);font-variant-numeric:tabular-nums;white-space:nowrap;font-weight:600}
+tr.total td{font-weight:600;border-top:2px solid var(--ink)}
+.wide table{min-width:32rem}
+
+.story{background:var(--paper);border:2px solid var(--ink);border-radius:14px;padding:18px 20px;display:grid;gap:12px}
+.steps{display:grid;gap:10px;margin:0;padding:0;list-style:none;counter-reset:s}
+.steps li{counter-increment:s;display:grid;grid-template-columns:1.9rem 1fr;gap:10px}
+.steps li::before{content:counter(s);font-family:var(--display);width:1.9rem;height:1.9rem;border-radius:50%;background:var(--ink);color:var(--paper);display:grid;place-items:center}
+
+.calcline{font-family:var(--data);font-size:.92rem;background:var(--bg);border-radius:8px;padding:10px 12px;font-variant-numeric:tabular-nums}
+
+.cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(18rem,1fr));gap:14px}
+.card{background:var(--paper);border:1px solid var(--line);border-radius:12px;padding:16px 18px;display:grid;gap:10px;align-content:start;min-width:0}
+.card h3{display:flex;flex-wrap:wrap;gap:8px;align-items:center}
+.card .meta{font-family:var(--data);font-size:.8rem;color:var(--muted)}
+.card table{font-size:.9rem}
+.card.y{border-top:4px solid var(--yeast)}.card.r{border-top:4px solid var(--warn)}.card.g{border-top:4px solid var(--sour)}.card.b{border-top:4px solid var(--bubble)}
+
+.check{display:grid;gap:8px;margin:0;padding:0;list-style:none}
+.check li{background:var(--paper);border:1px solid var(--line);border-radius:10px;padding:10px 14px;display:flex;gap:10px}
+.check li::before{content:"?";font-family:var(--display);color:var(--warn);flex:none}
+
+.quiz{display:grid;gap:10px}
+.q{background:var(--paper);border:1px solid var(--line);border-radius:10px;padding:14px 16px;display:grid;gap:10px}
+.opts{display:flex;flex-wrap:wrap;gap:8px}
+.opts button{font:inherit;font-size:.95rem;border:1.5px solid var(--line);background:var(--bg);color:var(--ink);border-radius:999px;padding:4px 14px;cursor:pointer}
+.opts button:focus-visible{outline:3px solid var(--bubble);outline-offset:2px}
+.opts button.right{background:var(--sour-soft);border-color:var(--sour)}
+.opts button.wrong{background:var(--warn-soft);border-color:var(--warn)}
+.fb{font-size:.92rem;color:var(--muted);min-height:1.5em}
+.links{display:flex;flex-wrap:wrap;gap:10px}
+.links a{background:var(--paper);border:1px solid var(--line);border-radius:10px;padding:10px 14px;text-decoration:none;color:var(--ink);display:grid}
+.links a small{color:var(--muted);font-size:.82rem}
+footer{padding-top:28px;color:var(--muted);font-size:.85rem}
+</style>
+
+<div class="wrap">
+<header>
+  <span class="eyebrow">생활발효지도사 공부 모임 · 수업 노트</span>
+  <h1>막장 수업 노트</h1>
+  <p class="lead">오늘 수업에서 적은 메모와 그때그때 나눈 질문을 주제별로 묶었어요. 다음 수업에서 강사로 설명할 때 그대로 읽어도 되게 썼어요.</p>
+  <div class="legend">
+    <span class="src s-class">수업 내용</span>오늘 강의에서 들은 것
+    <span class="src s-book">교재</span>생활발효지도사 교재
+    <span class="src s-add">덧붙인 정보</span>이해를 돕는 일반 지식
+    <span class="src s-check">확인 필요</span>강사께 여쭤볼 것
+  </div>
+  <nav class="toc" aria-label="차례">
+    <a href="#what">막장이란</a><a href="#starter">발효제</a><a href="#nuruk">누룩 모양</a><a href="#sweet">단맛과 소금</a><a href="#powder">가루</a><a href="#recipes">레시피 카드</a><a href="#group">공부 모임</a><a href="#ask">확인할 것</a><a href="#quiz">퀴즈</a>
+  </nav>
+</header>
+
+<section id="what">
+  <div class="num-h"><span class="n">1</span><h2>막장이란?</h2></div>
+  <div class="point">
+    <h3>바로 먹으려고 '막' 담그는 장 <span class="src s-class">수업 내용</span></h3>
+    <p>막장은 바로 먹을 수 있는 장이에요. 빨리 담가야 하기 때문에 재료는 빨리 섞이는 <b>가루</b>가 기본이에요.</p>
+  </div>
+  <div class="formula" role="img" aria-label="메주가루 더하기 소금 더하기 물 더하기 새로운 맛">
+    <span class="chip c1">메주가루</span><span class="op">+</span><span class="chip c2">소금</span><span class="op">+</span><span class="chip c3">물</span><span class="op">+</span><span class="chip c4">새로운 맛 (용도에 따라)</span>
+  </div>
+  <div class="point">
+    <h3>단맛을 줄까, 칼칼하게 할까 <span class="src s-class">수업 내용</span></h3>
+    <p>어떤 맛을 원하느냐에 따라 더하는 재료가 달라져요.</p>
+    <ul>
+      <li><b>단맛</b>: 조청(넣어도 되고 안 넣어도 됨), 양파즙, 무말랭이</li>
+      <li><b>칼칼함</b>: 삭힌 고추, 고춧가루</li>
+      <li><b>물 대신</b>: 동치미 국물, 김치 국물도 활용할 수 있음</li>
+    </ul>
+  </div>
+  <div class="point">
+    <h3>된장과 무엇이 다를까 <span class="src s-add">덧붙인 정보</span></h3>
+    <div class="tbl"><table>
+      <thead><tr><th></th><th>된장</th><th>막장</th></tr></thead>
+      <tbody>
+        <tr><td>만드는 법</td><td>메주를 소금물에 담가 간장을 빼고 남은 건더기</td><td>메주를 가루로 빻아 곡물·소금·물과 바로 섞음</td></tr>
+        <tr><td>간장</td><td>함께 생김</td><td>생기지 않음</td></tr>
+        <tr><td>숙성</td><td>수개월–수년</td><td>몇 주–몇 달</td></tr>
+        <tr><td>맛</td><td>깊고 구수함</td><td>달큰하고 부드러움</td></tr>
+      </tbody>
+    </table></div>
+    <p class="say">"된장은 간장을 먼저 빼고 남은 걸로 만들고, 막장은 간장을 안 빼고 가루에 바로 섞어 '막' 담가요. 그래서 빨리 먹을 수 있어요."</p>
+  </div>
+</section>
+
+<section id="starter">
+  <div class="num-h"><span class="n">2</span><h2>발효제: 가위가 꼭 필요해요</h2></div>
+  <div class="point">
+    <h3>효소제 또는 당화액 <span class="src s-class">수업 내용</span></h3>
+    <p>막장의 발효제는 <b>메주가루, 청국장가루</b>만 있으면 돼요. 효소를 가진 재료(효소제)가 있어야 해요. 혹은 <b>당화액</b>이 있으면 돼요.</p>
+    <div class="tbl"><table>
+      <thead><tr><th>방법</th><th>재료</th><th>하는 일</th></tr></thead>
+      <tbody>
+        <tr><td>효소제</td><td>메주가루, 청국장가루, 쌀누룩가루</td><td>미생물과 효소가 곡물을 단맛·감칠맛으로 쪼갬</td></tr>
+        <tr><td>당화액</td><td>식혜물처럼 이미 단맛으로 바뀐 물</td><td>쪼개는 일이 이미 끝난 상태로 들어감</td></tr>
+      </tbody>
+    </table></div>
+    <p class="say">"옥수수가루나 쌀가루는 그냥 두면 달아지지 않아요. 가위(효소)를 가진 메주가루를 넣거나, 가위질이 끝난 당화액을 넣어 줘야 해요."</p>
+  </div>
+  <div class="point">
+    <h3>쌈장용과 찌개용 <span class="src s-book">교재</span></h3>
+    <ul>
+      <li><b>쌈장용</b>: 곰팡이 쪽 발효제 (쌀코지, 보리코지)로 단맛·감칠맛</li>
+      <li><b>찌개·국용</b>: 세균 쪽 발효제 (청국장가루)로 끓였을 때 구수한 맛</li>
+    </ul>
+  </div>
+  <div class="point">
+    <h3>막장용 서리태 띄우기 <span class="src s-class">수업 내용</span></h3>
+    <p>서리태를 삶아 <b>40℃까지 식혀서 볏짚을 넣어 36시간</b> 띄워요.</p>
+    <p style="font-size:.95rem;color:var(--muted)">볏짚에 사는 고초균이 콩을 청국장으로 바꾸는 과정이에요. 말려서 가루로 내면 '검은콩 청국장가루'가 돼요. <span class="src s-add">덧붙인 정보</span></p>
+  </div>
+  <div class="point">
+    <h3>메주가루도 볏짚에 띄울까? <span class="src s-add">덧붙인 정보</span></h3>
+    <div class="tbl"><table>
+      <thead><tr><th></th><th>전통 메주</th><th>청국장</th><th>개량 메주가루</th></tr></thead>
+      <tbody>
+        <tr><td>볏짚</td><td>묶어 매달거나 깔고 띄움</td><td>콩 사이에 넣음</td><td>쓰지 않음</td></tr>
+        <tr><td>온도</td><td>서늘하게</td><td>40℃ 안팎</td><td>종균에 맞춰</td></tr>
+        <tr><td>기간</td><td>한두 달</td><td>2–3일 (36–48시간)</td><td>짧음</td></tr>
+        <tr><td>주인공</td><td>곰팡이 + 세균</td><td>고초균</td><td>황국균 (쌀코지와 같은 곰팡이)</td></tr>
+      </tbody>
+    </table></div>
+    <p style="font-size:.95rem">시중의 고추장용 메주가루는 대부분 개량 방식이에요.</p>
+  </div>
+</section>
+
+<section id="nuruk">
+  <div class="num-h"><span class="n">3</span><h2>누룩의 모양: 산국과 병국</h2></div>
+  <div class="point">
+    <h3>낱알 누룩과 떡 누룩 <span class="src s-add">덧붙인 정보</span></h3>
+    <div class="tbl"><table>
+      <thead><tr><th></th><th>산국 (散麴, 흩임누룩)</th><th>병국 (餠麴, 떡누룩)</th></tr></thead>
+      <tbody>
+        <tr><td>모양</td><td>쌀·보리 낱알 그대로</td><td>가루를 반죽해 덩어리로 빚음</td></tr>
+        <tr><td>기간</td><td>짧음 (2–3일)</td><td>김 (2–4주)</td></tr>
+        <tr><td>미생물</td><td>곰팡이 위주</td><td>곰팡이 + 효모 + 세균</td></tr>
+        <tr><td>잘하는 일</td><td>당화 (단맛 만들기)</td><td>당화와 술 만들기를 함께</td></tr>
+        <tr><td>예</td><td>쌀누룩, 쌀코지</td><td>전통누룩</td></tr>
+      </tbody>
+    </table></div>
+    <p>보양 막장의 <b>쌀누룩가루(젖산발효 산국)</b>는 쌀알로 띄운 산국을 가루로 낸 것이라, 막장에서 단맛·감칠맛을 만드는 효소제 역할을 해요.</p>
+    <p class="say">"산국은 밥알 하나하나에 곰팡이가 핀 누룩, 병국은 떡처럼 뭉쳐서 띄운 누룩이에요."</p>
+  </div>
+</section>
+
+<section id="sweet">
+  <div class="num-h"><span class="n">4</span><h2>단맛과 소금</h2></div>
+  <div class="story">
+    <h3>이야기: 제주 푸른콩장은 왜 달았을까? <span class="src s-class">수업 내용</span></h3>
+    <ol class="steps">
+      <li><span>여러 가지 콩으로 발효를 해 보다가, 제주 푸른콩장 간장을 처음 맛봤는데 <b>원래 달지 않아야 할 간장이 달았어요.</b></span></li>
+      <li><span>무슨 차이가 생긴 걸까 고민하다가 <b>당화물, 식혜물, 수곡(물누룩)</b> 세 가지로 실험해 봤어요.</span></li>
+      <li><span>그러다 <b>당화액에는 소금이 잘 녹지 않는다</b>는 것을 알게 됐어요. 물이 당으로 가득 차서(포화) 소금이 녹아 들어갈 자리가 부족한 거예요.</span></li>
+      <li><span>직접 테스트를 해 봤고, 앞으로 <b>데이터를 만들기 위해 함께 공부</b>하기로 했어요.</span></li>
+    </ol>
+    <p class="say">"컵 속 물이 설탕을 잔뜩 녹이고 있으면 소금까지 녹일 힘이 모자라요. 그래서 소금은 맹물에 먼저 녹이고, 단물은 나중에 섞어요."</p>
+  </div>
+
+  <div class="point">
+    <h3>고추장물은 40브릭스 <span class="src s-class">수업 내용</span></h3>
+    <ul>
+      <li>고추장 체험에서 조청 1kg 대신 당화액이 필요하면 <b>조청과 물을 1:1</b>로</li>
+      <li><b>고추장물은 40브릭스 정도</b></li>
+    </ul>
+    <p>조청은 보통 <b>70–80브릭스</b>라서, 물과 1:1로 섞으면 약 35–40브릭스가 돼요. 그래서 "조청 1 : 물 1 = 고추장물 40브릭스"예요. <span class="src s-add">덧붙인 정보</span></p>
+    <p class="calcline">더할 물 = (지금 당도 − 40) ÷ 40 × 양<br>예) 조청 1kg, 80브릭스 → (80 − 40) ÷ 40 × 1kg = 물 1kg</p>
+    <p style="font-size:.95rem;color:var(--muted)">교재 '당도를 낮추기 위한 가수 공식'과 같은 계산이에요. <span class="src s-book">교재</span> 식혜 단계 당화액(15–20브릭스)은 졸여서 40브릭스까지 올려 써요. <span class="src s-add">덧붙인 정보</span></p>
+  </div>
+
+  <div class="point">
+    <h3>소금 계산 두 가지</h3>
+    <p><b>① 염도 구하기</b>: 625g에 소금 5g → 5 ÷ 625 × 100 = <b>약 0.8%</b> <span class="src s-class">수업 내용</span></p>
+    <p class="calcline">소금 = 재료 무게 × 염도 ÷ 100 &nbsp;·&nbsp; 1kg에 0.8%면 8g</p>
+    <p><b>② 국물을 쓸 때 소금 줄이기</b>: 동치미·김치 국물은 염도 약 2–3% <span class="src s-add">덧붙인 정보</span></p>
+    <p class="calcline">넣을 소금 = 원래 소금 − (국물 양 × 국물 염도)<br>예) 교재 기본 막장 소금 30g, 물 270g을 2.5% 동치미 국물로 → 30 − 7 = 약 23g</p>
+    <p><b>구운소금</b>은 천일염을 구워 물기와 쓴맛(간수)이 빠진 소금이라 짠맛이 부드러워요. <span class="src s-add">덧붙인 정보</span></p>
+  </div>
+</section>
+
+<section id="powder">
+  <div class="num-h"><span class="n">5</span><h2>가루가 핵심</h2></div>
+  <div class="point">
+    <h3>모든 가루는 막장이 될 수 있어요 <span class="src s-class">수업 내용</span></h3>
+    <ul>
+      <li>제철 재료를 응용할 수 있어요. <b>볶거나 말려서 빻아서</b> 넣어야 해요.</li>
+      <li><b>옥수수막장</b>도 유명하고 맛있어요.</li>
+    </ul>
+    <p style="font-size:.95rem;color:var(--muted)">말리고 볶는 이유: 물기가 들어가면 염도가 흐트러지고 잡균이 생기기 쉬워요. 볶으면 고소한 향이 살아나요. <span class="src s-add">덧붙인 정보</span></p>
+  </div>
+  <div class="point">
+    <h3>가루의 굵기 <span class="src s-class">수업 내용</span></h3>
+    <div class="tbl"><table>
+      <thead><tr><th>고추장</th><th>막장</th></tr></thead>
+      <tbody><tr><td><b>모든 재료를 곱게</b> 갈아야 함</td><td><b>조금 거칠어도</b> 괜찮음</td></tr></tbody>
+    </table></div>
+    <p class="say">"고추장은 매끈하게 발라 먹는 장이라 곱게, 막장은 투박하게 빨리 먹는 장이라 알갱이가 조금 있어야 구수해요."</p>
+  </div>
+</section>
+
+<section id="recipes">
+  <div class="num-h"><span class="n">6</span><h2>레시피 카드</h2></div>
+  <div class="cards">
+    <div class="card y">
+      <h3>검은콩 쌀누룩 보양 막장 <span class="src s-class">수업 내용</span></h3>
+      <div class="tbl"><table>
+        <tbody>
+          <tr><td>검은콩(서리태) 청국장가루</td><td class="num">120g</td></tr>
+          <tr><td>생청국장가루</td><td class="num">30g</td></tr>
+          <tr><td>쌀누룩가루 (젖산발효 산국)</td><td class="num">100g</td></tr>
+          <tr><td>양파즙</td><td class="num">225g</td></tr>
+          <tr><td>물</td><td class="num">55g</td></tr>
+          <tr><td>무말랭이 (건조)</td><td class="num">40g</td></tr>
+          <tr><td>삭힌 고추 (다짐)</td><td class="num">40g</td></tr>
+          <tr><td>쌀조청</td><td class="num">20g</td></tr>
+          <tr><td>소금 (원안) / 구운소금 (실습)</td><td class="num">5g / 10g</td></tr>
+          <tr class="total"><td>합계</td><td class="num">635g / 640g</td></tr>
+        </tbody>
+      </table></div>
+      <p class="meta">염도 약 0.8% (원안) · 약 1.6% (실습) · 저염이라 냉장 보관</p>
+      <p style="font-size:.92rem">순서: 물에 소금 먼저 녹이기 → 양파즙·조청 섞기 → 가루 넣고 치대기 → 무말랭이·삭힌 고추 → 병에 꾹꾹 눌러 담기</p>
+    </div>
+    <div class="card r">
+      <h3>삼척 듬뿍장 <span class="src s-class">수업 내용</span></h3>
+      <div class="tbl"><table>
+        <tbody>
+          <tr><td>청국장</td><td class="num">1kg</td></tr>
+          <tr><td>볶음콩가루</td><td class="num">500g</td></tr>
+          <tr><td>고춧가루</td><td class="num">150g</td></tr>
+          <tr><td>다진 마늘</td><td class="num">70g</td></tr>
+          <tr><td>천일염</td><td class="num">100g</td></tr>
+          <tr class="total"><td>합계</td><td class="num">1,820g</td></tr>
+        </tbody>
+      </table></div>
+      <p class="meta">염도 약 5.5% · 단맛 없이 구수하고 칼칼함</p>
+    </div>
+    <div class="card g">
+      <h3>기본 막장 500g <span class="src s-book">교재</span></h3>
+      <div class="tbl"><table>
+        <tbody>
+          <tr><td>메주가루</td><td class="num">150g</td></tr>
+          <tr><td>물</td><td class="num">270g</td></tr>
+          <tr><td>소금</td><td class="num">30g</td></tr>
+          <tr><td>고추씨가루</td><td class="num">20g</td></tr>
+        </tbody>
+      </table></div>
+      <p class="meta">'오늘의 막장'은 청국장가루·메주가루·쌀코지·보리코지 비율을 직접 정해 물 270g, 소금 30g과 섞어요.</p>
+    </div>
+    <div class="card b">
+      <h3>고추장 비율 예시 <span class="src s-add">덧붙인 정보</span></h3>
+      <div class="tbl"><table>
+        <tbody>
+          <tr><td>고추장물 (조청 1kg + 물 1kg)</td><td class="num">2kg</td></tr>
+          <tr><td>고춧가루 (농도 보며)</td><td class="num">약 1kg</td></tr>
+          <tr><td>메주가루</td><td class="num">200–300g</td></tr>
+          <tr><td>소금 (전체의 6–8%)</td><td class="num">200–250g</td></tr>
+        </tbody>
+      </table></div>
+      <p class="meta">가정용 일반 기준을 수업 메모(40브릭스)에 맞춘 계산이에요. 수업 레시피를 받으면 바꿔 쓰세요. 소금은 물에 먼저 녹이고 조청을 섞어요.</p>
+    </div>
+    <div class="card b">
+      <h3>양파조청 <span class="src s-add">덧붙인 정보</span></h3>
+      <ol>
+        <li>엿기름 300g을 물 4–5L에 주물러 거른 웃물</li>
+        <li>밥 1kg과 보온밥솥에서 6–8시간 당화</li>
+        <li>면포로 짜서 당화액만 받기</li>
+        <li>양파 1–2kg을 갈거나 즙 내서 넣기</li>
+        <li>저어 가며 졸이기 → 실처럼 늘어지면 완성 (70–80브릭스)</li>
+      </ol>
+      <p class="meta">고추장에 쓸 때는 물과 1:1로 약 40브릭스.</p>
+    </div>
+  </div>
+</section>
+
+<section id="group">
+  <div class="num-h"><span class="n">7</span><h2>공부 모임의 목적</h2></div>
+  <div class="point">
+    <h3>배운 사람이 가르치는 사람으로 <span class="src s-class">수업 내용</span></h3>
+    <p>발효 자격증을 취득한 선생님들이 준비된 <b>사전 훈련</b>을 통해 <b>수업을 진행하는 강사로 활동</b>해 보는 것. 그리고 제주 푸른콩장 실험처럼 <b>함께 테스트하며 데이터를 만들어 가는 것.</b></p>
+  </div>
+</section>
+
+<section id="ask">
+  <div class="num-h"><span class="n">8</span><h2>다음 모임에서 확인할 것</h2></div>
+  <ul class="check">
+    <li>서리태 36시간 띄운 것이 청국장 방식이 맞는지, 말려 가루 내는 방법</li>
+    <li>쌀누룩가루 '젖산발효 산국'을 만드는 방법</li>
+    <li>보양 막장을 냉장에서 며칠까지 먹을 수 있는지</li>
+    <li>"조청과 물 1:1"이 조청 1kg에 물 1kg을 섞는다는 뜻이 맞는지</li>
+    <li>수업에서 쓰는 고추장 분량 (고춧가루·메주가루·소금)</li>
+    <li>푸른콩장 실험(당화물·식혜물·수곡)의 결과 데이터</li>
+  </ul>
+</section>
+
+<section id="quiz">
+  <div class="num-h"><span class="n">9</span><h2>수업 확인 퀴즈</h2></div>
+  <p>수업 끝에 참가자와 함께 풀어 보세요.</p>
+  <div class="quiz" id="quizBox"></div>
+</section>
+
+<section>
+  <span class="eyebrow">함께 쓰는 자료</span>
+  <div class="links">
+    <a href="https://claude.ai/artifact/Xw8kubKpDKDEsyQnu7eMXG" target="_blank" rel="noopener">나만의 막장 교실<small>120분 진행표와 재료 계산기</small></a>
+    <a href="https://claude.ai/artifact/MCeLxBynDYz8D2AqnMdPbM" target="_blank" rel="noopener">발효 낱말 사전<small>메주, 당화, 고초균, 삼투압</small></a>
+    <a href="https://claude.ai/artifact/AZKo5hRfPaPwNLVRfBDM7h" target="_blank" rel="noopener">막걸리 빚기 교실<small>누룩으로 술 빚기</small></a>
+  </div>
+</section>
+
+<footer>오늘 수업 메모 ①–⑨와 질의응답을 정리했어요. '덧붙인 정보'의 숫자(조청 당도, 국물 염도, 고추장 비율, 양파조청)는 일반적인 기준이라 재료와 집마다 달라요.</footer>
+</div>
+
+<script>
+(function(){
+  const Q=[
+    {q:'막장 재료가 가루인 이유는?',o:['오래 숙성하려고','빨리 담가 바로 먹으려고','색을 예쁘게 하려고'],a:1,e:'막장은 바로 먹는 장이라 빨리 섞이는 가루를 써요.'},
+    {q:'막장에 꼭 필요한 것은?',o:['효소제나 당화액','설탕','식초'],a:0,e:'메주가루·청국장가루 같은 효소제, 또는 당화액이 있어야 해요.'},
+    {q:'조청물에 소금을 넣으면?',o:['더 빨리 녹아요','잘 녹지 않아요','색이 변해요'],a:1,e:'물이 당으로 가득 차 있어서 소금이 잘 녹지 않아요. 소금은 맹물에 먼저!'},
+    {q:'고추장물은 몇 브릭스 정도?',o:['10브릭스','40브릭스','80브릭스'],a:1,e:'조청(70–80브릭스)과 물을 1:1로 섞으면 약 40브릭스예요.'},
+    {q:'막장에 넣는 제철 재료는 어떻게?',o:['생으로 다져서','볶거나 말려서 빻아서','즙만 내서'],a:1,e:'볶거나 말려서 빻아 넣어야 물기가 들어가지 않아요.'},
+    {q:'가루를 더 곱게 갈아야 하는 장은?',o:['고추장','막장'],a:0,e:'고추장은 모든 재료를 곱게, 막장은 조금 거칠어도 괜찮아요.'},
+    {q:'서리태를 띄울 때 함께 넣는 것은?',o:['솔잎','볏짚','연잎'],a:1,e:'40℃까지 식혀 볏짚을 넣고 36시간. 볏짚의 고초균이 일해요.'}
+  ];
+  const box=document.getElementById('quizBox');
+  Q.forEach((it,qi)=>{
+    const d=document.createElement('div');d.className='q';
+    d.innerHTML='<strong>'+(qi+1)+'. '+it.q+'</strong><div class="opts"></div><p class="fb" aria-live="polite"></p>';
+    const opts=d.querySelector('.opts'),fb=d.querySelector('.fb');
+    it.o.forEach((o,oi)=>{const b=document.createElement('button');b.type='button';b.id='q'+qi+'o'+oi;b.textContent=o;
+      b.onclick=()=>{opts.querySelectorAll('button').forEach(x=>x.className='');
+        if(oi===it.a){b.className='right';fb.textContent='정답! '+it.e}else{b.className='wrong';fb.textContent='다시 생각해 볼까요?'}};
+      opts.appendChild(b)});
+    box.appendChild(d);
+  });
+})();
+</script>

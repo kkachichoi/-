@@ -1,0 +1,347 @@
+<title>우리 집 찬밥 막걸리</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Jua&family=Gowun+Batang:wght@400;700&family=Gowun+Dodum&family=IBM+Plex+Sans+KR:wght@400;600&display=swap">
+<style>
+/* Layout: 넷제로 원데이 워크숍. 찬밥이 다시 쓰이는 순환을 뼈대로, 진행표 → 계산기 → 순환 고리 → 준비 → 모집 글. '빚다' 세 갈래(흙·술·장) → 두 날의 진행표 → 맛 기록 카드 → 준비 → 모집 글. 제목·인용은 바탕체, 흙빛 액센트를 하나 더한다. */
+:root{
+  --bg:#f4f3ee;--paper:#ffffff;--ink:#22282f;--muted:#5f666d;--line:#dcdad0;
+  --clay:#a5603a;--clay-soft:#f2e2d6;
+  --yeast:#b98112;--yeast-soft:#f6e9c8;
+  --leaf:#4f7a3c;--leaf-soft:#e2eed9;
+  --warn:#b4472f;--warn-soft:#f7e0d9;--bubble:#2f74a8;
+  --display:"Gowun Batang",serif;
+  --round:"Jua","Gowun Dodum",system-ui,sans-serif;
+  --body:"Gowun Dodum","Apple SD Gothic Neo","Malgun Gothic",system-ui,sans-serif;
+  --data:"IBM Plex Sans KR","Apple SD Gothic Neo","Malgun Gothic",system-ui,sans-serif;
+}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
+  --bg:#171615;--paper:#211f1d;--ink:#ece8e1;--muted:#a49e96;--line:#36322e;
+  --clay:#e0946a;--clay-soft:#3d2a1f;--yeast:#e3ab3e;--yeast-soft:#3a3018;
+  --leaf:#8cc06f;--leaf-soft:#22311b;--warn:#ec8a72;--warn-soft:#3d221b;--bubble:#6fb3e6;color-scheme:dark}}
+:root[data-theme="dark"]{
+  --bg:#171615;--paper:#211f1d;--ink:#ece8e1;--muted:#a49e96;--line:#36322e;
+  --clay:#e0946a;--clay-soft:#3d2a1f;--yeast:#e3ab3e;--yeast-soft:#3a3018;
+  --leaf:#8cc06f;--leaf-soft:#22311b;--warn:#ec8a72;--warn-soft:#3d221b;--bubble:#6fb3e6;color-scheme:dark}
+*{box-sizing:border-box}
+body{background:var(--bg);color:var(--ink);font-family:var(--body);font-size:17px;line-height:1.75;
+  padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));padding-block:0 64px}
+.wrap{max-width:52rem;margin:0 auto}
+h1,h2,h3{font-family:var(--display);font-weight:700;line-height:1.3;text-wrap:balance;margin:0}
+h1{font-size:clamp(1.9rem,6.5vw,3rem);letter-spacing:-.01em}
+h2{font-size:1.7rem}h3{font-size:1.2rem}
+p{margin:0}
+a{color:var(--bubble)}
+ul,ol{margin:0;padding-left:1.25em;display:grid;gap:4px}
+.eyebrow{font-family:var(--data);font-size:.78rem;letter-spacing:.08em;color:var(--muted);font-weight:600}
+header{display:grid;gap:14px;padding-block:52px 28px}
+.sub{font-family:var(--display);font-size:1.3rem;color:var(--clay)}
+.lead{font-size:1.1rem;color:var(--muted);max-width:40rem}
+nav.toc{display:flex;flex-wrap:wrap;gap:6px}
+nav.toc a{font-size:.9rem;text-decoration:none;color:var(--ink);border:1.5px solid var(--line);background:var(--paper);border-radius:999px;padding:4px 12px}
+nav.toc a:focus-visible{outline:3px solid var(--bubble);outline-offset:2px}
+section{display:grid;gap:18px;padding-block:40px;border-top:1px dashed var(--line);scroll-margin-top:12px}
+
+/* 빚다 세 갈래 */
+.binda{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px}
+@media (max-width:620px){.binda{grid-template-columns:1fr}}
+.bd{border-radius:14px;padding:18px;display:grid;gap:6px;align-content:start;min-width:0}
+.bd .verb{font-family:var(--display);font-weight:700;font-size:1.5rem}
+.bd .what{font-family:var(--data);font-size:.75rem;font-weight:600;color:var(--muted)}
+.b1{background:var(--clay-soft)}.b2{background:var(--yeast-soft)}.b3{background:var(--leaf-soft)}
+.quote{font-family:var(--display);font-size:1.12rem;border-left:3px solid var(--clay);padding:2px 0 2px 16px}
+
+.overview{display:grid;grid-template-columns:repeat(auto-fit,minmax(11rem,1fr));gap:12px}
+.ov{background:var(--paper);border:1px solid var(--line);border-radius:10px;padding:14px 16px;display:grid;gap:2px;min-width:0}
+.ov .k{font-family:var(--data);font-size:.75rem;color:var(--muted);font-weight:600;letter-spacing:.04em}
+.ov .v{font-family:var(--round);font-size:1.15rem}
+
+/* 두 날 */
+.days{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px}
+@media (max-width:680px){.days{grid-template-columns:1fr}}
+.day{background:var(--paper);border:2px solid var(--ink);border-radius:16px;padding:18px;display:grid;gap:14px;align-content:start;min-width:0}
+.day .dhead{display:grid;gap:2px}
+.day .dname{font-family:var(--display);font-weight:700;font-size:1.4rem}
+.day .dmeta{font-family:var(--data);font-size:.8rem;color:var(--muted);font-weight:600}
+.timeline{display:grid;gap:0;border-left:3px solid var(--ink);margin-left:6px}
+.slot{display:grid;gap:4px;padding:0 0 16px 16px;position:relative}
+.slot::before{content:"";position:absolute;left:-9px;top:6px;width:15px;height:15px;border-radius:50%;background:var(--paper);border:3px solid var(--ink)}
+.slot.clay::before{background:var(--clay);border-color:var(--clay)}
+.slot.brew::before{background:var(--yeast);border-color:var(--yeast)}
+.slot.table::before{background:var(--leaf);border-color:var(--leaf)}
+.slot .t{font-family:var(--data);font-size:.78rem;font-weight:600;color:var(--muted);font-variant-numeric:tabular-nums}
+.slot h3{font-size:1.05rem;font-family:var(--round);font-weight:400}
+.slot p,.slot li{font-size:.93rem}
+.say{border-left:4px solid var(--clay);padding:2px 0 2px 12px;font-size:.95rem}
+.say::before{content:"작가의 말 · ";font-family:var(--data);font-size:.72rem;font-weight:600;color:var(--clay)}
+.legend{display:flex;flex-wrap:wrap;gap:12px;font-size:.85rem;color:var(--muted)}
+.legend i{display:inline-block;width:11px;height:11px;border-radius:50%;margin-right:5px;vertical-align:middle}
+
+.gap{background:var(--paper);border:1px solid var(--line);border-radius:12px;padding:16px 18px;display:grid;gap:10px}
+.track{display:grid;grid-template-columns:repeat(22,minmax(0,1fr));gap:2px}
+.track span{height:22px;border-radius:3px;background:var(--line)}
+.track .c{background:var(--clay)}.track .y{background:var(--yeast)}.track .f{background:var(--bubble);opacity:.7}.track .s{background:var(--leaf)}
+.track-lab{display:flex;justify-content:space-between;font-family:var(--data);font-size:.75rem;color:var(--muted)}
+
+/* 시음 카드 */
+.taste{background:var(--paper);border:2px solid var(--ink);border-radius:16px;padding:20px;display:grid;gap:14px}
+.taste-top{display:flex;flex-wrap:wrap;gap:8px;align-items:center}
+.taste-top button{font:inherit;font-family:var(--round);border:2px solid var(--line);background:var(--bg);color:var(--ink);border-radius:999px;padding:4px 14px;cursor:pointer}
+.taste-top button[aria-pressed="true"]{border-color:var(--ink);background:var(--ink);color:var(--paper)}
+.taste-top button:focus-visible,.rate button:focus-visible,.copy:focus-visible{outline:3px solid var(--bubble);outline-offset:2px}
+.rows{display:grid;gap:10px}
+.row{display:grid;grid-template-columns:7rem minmax(0,1fr);gap:12px;align-items:center}
+.row .lab{font-family:var(--round)}
+.row .lab small{display:block;font-family:var(--body);font-size:.78rem;color:var(--muted)}
+.rate{display:flex;gap:6px;flex-wrap:wrap}
+.rate button{width:2.3rem;height:2.3rem;border-radius:50%;border:2px solid var(--line);background:var(--bg);color:var(--ink);font-family:var(--data);font-weight:600;cursor:pointer}
+.rate button.on{background:var(--clay);border-color:var(--clay);color:var(--paper)}
+.line-out{font-family:var(--display);font-size:1.15rem;background:var(--bg);border-radius:10px;padding:12px 14px;min-height:3rem}
+.hint{font-size:.88rem;color:var(--muted)}
+
+.tbl{overflow-x:auto}
+table{border-collapse:collapse;width:100%;font-size:.94rem;background:var(--paper)}
+th,td{border-bottom:1px solid var(--line);padding:9px 12px;text-align:left;vertical-align:top}
+th{font-family:var(--data);font-size:.75rem;color:var(--muted);font-weight:600;letter-spacing:.04em}
+.wide table{min-width:34rem}
+.fill{background:var(--yeast-soft);border-radius:4px;padding:0 6px;font-family:var(--data);font-size:.85rem}
+
+.promo{background:var(--paper);border:2px solid var(--ink);border-radius:16px;padding:18px 20px;display:grid;gap:12px}
+.promo pre{margin:0;white-space:pre-wrap;font-family:var(--body);font-size:1rem;line-height:1.7;background:var(--bg);border-radius:10px;padding:14px 16px;user-select:all}
+.copy{font:inherit;font-family:var(--round);border:2px solid var(--ink);background:var(--ink);color:var(--paper);border-radius:999px;padding:6px 18px;cursor:pointer;justify-self:start}
+.copied{font-size:.88rem;color:var(--leaf);min-height:1.4em}
+
+.note{background:var(--paper);border:1px solid var(--line);border-radius:10px;padding:14px 16px;display:grid;gap:6px}
+.note .tag{font-family:var(--data);font-size:.75rem;font-weight:600;letter-spacing:.06em;color:var(--warn)}
+.check{display:grid;gap:8px;margin:0;padding:0;list-style:none}
+.check li{background:var(--paper);border:1px solid var(--line);border-radius:10px;padding:10px 14px;display:flex;gap:10px}
+.check li::before{content:"?";font-family:var(--round);color:var(--warn);flex:none}
+.links{display:flex;flex-wrap:wrap;gap:10px}
+.links a{background:var(--paper);border:1px solid var(--line);border-radius:10px;padding:10px 14px;text-decoration:none;color:var(--ink);display:grid}
+.links a small{color:var(--muted);font-size:.82rem}
+footer{padding-top:28px;color:var(--muted);font-size:.85rem}
+
+.loop{display:grid;grid-template-columns:repeat(auto-fit,minmax(9.5rem,1fr));gap:10px;counter-reset:l}
+.lp{background:var(--paper);border:1px solid var(--line);border-radius:12px;padding:14px;display:grid;gap:4px;align-content:start;position:relative;min-width:0}
+.lp b{font-family:var(--round);font-weight:400;font-size:1.1rem}
+.lp small{color:var(--muted);font-size:.85rem}
+.lp .st{font-family:var(--data);font-size:.7rem;font-weight:600;color:var(--leaf)}
+.lp.start{border:2px solid var(--leaf)}
+.loopback{font-family:var(--data);font-size:.85rem;color:var(--leaf);text-align:center}
+.calc{background:var(--paper);border:2px solid var(--ink);border-radius:16px;padding:20px;display:grid;gap:14px}
+.inputs{display:flex;flex-wrap:wrap;gap:14px 22px}
+.field{display:grid;gap:4px}
+.field label{font-family:var(--round);font-size:1rem}
+.field input{font:inherit;font-family:var(--data);width:8rem;padding:6px 10px;border:1.5px solid var(--line);border-radius:8px;background:var(--bg);color:var(--ink);font-variant-numeric:tabular-nums}
+.field input:focus-visible{outline:3px solid var(--bubble);outline-offset:1px}
+.field small{color:var(--muted);font-size:.8rem}
+td.num{font-family:var(--data);font-variant-numeric:tabular-nums;white-space:nowrap;font-weight:600}
+.big{font-family:var(--display);font-weight:700;font-size:1.35rem}
+.safe{display:grid;grid-template-columns:repeat(auto-fit,minmax(14rem,1fr));gap:10px}
+.ok,.no{border-radius:10px;padding:12px 14px;display:grid;gap:4px}
+.ok{background:var(--leaf-soft)}.no{background:var(--warn-soft)}
+.ok b,.no b{font-family:var(--round);font-weight:400}
+</style>
+<div class="wrap">
+<header>
+  <span class="eyebrow">넷제로 에너지 카페 프로그램 · 까치카페 (광명) · 원데이 120분</span>
+  <h1>남은 찬밥으로 만드는 우리 집만의 막걸리</h1>
+  <p class="sub">버려질 밥 한 공기가 술 한 사발이 되기까지</p>
+  <p class="lead">냉장고 속 남은 찬밥을 가져와 누룩과 함께 치대 우리 집 막걸리 한 병을 빚어요. 불도 전기도 거의 쓰지 않고, 미생물이 열흘 동안 일해요. 거르고 남은 술지게미까지 다시 쓰는 순환을 함께 배워요.</p>
+  <nav class="toc" aria-label="차례">
+    <a href="#why">왜 찬밥일까</a><a href="#loop">순환 고리</a><a href="#flow">120분 진행</a><a href="#recipe">찬밥 레시피</a><a href="#calc">우리 집 계산기</a><a href="#safe">찬밥 안전</a><a href="#prep">준비</a><a href="#promo">모집 글</a><a href="#care">유의할 점</a>
+  </nav>
+</header>
+
+<section id="why">
+  <span class="eyebrow">왜 찬밥일까</span>
+  <h2>밥을 한 번 더 쓰면 줄어드는 것들</h2>
+  <div class="binda">
+    <div class="bd b3"><span class="what">음식물 쓰레기</span><span class="verb">버리지 않는다</span><p>버려진 밥은 음식물 쓰레기가 되어 모으고 옮기고 처리하는 데 에너지가 들고, 썩으면서 온실가스가 나와요.</p></div>
+    <div class="bd b2"><span class="what">에너지</span><span class="verb">다시 찌지 않는다</span><p>막걸리는 원래 쌀을 불려 고두밥을 쪄야 해요. 찬밥은 이미 익은 밥이라 찌는 과정을 건너뛰어요.</p></div>
+    <div class="bd b1"><span class="what">미생물의 일</span><span class="verb">기다린다</span><p>발효는 전기 대신 누룩 속 곰팡이와 효모가 상온에서 해요. 우리가 하는 일은 알맞은 온도에 두고 기다리는 것뿐이에요.</p></div>
+  </div>
+  <p class="quote">어제 남긴 밥 한 공기가, 열흘 뒤 우리 집 술 한 사발이 된다.</p>
+</section>
+
+<section id="loop">
+  <span class="eyebrow">순환 고리</span>
+  <h2>찬밥에서 다시 밥상으로</h2>
+  <div class="loop">
+    <div class="lp start"><span class="st">시작</span><b>남은 찬밥</b><small>냉장·냉동해 둔 밥</small></div>
+    <div class="lp"><span class="st">누룩 + 10일</span><b>우리 집 막걸리</b><small>곰팡이가 단맛을, 효모가 술을</small></div>
+    <div class="lp"><span class="st">거르고 남은 것</span><b>술지게미</b><small>모주, 장아찌 절임, 퇴비</small></div>
+    <div class="lp"><span class="st">시어지면</span><b>막걸리 식초</b><small>공기를 통하게 두면 초산균이 식초로</small></div>
+    <div class="lp"><span class="st">다시</span><b>우리 집 밥상</b><small>식초·장아찌·모주가 반찬과 음료로</small></div>
+  </div>
+  <p class="loopback">버리는 것 없이 한 바퀴</p>
+</section>
+
+<section id="flow">
+  <span class="eyebrow">진행 · 120분</span>
+  <h2>하루의 흐름</h2>
+  <div class="legend"><span><i style="background:var(--leaf)"></i>넷제로 이야기</span><span><i style="background:var(--yeast)"></i>빚기</span><span><i style="background:var(--clay)"></i>맛보기</span></div>
+  <div class="day">
+    <div class="timeline">
+      <div class="slot table"><span class="t">0–15분</span><h3>우리 집 찬밥은 어디로 가나요?</h3><p>한 주에 남는 밥이 몇 공기인지 손 들어 보기. 남은 밥이 음식물 쓰레기가 되는 길과, 다시 쓰이는 길 비교.</p>
+        <p class="say">"오늘 가져오신 찬밥은 원래라면 음식물 쓰레기통으로 갈 밥이에요. 오늘은 술이 됩니다."</p></div>
+      <div class="slot table"><span class="t">15–30분</span><h3>밥이 술이 되는 원리</h3><ul><li>누룩 속 곰팡이가 밥의 녹말을 단맛으로 바꾸고(당화)</li><li>효모가 그 단맛을 먹고 술과 거품을 만들어요(알코올 발효)</li><li>찬밥은 이미 익어 있어서 고두밥 찌는 과정이 필요 없어요</li></ul></div>
+      <div class="slot brew"><span class="t">30–40분</span><h3>찬밥 살펴보기 · 안전 체크</h3><p>가져온 찬밥을 아래 '찬밥 안전' 기준으로 함께 확인. 굳은 밥은 손으로 잘게 부숴 풀기. 얼린 밥은 미리 녹여 두기.</p></div>
+      <div class="slot brew"><span class="t">40–75분</span><h3>우리 집 막걸리 빚기</h3><ol><li>찬밥 500g, 누룩 60g, 끓여 식힌 물 250ml 계량</li><li>누룩을 물에 담가 둔 물누룩(미리 준비)과 찬밥을 섞기</li><li>밥알이 다 풀리도록 손으로 10분 치대기</li><li>1L 병에 70%만 담고 천으로 덮기</li><li>라벨에 우리 집 막걸리 이름과 날짜 쓰기</li></ol>
+        <p class="say">"밥알 하나하나에 누룩이 닿도록 꼭꼭 주물러요. 이름은 우리 집 이야기로 지어 보세요."</p></div>
+      <div class="slot"><span class="t">75–95분</span><h3>순환 테이블 맛보기</h3><p>미리 빚어 둔 찬밥 막걸리 <span class="fill">시음 가능 여부 확인</span>, 술지게미 활용 음식, 찬밥 식혜(아이·운전자용). 막장과 채소 곁들임.</p></div>
+      <div class="slot table"><span class="t">95–110분</span><h3>우리 집 찬밥 약속</h3><p>아래 계산기로 우리 집 한 주 찬밥이 막걸리 몇 병이 되는지 보기. 찬밥 줄이기 실천 한 가지를 카드에 쓰기.</p></div>
+      <div class="slot"><span class="t">110–120분</span><h3>집에서 돌보는 법</h3><p>관찰 카드 나눠 주기: 22–25℃, 처음 2–3일만 하루 1–2번 젓기, 7–10일째 맑은 층이 생기면 걸러 냉장. 술지게미는 버리지 말고 다시 쓰기.</p></div>
+    </div>
+  </div>
+</section>
+
+<section id="recipe">
+  <span class="eyebrow">찬밥 레시피</span>
+  <h2>고두밥 대신 찬밥을 쓸 때</h2>
+  <div class="tbl wide"><table>
+    <thead><tr><th></th><th>고두밥 막걸리 (기존)</th><th>찬밥 막걸리 (오늘)</th></tr></thead>
+    <tbody>
+      <tr><td>밥 준비</td><td>쌀 불리기 + 찜기에 40–50분</td><td>남은 밥 그대로 (찌지 않음)</td></tr>
+      <tr><td>1인 분량</td><td>쌀 300g → 고두밥</td><td><b>찬밥 500g</b> (약 2–3공기)</td></tr>
+      <tr><td>누룩</td><td>쌀 무게의 20% (60g)</td><td><b>찬밥 무게의 10–12% (50–60g)</b></td></tr>
+      <tr><td>물</td><td>쌀 무게의 1.5배 (450ml)</td><td><b>찬밥 무게의 절반 (250ml)</b></td></tr>
+      <tr><td>왜 물이 적을까</td><td>고두밥은 꼬들한 밥</td><td>찬밥은 이미 물을 많이 머금고 있어요</td></tr>
+      <tr><td>맛</td><td>깔끔, 알코올 조금 더 높음</td><td>부드럽고 달큰, 걸쭉한 편</td></tr>
+    </tbody>
+  </table></div>
+  <p class="hint">찬밥 막걸리 비율은 집에서 많이 쓰는 시작 비율이에요. 밥이 진 밥인지 된 밥인지에 따라 다르니, 워크숍 전에 한 번 빚어 보고 물을 조절해 주세요.</p>
+</section>
+
+<section id="calc">
+  <span class="eyebrow">우리 집 계산기</span>
+  <h2>한 주 찬밥이 막걸리 몇 병?</h2>
+  <div class="calc">
+    <div class="inputs">
+      <div class="field"><label for="bowls">한 주에 남는 밥</label><input id="bowls" type="number" min="0" max="50" value="5"><small>공기 (1공기 약 200g)</small></div>
+      <div class="field"><label for="weeks">모으는 기간</label><input id="weeks" type="number" min="1" max="4" value="2"><small>주 (냉동해서 모으기)</small></div>
+    </div>
+    <p class="big" id="calcBig" aria-live="polite"></p>
+    <div class="tbl"><table><tbody id="calcBody"></tbody></table></div>
+    <p class="hint">예상 막걸리 양은 거른 뒤 대략이에요. 밥 상태와 거르는 방법에 따라 달라요.</p>
+  </div>
+</section>
+
+<section id="safe">
+  <span class="eyebrow">찬밥 안전</span>
+  <h2>이런 찬밥만 써요</h2>
+  <div class="safe">
+    <div class="ok"><b>써도 되는 밥</b><ul><li>지은 뒤 바로 식혀 냉장 보관한 지 1–2일 된 밥</li><li>한 공기씩 나눠 얼려 둔 밥 (녹여서)</li><li>흰쌀밥, 현미·잡곡밥도 가능</li></ul></div>
+    <div class="no"><b>쓰면 안 되는 밥</b><ul><li>상온에 오래 둔 밥, 쉰내·끈적임이 있는 밥</li><li>보온밥솥에서 하루 넘게 둔 노랗게 마른 밥</li><li>반찬·양념·국물이 섞인 밥, 먹다 남긴 그릇의 밥</li></ul></div>
+  </div>
+  <p class="hint">밥을 상온에 오래 두면 열에 강한 세균이 자랄 수 있어요. 남은 밥은 따뜻할 때 바로 한 공기씩 나눠 냉장·냉동하는 습관이 찬밥 막걸리의 첫걸음이에요.</p>
+</section>
+
+<section id="prep">
+  <span class="eyebrow">준비</span>
+  <h2>미리 챙길 것 (12명 기준)</h2>
+  <div class="tbl wide"><table>
+    <thead><tr><th>무엇</th><th>양</th><th>메모</th></tr></thead>
+    <tbody>
+      <tr><td>찬밥</td><td>1인 500g</td><td>참가자가 집에서 얼려 가져오기 + 카페에서 여분 3kg (전날 지어 식혀 냉장)</td></tr>
+      <tr><td>누룩</td><td>720g</td><td>전날 햇볕에 법제, 당일 1시간 전 물누룩으로 불리기</td></tr>
+      <tr><td>끓여 식힌 물</td><td>3L</td><td>전날 끓여 식혀 두기</td></tr>
+      <tr><td>병</td><td>1L 유리병 12개</td><td>열탕 소독, 천 덮개·고무줄·라벨</td></tr>
+      <tr><td>도구</td><td>저울, 큰 볼, 위생장갑, 주걱</td><td>모둠별 1세트</td></tr>
+      <tr><td>순환 테이블</td><td>찬밥 막걸리(1–2주 전 미리 빚기), 술지게미 활용 음식, 찬밥 식혜, 막장, 채소</td><td>식혜: 엿기름물 + 찬밥, 보온밥솥 6–8시간</td></tr>
+      <tr><td>나눔 자료</td><td>관찰 카드, 찬밥 약속 카드</td><td>인쇄</td></tr>
+    </tbody>
+  </table></div>
+  <p class="hint">모집 글에 "찬밥 2–3공기(500g)를 얼려서 가져오세요"를 꼭 넣어 주세요. 얼린 밥은 오는 동안 천천히 녹아 쓰기 좋아요. 아이스팩과 함께 가져오도록 안내해요.</p>
+</section>
+
+<section id="promo">
+  <span class="eyebrow">모집 글 초안</span>
+  <h2>바로 올릴 수 있게</h2>
+  <div class="promo">
+    <pre id="promoText">🌱 넷제로 에너지 카페 프로그램
+남은 찬밥으로 만드는 우리 집만의 막걸리
+
+냉장고 속 남은 찬밥, 버리지 마세요.
+누룩과 함께 치대면 열흘 뒤 우리 집 막걸리가 됩니다.
+
+✔ 찬밥이 술이 되는 발효 원리
+✔ 우리 집 이름을 붙인 막걸리 한 병 빚어 가기
+✔ 거르고 남은 술지게미까지 다시 쓰는 순환 이야기
+✔ 찬밥 막걸리 · 찬밥 식혜 맛보기
+
+불로 찌지 않고, 전기 없이, 미생물이 일하는 시간.
+버려질 밥 한 공기로 탄소를 줄이는 하루예요.
+
+📍 까치카페 (광명)
+⏱ 120분 · 성인 12명
+🍚 준비물: 찬밥 2–3공기(500g)를 얼려서 가져오세요
+🗓 일정 · 참가비: ○○
+✉️ 신청: DM 또는 프로필 링크
+
+#넷제로 #제로웨이스트 #찬밥막걸리 #까치카페 #광명카페 #막걸리빚기 #원데이클래스</pre>
+    <button class="copy" id="copyBtn" type="button">모집 글 복사</button>
+    <p class="copied" id="copied" aria-live="polite"></p>
+  </div>
+</section>
+
+<section id="care">
+  <span class="eyebrow">유의할 점</span>
+  <h2>열기 전에 꼭 확인할 것</h2>
+  <div class="note">
+    <span class="tag">주류 관련</span>
+    <ul>
+      <li>참가자가 빚은 술은 <b>집에서 직접 마시는 용도</b>로 안내해요. 판매하려면 주류 제조 면허가 필요해요.</li>
+      <li>카페에서 막걸리 시음을 하려면 영업 신고 종류(휴게음식점인지)에 따라 가능 여부가 달라요. 어렵다면 순환 테이블은 찬밥 식혜와 술지게미 음식으로만 차려도 충분해요.</li>
+      <li>시음은 성인만, 소량으로. 운전할 분과 아이에게는 찬밥 식혜를 드려요.</li>
+    </ul>
+  </div>
+  <div class="note">
+    <span class="tag">위생 관련</span>
+    <ul>
+      <li>찬밥은 '찬밥 안전' 기준을 통과한 것만 써요. 애매하면 카페 여분 밥으로 바꿔 드려요.</li>
+      <li>병과 도구는 열탕 소독, 손은 위생장갑.</li>
+    </ul>
+  </div>
+  <h3>정해서 채울 것</h3>
+  <ul class="check">
+    <li>워크숍 전 찬밥 막걸리 한 번 시험 빚기 (물 양 확인)</li>
+    <li>순환 테이블 메뉴: 술지게미 음식 무엇으로 할지</li>
+    <li>넷제로 프로그램 쪽에서 요구하는 탄소 절감 설명 자료가 있는지</li>
+    <li>일정과 참가비</li>
+  </ul>
+  <div class="links">
+    <a href="https://claude.ai/artifact/AZKo5hRfPaPwNLVRfBDM7h" target="_blank" rel="noopener">막걸리 빚기 교실<small>관찰일지 · 문제 해결 · 거르기</small></a>
+    <a href="https://claude.ai/artifact/Vc2hTzx9GHoHvPN9bQQuzv" target="_blank" rel="noopener">작가의 테이블<small>까치카페 원데이 워크숍</small></a>
+    <a href="https://claude.ai/artifact/MCeLxBynDYz8D2AqnMdPbM" target="_blank" rel="noopener">발효 낱말 사전<small>누룩, 당화, 효모</small></a>
+  </div>
+</section>
+
+<footer>까치카페 넷제로 에너지 카페 프로그램 기획안. 발효 원리와 술지게미 활용은 생활발효지도사 교재와 지난 수업 자료를 따랐어요. 찬밥 막걸리 비율은 가정용 시작 비율이라 시험 빚기로 맞춰 주세요.</footer>
+</div>
+
+<script>
+(function(){
+  const $=id=>document.getElementById(id);
+  function calc(){
+    const b=Math.max(0,+$('bowls').value||0),w=Math.max(1,+$('weeks').value||1);
+    const rice=b*w*200,n=rice*0.12,water=rice*0.5,out=rice*1.0,bottles=Math.floor(rice/500);
+    $('calcBig').textContent=rice?('찬밥 '+(rice/1000).toFixed(1)+'kg → 막걸리 약 '+(out/1000).toFixed(1)+'L (1L 병 '+Math.max(bottles,rice>=200?1:0)+'개에 빚기)'):'남는 밥이 없다면 이미 넷제로 밥상이에요!';
+    $('calcBody').innerHTML=rice?[
+      ['모은 찬밥',(rice/1000).toFixed(1)+'kg ('+b*w+'공기)'],
+      ['누룩 (12%)',Math.round(n)+'g'],
+      ['끓여 식힌 물 (밥의 절반)',Math.round(water)+'ml'],
+      ['거른 막걸리 (대략)','약 '+(out/1000).toFixed(1)+'L'],
+      ['버리지 않은 음식물 쓰레기',(rice/1000).toFixed(1)+'kg']
+    ].map(([k,v])=>'<tr><td>'+k+'</td><td class="num">'+v+'</td></tr>').join(''):'';
+  }
+  ['bowls','weeks'].forEach(i=>$(i).addEventListener('input',calc));calc();
+
+  const btn=$('copyBtn'),msg=$('copied'),pre=$('promoText');
+  btn.addEventListener('click',()=>{
+    const sel=()=>{const r=document.createRange();r.selectNodeContents(pre);const s=getSelection();s.removeAllRanges();s.addRange(r);msg.textContent='글을 선택해 두었어요. 길게 눌러 복사하세요.'};
+    try{navigator.clipboard.writeText(pre.textContent).then(()=>{msg.textContent='복사했어요. 붙여 넣어 쓰세요.'},sel)}catch(e){sel()}
+  });
+})();
+</script>

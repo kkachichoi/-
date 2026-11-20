@@ -1,0 +1,332 @@
+<title>작가의 테이블</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Jua&family=Gowun+Batang:wght@400;700&family=Gowun+Dodum&family=IBM+Plex+Sans+KR:wght@400;600&display=swap">
+<style>
+/* Layout: 까치카페의 원데이(150분) 계절 워크숍. '빚다' 세 갈래(흙·술·장) → 두 날의 진행표 → 맛 기록 카드 → 준비 → 모집 글. 제목·인용은 바탕체, 흙빛 액센트를 하나 더한다. */
+:root{
+  --bg:#f4f3ee;--paper:#ffffff;--ink:#22282f;--muted:#5f666d;--line:#dcdad0;
+  --clay:#a5603a;--clay-soft:#f2e2d6;
+  --yeast:#b98112;--yeast-soft:#f6e9c8;
+  --leaf:#4f7a3c;--leaf-soft:#e2eed9;
+  --warn:#b4472f;--warn-soft:#f7e0d9;--bubble:#2f74a8;
+  --display:"Gowun Batang",serif;
+  --round:"Jua","Gowun Dodum",system-ui,sans-serif;
+  --body:"Gowun Dodum","Apple SD Gothic Neo","Malgun Gothic",system-ui,sans-serif;
+  --data:"IBM Plex Sans KR","Apple SD Gothic Neo","Malgun Gothic",system-ui,sans-serif;
+}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
+  --bg:#171615;--paper:#211f1d;--ink:#ece8e1;--muted:#a49e96;--line:#36322e;
+  --clay:#e0946a;--clay-soft:#3d2a1f;--yeast:#e3ab3e;--yeast-soft:#3a3018;
+  --leaf:#8cc06f;--leaf-soft:#22311b;--warn:#ec8a72;--warn-soft:#3d221b;--bubble:#6fb3e6;color-scheme:dark}}
+:root[data-theme="dark"]{
+  --bg:#171615;--paper:#211f1d;--ink:#ece8e1;--muted:#a49e96;--line:#36322e;
+  --clay:#e0946a;--clay-soft:#3d2a1f;--yeast:#e3ab3e;--yeast-soft:#3a3018;
+  --leaf:#8cc06f;--leaf-soft:#22311b;--warn:#ec8a72;--warn-soft:#3d221b;--bubble:#6fb3e6;color-scheme:dark}
+*{box-sizing:border-box}
+body{background:var(--bg);color:var(--ink);font-family:var(--body);font-size:17px;line-height:1.75;
+  padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));padding-block:0 64px}
+.wrap{max-width:52rem;margin:0 auto}
+h1,h2,h3{font-family:var(--display);font-weight:700;line-height:1.3;text-wrap:balance;margin:0}
+h1{font-size:clamp(2.5rem,9vw,4rem);letter-spacing:-.01em}
+h2{font-size:1.7rem}h3{font-size:1.2rem}
+p{margin:0}
+a{color:var(--bubble)}
+ul,ol{margin:0;padding-left:1.25em;display:grid;gap:4px}
+.eyebrow{font-family:var(--data);font-size:.78rem;letter-spacing:.08em;color:var(--muted);font-weight:600}
+header{display:grid;gap:14px;padding-block:52px 28px}
+.sub{font-family:var(--display);font-size:1.3rem;color:var(--clay)}
+.lead{font-size:1.1rem;color:var(--muted);max-width:40rem}
+nav.toc{display:flex;flex-wrap:wrap;gap:6px}
+nav.toc a{font-size:.9rem;text-decoration:none;color:var(--ink);border:1.5px solid var(--line);background:var(--paper);border-radius:999px;padding:4px 12px}
+nav.toc a:focus-visible{outline:3px solid var(--bubble);outline-offset:2px}
+section{display:grid;gap:18px;padding-block:40px;border-top:1px dashed var(--line);scroll-margin-top:12px}
+
+/* 빚다 세 갈래 */
+.binda{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px}
+@media (max-width:620px){.binda{grid-template-columns:1fr}}
+.bd{border-radius:14px;padding:18px;display:grid;gap:6px;align-content:start;min-width:0}
+.bd .verb{font-family:var(--display);font-weight:700;font-size:1.5rem}
+.bd .what{font-family:var(--data);font-size:.75rem;font-weight:600;color:var(--muted)}
+.b1{background:var(--clay-soft)}.b2{background:var(--yeast-soft)}.b3{background:var(--leaf-soft)}
+.quote{font-family:var(--display);font-size:1.12rem;border-left:3px solid var(--clay);padding:2px 0 2px 16px}
+
+.overview{display:grid;grid-template-columns:repeat(auto-fit,minmax(11rem,1fr));gap:12px}
+.ov{background:var(--paper);border:1px solid var(--line);border-radius:10px;padding:14px 16px;display:grid;gap:2px;min-width:0}
+.ov .k{font-family:var(--data);font-size:.75rem;color:var(--muted);font-weight:600;letter-spacing:.04em}
+.ov .v{font-family:var(--round);font-size:1.15rem}
+
+/* 두 날 */
+.days{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px}
+@media (max-width:680px){.days{grid-template-columns:1fr}}
+.day{background:var(--paper);border:2px solid var(--ink);border-radius:16px;padding:18px;display:grid;gap:14px;align-content:start;min-width:0}
+.day .dhead{display:grid;gap:2px}
+.day .dname{font-family:var(--display);font-weight:700;font-size:1.4rem}
+.day .dmeta{font-family:var(--data);font-size:.8rem;color:var(--muted);font-weight:600}
+.timeline{display:grid;gap:0;border-left:3px solid var(--ink);margin-left:6px}
+.slot{display:grid;gap:4px;padding:0 0 16px 16px;position:relative}
+.slot::before{content:"";position:absolute;left:-9px;top:6px;width:15px;height:15px;border-radius:50%;background:var(--paper);border:3px solid var(--ink)}
+.slot.clay::before{background:var(--clay);border-color:var(--clay)}
+.slot.brew::before{background:var(--yeast);border-color:var(--yeast)}
+.slot.table::before{background:var(--leaf);border-color:var(--leaf)}
+.slot .t{font-family:var(--data);font-size:.78rem;font-weight:600;color:var(--muted);font-variant-numeric:tabular-nums}
+.slot h3{font-size:1.05rem;font-family:var(--round);font-weight:400}
+.slot p,.slot li{font-size:.93rem}
+.say{border-left:4px solid var(--clay);padding:2px 0 2px 12px;font-size:.95rem}
+.say::before{content:"작가의 말 · ";font-family:var(--data);font-size:.72rem;font-weight:600;color:var(--clay)}
+.legend{display:flex;flex-wrap:wrap;gap:12px;font-size:.85rem;color:var(--muted)}
+.legend i{display:inline-block;width:11px;height:11px;border-radius:50%;margin-right:5px;vertical-align:middle}
+
+.gap{background:var(--paper);border:1px solid var(--line);border-radius:12px;padding:16px 18px;display:grid;gap:10px}
+.track{display:grid;grid-template-columns:repeat(22,minmax(0,1fr));gap:2px}
+.track span{height:22px;border-radius:3px;background:var(--line)}
+.track .c{background:var(--clay)}.track .y{background:var(--yeast)}.track .f{background:var(--bubble);opacity:.7}.track .s{background:var(--leaf)}
+.track-lab{display:flex;justify-content:space-between;font-family:var(--data);font-size:.75rem;color:var(--muted)}
+
+/* 시음 카드 */
+.taste{background:var(--paper);border:2px solid var(--ink);border-radius:16px;padding:20px;display:grid;gap:14px}
+.taste-top{display:flex;flex-wrap:wrap;gap:8px;align-items:center}
+.taste-top button{font:inherit;font-family:var(--round);border:2px solid var(--line);background:var(--bg);color:var(--ink);border-radius:999px;padding:4px 14px;cursor:pointer}
+.taste-top button[aria-pressed="true"]{border-color:var(--ink);background:var(--ink);color:var(--paper)}
+.taste-top button:focus-visible,.rate button:focus-visible,.copy:focus-visible{outline:3px solid var(--bubble);outline-offset:2px}
+.rows{display:grid;gap:10px}
+.row{display:grid;grid-template-columns:7rem minmax(0,1fr);gap:12px;align-items:center}
+.row .lab{font-family:var(--round)}
+.row .lab small{display:block;font-family:var(--body);font-size:.78rem;color:var(--muted)}
+.rate{display:flex;gap:6px;flex-wrap:wrap}
+.rate button{width:2.3rem;height:2.3rem;border-radius:50%;border:2px solid var(--line);background:var(--bg);color:var(--ink);font-family:var(--data);font-weight:600;cursor:pointer}
+.rate button.on{background:var(--clay);border-color:var(--clay);color:var(--paper)}
+.line-out{font-family:var(--display);font-size:1.15rem;background:var(--bg);border-radius:10px;padding:12px 14px;min-height:3rem}
+.hint{font-size:.88rem;color:var(--muted)}
+
+.tbl{overflow-x:auto}
+table{border-collapse:collapse;width:100%;font-size:.94rem;background:var(--paper)}
+th,td{border-bottom:1px solid var(--line);padding:9px 12px;text-align:left;vertical-align:top}
+th{font-family:var(--data);font-size:.75rem;color:var(--muted);font-weight:600;letter-spacing:.04em}
+.wide table{min-width:34rem}
+.fill{background:var(--yeast-soft);border-radius:4px;padding:0 6px;font-family:var(--data);font-size:.85rem}
+
+.promo{background:var(--paper);border:2px solid var(--ink);border-radius:16px;padding:18px 20px;display:grid;gap:12px}
+.promo pre{margin:0;white-space:pre-wrap;font-family:var(--body);font-size:1rem;line-height:1.7;background:var(--bg);border-radius:10px;padding:14px 16px;user-select:all}
+.copy{font:inherit;font-family:var(--round);border:2px solid var(--ink);background:var(--ink);color:var(--paper);border-radius:999px;padding:6px 18px;cursor:pointer;justify-self:start}
+.copied{font-size:.88rem;color:var(--leaf);min-height:1.4em}
+
+.note{background:var(--paper);border:1px solid var(--line);border-radius:10px;padding:14px 16px;display:grid;gap:6px}
+.note .tag{font-family:var(--data);font-size:.75rem;font-weight:600;letter-spacing:.06em;color:var(--warn)}
+.check{display:grid;gap:8px;margin:0;padding:0;list-style:none}
+.check li{background:var(--paper);border:1px solid var(--line);border-radius:10px;padding:10px 14px;display:flex;gap:10px}
+.check li::before{content:"?";font-family:var(--round);color:var(--warn);flex:none}
+.links{display:flex;flex-wrap:wrap;gap:10px}
+.links a{background:var(--paper);border:1px solid var(--line);border-radius:10px;padding:10px 14px;text-decoration:none;color:var(--ink);display:grid}
+.links a small{color:var(--muted);font-size:.82rem}
+footer{padding-top:28px;color:var(--muted);font-size:.85rem}
+</style>
+
+<div class="wrap">
+<header>
+  <span class="eyebrow">까치카페 (광명) · 원데이 워크숍 기획안</span>
+  <h1>작가의 테이블</h1>
+  <p class="sub">조각가가 차리는 늦가을 막걸리 술상</p>
+  <p class="lead">하루 150분. 작가가 차린 술상에 앉아 막걸리를 맛보고, 내 막걸리 한 병을 빚고, 흙으로 그 술을 담을 잔을 빚어요. 술은 집에서 익고, 잔은 가마에서 익어요.</p>
+  <nav class="toc" aria-label="차례">
+    <a href="#idea">빚다</a><a href="#overview">한눈에</a><a href="#flow">150분 진행</a><a href="#after">워크숍 뒤</a><a href="#taste">맛 기록 카드</a><a href="#prep">준비</a><a href="#promo">모집 글</a><a href="#care">유의할 점</a>
+  </nav>
+</header>
+
+<section id="idea">
+  <span class="eyebrow">워크숍의 뼈대</span>
+  <h2>흙도, 술도, 상도 '빚는다'</h2>
+  <div class="binda">
+    <div class="bd b3"><span class="what">계절의 상</span><span class="verb">상을 차리다</span><p>작가가 좋아하는 막걸리와 직접 담근 막장, 제철 재료로 차린 늦가을 술상에 먼저 앉아요.</p></div>
+    <div class="bd b2"><span class="what">누룩의 시간</span><span class="verb">술을 빚다</span><p>쌀과 누룩을 손으로 치대 내 막걸리 한 병을 담아 가요. 집에서 열흘이면 익어요.</p></div>
+    <div class="bd b1"><span class="what">조각가의 손</span><span class="verb">흙을 빚다</span><p>그 술을 담을 잔을 손으로 빚고, 구름산에서 주운 잎으로 계절의 무늬를 남겨요.</p></div>
+  </div>
+  <p class="quote">오늘 빚은 술은 집에서 익고, 오늘 빚은 잔은 가마에서 익는다. 둘이 다 익으면, 내 잔에 내 술을 따른다.</p>
+</section>
+
+<section id="overview">
+  <span class="eyebrow">한눈에</span>
+  <h2>무엇을, 얼마나</h2>
+  <div class="overview">
+    <div class="ov"><span class="k">대상</span><span class="v">성인 8–12명</span></div>
+    <div class="ov"><span class="k">시간</span><span class="v">하루 150분</span></div>
+    <div class="ov"><span class="k">맛보기</span><span class="v">작가의 술상</span></div>
+    <div class="ov"><span class="k">빚기 1</span><span class="v">내 막걸리 한 병</span></div>
+    <div class="ov"><span class="k">빚기 2</span><span class="v">내 막걸리 잔</span></div>
+    <div class="ov"><span class="k">가져가는 것</span><span class="v">술 병 + 관찰 카드 + 한 줄 엽서</span></div>
+  </div>
+</section>
+
+<section id="flow">
+  <span class="eyebrow">진행 · 150분</span>
+  <h2>하루의 흐름</h2>
+  <div class="legend"><span><i style="background:var(--leaf)"></i>테이블</span><span><i style="background:var(--yeast)"></i>술</span><span><i style="background:var(--clay)"></i>흙</span></div>
+  <div class="day">
+    <div class="timeline">
+      <div class="slot"><span class="t">0–15분</span><h3>작가의 이야기</h3><p>13년째 작업실 겸 카페. 흙과 음식으로 계절을 빚는 이야기, 작업실 둘러보기.</p></div>
+      <div class="slot table"><span class="t">15–40분</span><h3>작가의 술상 맛보기</h3><p>작가가 좋아하는 막걸리 <span class="fill">이름 넣기</span>, 보양 막장과 삼척 듬뿍장, 제철 채소. 맛 기록 카드 쓰기.</p>
+        <p class="say">"제가 이 막걸리를 좋아하는 이유는 …"</p></div>
+      <div class="slot brew"><span class="t">40–70분</span><h3>내 막걸리 빚기</h3><ul><li>누룩 속 곰팡이와 효모 이야기 (5분)</li><li>미리 쪄서 25℃ 아래로 식혀 둔 고두밥 + 미리 불려 둔 물누룩을 받아 손으로 10분 치대기</li><li>1.5L 병에 70%만 담고 천으로 덮기, 라벨에 이름과 날짜</li></ul>
+        <p class="say">"흙을 주무르듯 쌀을 주물러요. 손의 온기가 미생물을 깨워요."</p></div>
+      <div class="slot"><span class="t">70–75분</span><h3>쉬는 시간</h3><p>손 씻고 흙 작업대로 자리 옮기기.</p></div>
+      <div class="slot clay"><span class="t">75–130분</span><h3>내 막걸리 잔 빚기</h3><ul><li>흙 한 덩이를 손으로 눌러 펴 올리는 핀칭으로 사발 모양 잔</li><li>구름산에서 주운 잎을 눌러 무늬 찍기</li><li>굽 안쪽에 이니셜 새기기</li></ul>
+        <p class="say">"잔은 손바닥 안에서 자라요. 막걸리 한 사발이 편하게 담길 만큼 키워 보세요."</p></div>
+      <div class="slot table"><span class="t">130–150분</span><h3>한 줄 남기기 · 안내</h3><p>맛 기록 카드 문장으로 시작해 엽서에 한 줄. 집에서 술 돌보는 법(관찰 카드)과 잔 찾는 날 안내.</p></div>
+    </div>
+  </div>
+  <p class="hint">고두밥은 쌀을 전날 불려 두고 워크숍 시작 1시간 반 전에 찌기 시작해, 넓게 펴서 식혀 두면 40분에 바로 쓸 수 있어요.</p>
+</section>
+
+<section id="after">
+  <span class="eyebrow">워크숍 뒤</span>
+  <h2>술은 집에서, 잔은 가마에서</h2>
+  <div class="gap">
+    <div class="track" role="img" aria-label="0일 워크숍, 1일부터 10일 집에서 술 익히기, 10일째 거르기, 3주 뒤 잔 찾기">
+      <span class="s"></span><span class="y"></span><span class="y"></span><span class="y"></span><span class="y"></span><span class="y"></span><span class="y"></span><span class="y"></span><span class="y"></span><span class="y"></span><span class="y"></span><span class="f"></span><span class="f"></span><span class="f"></span><span class="f"></span><span class="f"></span><span class="f"></span><span class="f"></span><span class="f"></span><span class="f"></span><span class="f"></span><span class="c"></span>
+    </div>
+    <div class="track-lab"><span>0일 · 워크숍</span><span>10일 · 집에서 거르기</span><span>3주 · 잔 찾는 날</span></div>
+    <ul>
+      <li><b>술 (집에서)</b>: 22–25℃에 두고 처음 2–3일만 하루 1–2번 젓기 → 7–10일째 맑은 층이 생기면 걸러 냉장</li>
+      <li><b>잔 (작가가)</b>: 1–2주 말리기 → 초벌 → 식기용 유약 → 재벌 → 3주쯤 뒤 까치카페에서 찾아가기</li>
+      <li><b>잔 찾는 날</b>: 걸러 둔 막걸리를 조금 들고 오면, 카페에서 내 잔에 처음 따라 볼 수 있어요</li>
+    </ul>
+  </div>
+</section>
+
+<section id="taste">
+  <span class="eyebrow">활동지</span>
+  <h2>맛 기록 카드</h2>
+  <p>막걸리를 고르고 다섯 가지 맛에 1–5점을 매기면 한 줄 문장이 나와요. 엽서의 첫 줄로 써요.</p>
+  <div class="taste">
+    <div class="taste-top" role="group" aria-label="막걸리 고르기">
+      <button type="button" id="m1" aria-pressed="true">작가의 막걸리</button>
+      <button type="button" id="m2" aria-pressed="false">비교용 막걸리</button>
+    </div>
+    <div class="rows" id="rows"></div>
+    <p class="line-out" id="lineOut" aria-live="polite"></p>
+    <p class="hint">점수는 이 화면에서만 쓰이고 저장되지 않아요. 종이 카드로 나눠 주어도 같은 방식이에요.</p>
+  </div>
+</section>
+
+<section id="prep">
+  <span class="eyebrow">준비</span>
+  <h2>미리 챙길 것</h2>
+  <div class="tbl wide"><table>
+    <thead><tr><th>갈래</th><th>준비물 (12명 기준)</th><th>언제</th></tr></thead>
+    <tbody>
+      <tr><td>테이블</td><td>작가의 막걸리 <span class="fill">이름 · 병 수</span>, 비교용 막걸리 1종, 막장 2종, 제철 채소, 작은 잔, 물</td><td>막장은 1–2주 전 담그기</td></tr>
+      <tr><td>술</td><td>쌀 3.6kg, 누룩 720g, 끓여 식힌 물 5.4L (1인 쌀 300g · 누룩 60g · 물 450ml), 1.5L 병 12개, 천 덮개, 고무줄, 라벨</td><td>전날 쌀 불리기 · 누룩 법제, 당일 아침 고두밥</td></tr>
+      <tr><td>술</td><td>관찰 카드 (0–10일 돌보기, 거르는 신호)</td><td>인쇄</td></tr>
+      <tr><td>흙</td><td>1인 흙 약 500g, 물 그릇, 나무 도구, 잎, 이름표 판, 앞치마</td><td>1주 전 구름산에서 잎 모으기</td></tr>
+      <tr><td>흙</td><td>식기용 무연 유약, 가마 일정 <span class="fill">작업실 가마 / 외부 소성</span></td><td>워크숍 뒤 3주</td></tr>
+      <tr><td>마무리</td><td>엽서, 펜, 잔 찾는 날 안내 카드</td><td></td></tr>
+    </tbody>
+  </table></div>
+  <p class="hint">1인 쌀 300g이면 집에서 거른 뒤 막걸리 약 600ml 안팎이 나와요. 병이 무거우니 들고 갈 장바구니를 안내해 주세요.</p>
+</section>
+
+<section id="promo">
+  <span class="eyebrow">인스타그램 모집 글 초안</span>
+  <h2>바로 올릴 수 있게</h2>
+  <div class="promo">
+    <pre id="promoText">🍶 작가의 테이블 | 늦가을 막걸리 원데이 워크숍
+
+흙을 빚는 조각가가 술을 빚고, 계절을 차립니다.
+
+작가가 좋아하는 막걸리와 직접 담근 막장으로 차린
+늦가을 술상에 먼저 앉아요.
+그리고 쌀과 누룩을 손으로 치대 내 막걸리 한 병을 빚고,
+흙으로 그 술을 담을 잔을 빚어요.
+
+술은 집에서 열흘 동안 익고,
+잔은 가마에서 구워져 3주 뒤 까치카페에서 찾아가요.
+다 익으면, 내 잔에 내 술을 따르는 날.
+
+📍 까치카페 (광명)
+⏱ 150분 · 성인 8–12명
+🗓 일정 · 참가비: ○○
+✉️ 신청: DM 또는 프로필 링크
+
+#작가의테이블 #까치카페 #광명카페 #원데이클래스 #막걸리빚기 #도예체험 #계절을차리는조각가</pre>
+    <button class="copy" id="copyBtn" type="button">모집 글 복사</button>
+    <p class="copied" id="copied" aria-live="polite"></p>
+  </div>
+</section>
+
+<section id="care">
+  <span class="eyebrow">유의할 점</span>
+  <h2>열기 전에 꼭 확인할 것</h2>
+  <div class="note">
+    <span class="tag">주류 관련</span>
+    <ul>
+      <li>카페가 <b>휴게음식점</b>으로 신고되어 있으면 술을 팔 수 없어요. 시판 막걸리 시음을 어떤 형태로 할 수 있는지 관할 구청에 확인해 주세요.</li>
+      <li>참가자가 빚은 술은 <b>집에서 직접 마시는 용도</b>로 안내해요. 판매하려면 주류 제조 면허가 필요해요.</li>
+      <li>시음은 성인만, 소량으로. 운전할 분은 향만 맡도록 안내해요.</li>
+    </ul>
+  </div>
+  <div class="note">
+    <span class="tag">잔 관련</span>
+    <ul>
+      <li>술을 담는 잔이니 <b>식기용 무연 유약</b>을 써요.</li>
+      <li>손으로 빚은 잔은 두께가 고르지 않아 터질 수 있으니 천천히 충분히 말려요.</li>
+    </ul>
+  </div>
+  <h3>정해서 채울 것</h3>
+  <ul class="check">
+    <li>작가가 좋아하는 막걸리 이름과 그 이유 한 줄</li>
+    <li>가마: 작업실 가마로 구울지, 외부 공방에 맡길지</li>
+    <li>잔 찾는 날짜 (워크숍 3주 뒤 즈음)</li>
+    <li>일정과 참가비</li>
+  </ul>
+  <div class="links">
+    <a href="https://claude.ai/artifact/AZKo5hRfPaPwNLVRfBDM7h" target="_blank" rel="noopener">막걸리 빚기 교실<small>관찰일지와 문제 해결</small></a>
+    <a href="https://claude.ai/artifact/Xw8kubKpDKDEsyQnu7eMXG" target="_blank" rel="noopener">나만의 막장 교실<small>술상에 올릴 막장</small></a>
+    <a href="https://claude.ai/artifact/ABW1TwHtysnyLPvPhoS7qJ" target="_blank" rel="noopener">막장 수업 노트<small>보양 막장 · 듬뿍장 레시피</small></a>
+  </div>
+</section>
+
+<footer>까치카페 원데이 워크숍 기획안. 술 빚기 분량은 '막걸리 빚기 교실'의 가정용 단양주 비율(쌀 1 : 누룩 0.2 : 물 1.5), 막장은 생활발효지도사 공부 모임 수업 레시피를 따랐어요.</footer>
+</div>
+
+<script>
+(function(){
+  const F=[['단맛','혀끝에 남는 달큰함'],['신맛','새콤한 정도'],['탄산','톡 쏘는 느낌'],['묵직함','입안을 채우는 무게'],['누룩향','구수하고 쿰쿰한 향']];
+  const W={
+    '단맛':['거의 달지 않은','은은하게 단','달큰한','꿀처럼 단','조청처럼 진하게 단'],
+    '신맛':['신맛 없이 순한','살짝 새콤한','새콤한','시큼한','식초 쪽으로 기운'],
+    '탄산':['잔잔한','숨 쉬듯 기포가 오르는','톡 쏘는','팡팡 터지는','샴페인처럼 터지는'],
+    '묵직함':['물처럼 가벼운','산뜻한','부드러운','묵직한','죽처럼 걸쭉한'],
+    '누룩향':['향이 맑은','쌀 향이 나는','구수한','누룩 냄새 짙은','곳간 냄새가 나는']
+  };
+  const state={m1:[3,2,3,3,2],m2:[2,4,4,2,2]};
+  let cur='m1';
+  const rows=document.getElementById('rows'),out=document.getElementById('lineOut');
+  function render(){
+    rows.innerHTML='';
+    F.forEach(([k,sub],i)=>{
+      const r=document.createElement('div');r.className='row';
+      r.innerHTML='<span class="lab">'+k+'<small>'+sub+'</small></span><div class="rate" role="group" aria-label="'+k+' 점수"></div>';
+      const g=r.querySelector('.rate');
+      for(let n=1;n<=5;n++){const b=document.createElement('button');b.type='button';b.id=cur+'-'+i+'-'+n;b.textContent=n;b.setAttribute('aria-label',k+' '+n+'점');
+        if(state[cur][i]>=n)b.classList.add('on');
+        b.onclick=()=>{state[cur][i]=n;render()};g.appendChild(b)}
+      rows.appendChild(r);
+    });
+    const s=state[cur];
+    const top=s.map((v,i)=>[v,i]).sort((a,b)=>b[0]-a[0]);
+    const a=W[F[top[0][1]][0]][s[top[0][1]]-1],b=W[F[top[1][1]][0]][s[top[1][1]]-1],c=W['묵직함'][s[3]-1];
+    out.textContent='"'+a+', '+b+' 막걸리. 한 모금이 '+c+' 늦가을 오후를 데려온다."';
+  }
+  ['m1','m2'].forEach(id=>document.getElementById(id).addEventListener('click',()=>{
+    cur=id;document.querySelectorAll('.taste-top button').forEach(x=>x.setAttribute('aria-pressed',x.id===id?'true':'false'));render()}));
+  render();
+
+  const btn=document.getElementById('copyBtn'),msg=document.getElementById('copied'),pre=document.getElementById('promoText');
+  btn.addEventListener('click',()=>{
+    const txt=pre.textContent;
+    const sel=()=>{const r=document.createRange();r.selectNodeContents(pre);const s=getSelection();s.removeAllRanges();s.addRange(r);msg.textContent='글을 선택해 두었어요. 길게 눌러 복사하세요.'};
+    try{navigator.clipboard.writeText(txt).then(()=>{msg.textContent='복사했어요. 인스타그램에 붙여 넣으세요.'},sel)}catch(e){sel()}
+  });
+})();
+</script>

@@ -1,0 +1,516 @@
+<title>효모의 설탕 잔치</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Jua&family=Gowun+Dodum&family=IBM+Plex+Sans+KR:wght@400;600&display=swap">
+<style>
+/* Layout: 한 줄 기둥(약 46rem) 위에 관찰일지처럼 이어지는 단원들. 시뮬레이션만 넓게 펼친다. */
+:root{
+  --bg:#f3f6f1;          /* 쌀겨빛 연녹 종이 */
+  --paper:#ffffff;
+  --ink:#1f2b3a;         /* 남색 잉크 */
+  --muted:#5b6878;
+  --line:#d6ded3;
+  --yeast:#c98a12;       /* 효모 호박색 */
+  --yeast-soft:#f6e7c4;
+  --bubble:#2f7fb8;      /* 이산화탄소 거품 파랑 */
+  --bubble-soft:#dcebf6;
+  --sour:#4f8a3c;        /* 유산균·초산균 초록 */
+  --sour-soft:#e1efd9;
+  --warn:#b4472f;
+  --warn-soft:#f7e0d9;
+  --display:"Jua","Gowun Dodum",system-ui,sans-serif;
+  --body:"Gowun Dodum","Apple SD Gothic Neo","Malgun Gothic",system-ui,sans-serif;
+  --data:"IBM Plex Sans KR","Apple SD Gothic Neo","Malgun Gothic",system-ui,sans-serif;
+}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
+  --bg:#141a20;--paper:#1c242c;--ink:#e6ecef;--muted:#9aa8b4;--line:#2e3a44;
+  --yeast:#e3a93a;--yeast-soft:#3a2f17;--bubble:#6fb3e6;--bubble-soft:#183245;
+  --sour:#86c06f;--sour-soft:#1f3319;--warn:#ec8a72;--warn-soft:#3d221b;color-scheme:dark}}
+:root[data-theme="dark"]{
+  --bg:#141a20;--paper:#1c242c;--ink:#e6ecef;--muted:#9aa8b4;--line:#2e3a44;
+  --yeast:#e3a93a;--yeast-soft:#3a2f17;--bubble:#6fb3e6;--bubble-soft:#183245;
+  --sour:#86c06f;--sour-soft:#1f3319;--warn:#ec8a72;--warn-soft:#3d221b;color-scheme:dark}
+
+*{box-sizing:border-box}
+body{background:var(--bg);color:var(--ink);font-family:var(--body);font-size:17px;line-height:1.75;
+  padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));padding-block:0 64px}
+.wrap{max-width:46rem;margin:0 auto}
+h1,h2,h3{font-family:var(--display);font-weight:400;line-height:1.3;text-wrap:balance;margin:0}
+h1{font-size:clamp(2.2rem,7vw,3.4rem)}
+h2{font-size:1.75rem}
+h3{font-size:1.2rem}
+p{margin:0}
+.eyebrow{font-family:var(--data);font-size:.78rem;letter-spacing:.08em;color:var(--muted);font-weight:600}
+section{display:grid;gap:18px;padding-block:44px;border-top:1px dashed var(--line)}
+header{display:grid;gap:16px;padding-block:48px 36px}
+.lead{font-size:1.15rem;color:var(--muted);max-width:38rem}
+
+/* 핵심 공식 */
+.formula{display:flex;flex-wrap:wrap;align-items:center;gap:10px;font-family:var(--display);font-size:1.35rem;
+  background:var(--paper);border:2px solid var(--ink);border-radius:14px;padding:18px 20px}
+.chip{padding:4px 14px;border-radius:999px;white-space:nowrap}
+.c-sugar{background:var(--yeast-soft)}
+.c-yeast{background:var(--yeast);color:var(--paper)}
+.c-alc{background:var(--sour-soft)}
+.c-gas{background:var(--bubble-soft);color:var(--ink)}
+.arrow{color:var(--muted)}
+
+.say{border-left:4px solid var(--yeast);padding:4px 0 4px 16px;font-size:1.08rem}
+.say b{font-family:var(--display);font-weight:400;color:var(--yeast)}
+
+.note{background:var(--paper);border:1px solid var(--line);border-radius:10px;padding:16px 18px;display:grid;gap:6px}
+.note .tag{font-family:var(--data);font-size:.75rem;font-weight:600;letter-spacing:.06em;color:var(--bubble)}
+
+.facts{display:grid;grid-template-columns:repeat(auto-fit,minmax(13rem,1fr));gap:12px}
+.fact{background:var(--paper);border:1px solid var(--line);border-radius:10px;padding:14px 16px;display:grid;gap:4px;min-width:0}
+.fact .k{font-family:var(--data);font-size:.78rem;color:var(--muted);font-weight:600}
+.fact .v{font-family:var(--display);font-size:1.25rem}
+
+/* 시뮬레이션 */
+.lab{background:var(--paper);border:2px solid var(--ink);border-radius:16px;padding:20px;display:grid;gap:18px}
+.lab-grid{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.1fr);gap:20px;align-items:start}
+@media (max-width:680px){.lab-grid{grid-template-columns:1fr}}
+.ctrls{display:grid;gap:14px}
+fieldset{border:0;margin:0;padding:0;display:grid;gap:6px}
+legend{font-family:var(--display);font-size:1.05rem;margin-bottom:4px}
+.seg{display:flex;flex-wrap:wrap;gap:6px}
+.seg input{position:absolute;opacity:0;pointer-events:none}
+.seg label{border:1.5px solid var(--line);border-radius:999px;padding:5px 12px;cursor:pointer;font-size:.95rem;background:var(--bg)}
+.seg input:checked+label{border-color:var(--ink);background:var(--ink);color:var(--paper)}
+.seg input:focus-visible+label{outline:3px solid var(--bubble);outline-offset:2px}
+canvas{width:100%;max-width:100%;aspect-ratio:4/5;display:block;border-radius:12px;background:var(--bg)}
+.meters{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px;font-family:var(--data);font-size:.8rem}
+.meter{display:grid;gap:4px}
+.bar{height:8px;border-radius:4px;background:var(--line);overflow:hidden}
+.bar i{display:block;height:100%;width:0;transition:width .4s}
+#mY i{background:var(--yeast)}#mG i{background:var(--bubble)}#mA i{background:var(--sour)}
+.verdict{border-radius:10px;padding:14px 16px;display:grid;gap:4px;background:var(--bg)}
+.verdict h3{font-size:1.15rem}
+.verdict.good{background:var(--sour-soft)}
+.verdict.grow{background:var(--bubble-soft)}
+.verdict.bad{background:var(--warn-soft)}
+.verdict .why{font-size:.95rem;color:var(--muted)}
+.btn{font:inherit;font-family:var(--display);border:2px solid var(--ink);background:var(--paper);color:var(--ink);border-radius:999px;padding:6px 16px;cursor:pointer;justify-self:start}
+.btn:focus-visible{outline:3px solid var(--bubble);outline-offset:2px}
+
+/* 릴레이 */
+.relay{display:grid;grid-template-columns:repeat(5,auto);align-items:center;justify-content:start;gap:8px;overflow-x:auto;padding-bottom:4px}
+.relay .stop{background:var(--paper);border:1px solid var(--line);border-radius:10px;padding:10px 14px;text-align:center;min-width:6.5rem}
+.relay .stop b{display:block;font-family:var(--display);font-weight:400;font-size:1.15rem}
+.relay .stop small{color:var(--muted);font-size:.8rem}
+.relay .who{font-family:var(--data);font-size:.78rem;color:var(--muted);text-align:center;line-height:1.3}
+.relay .who::after{content:"→";display:block;font-size:1.3rem;color:var(--ink)}
+
+.tbl{overflow-x:auto}
+table{border-collapse:collapse;width:100%;min-width:34rem;font-size:.95rem;background:var(--paper)}
+th,td{border-bottom:1px solid var(--line);padding:10px 12px;text-align:left;vertical-align:top}
+th{font-family:var(--data);font-size:.78rem;color:var(--muted);font-weight:600;letter-spacing:.04em}
+td:first-child{font-family:var(--display);font-size:1.05rem;white-space:nowrap}
+
+/* Q&A */
+details{background:var(--paper);border:1px solid var(--line);border-radius:10px}
+details+details{margin-top:-6px}
+summary{cursor:pointer;padding:14px 18px;font-family:var(--display);font-size:1.08rem;list-style:none;display:flex;gap:10px}
+summary::-webkit-details-marker{display:none}
+summary::before{content:"Q";color:var(--yeast);flex:none}
+summary:focus-visible{outline:3px solid var(--bubble);outline-offset:-3px;border-radius:10px}
+details .a{padding:0 18px 16px 42px;display:grid;gap:8px}
+details .a .kid{background:var(--yeast-soft);border-radius:8px;padding:8px 12px}
+
+/* 실험 */
+.steps{display:grid;gap:10px;margin:0;padding:0;list-style:none;counter-reset:s}
+.steps li{counter-increment:s;display:grid;grid-template-columns:2rem 1fr;gap:10px}
+.steps li::before{content:counter(s);font-family:var(--display);width:2rem;height:2rem;border-radius:50%;background:var(--ink);color:var(--paper);display:grid;place-items:center}
+.bottles{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px}
+.bottle{background:var(--paper);border:1px solid var(--line);border-radius:10px;padding:12px;display:grid;gap:4px;font-size:.92rem;min-width:0}
+.bottle b{font-family:var(--display);font-weight:400;font-size:1.05rem}
+.bottle .res{font-family:var(--data);font-size:.8rem;color:var(--muted)}
+@media (max-width:520px){.bottles{grid-template-columns:1fr}}
+
+.plan{display:grid;gap:0;border:1px solid var(--line);border-radius:10px;background:var(--paper);overflow:hidden}
+.plan div{display:grid;grid-template-columns:5.2rem 1fr;gap:12px;padding:12px 16px;border-bottom:1px solid var(--line)}
+.plan div:last-child{border-bottom:0}
+.plan .t{font-family:var(--data);font-size:.85rem;color:var(--muted);font-variant-numeric:tabular-nums;font-weight:600}
+
+.quiz{display:grid;gap:10px}
+.q{background:var(--paper);border:1px solid var(--line);border-radius:10px;padding:14px 16px;display:grid;gap:10px}
+.opts{display:flex;flex-wrap:wrap;gap:8px}
+.opts button{font:inherit;font-size:.95rem;border:1.5px solid var(--line);background:var(--bg);color:var(--ink);border-radius:999px;padding:4px 14px;cursor:pointer}
+.opts button:focus-visible{outline:3px solid var(--bubble);outline-offset:2px}
+.opts button.right{background:var(--sour-soft);border-color:var(--sour)}
+.opts button.wrong{background:var(--warn-soft);border-color:var(--warn)}
+.fb{font-size:.92rem;color:var(--muted)}
+footer{padding-top:32px;color:var(--muted);font-size:.85rem}
+@media (prefers-reduced-motion:reduce){.bar i{transition:none}}
+</style>
+
+<div class="wrap">
+
+<header>
+  <span class="eyebrow">생활발효지도사 수업 자료 · 알코올 발효</span>
+  <h1>효모의 설탕 잔치</h1>
+  <p class="lead">눈에 안 보이는 작은 생물 '효모'가 설탕을 먹고 술과 거품을 만드는 이야기예요. 초등학생에게 설명하는 말투로 쓰고, 선생님이 알아 두면 좋은 교재 내용은 따로 표시했어요.</p>
+</header>
+
+<section>
+  <span class="eyebrow">한 줄로 말하면</span>
+  <h2>효모가 설탕을 먹고, 술과 방귀를 내놓아요</h2>
+  <div class="formula" role="img" aria-label="당을 효모가 먹으면 알코올과 이산화탄소가 생긴다">
+    <span class="chip c-sugar">설탕(당)</span><span class="arrow">+</span>
+    <span class="chip c-yeast">효모</span><span class="arrow">→</span>
+    <span class="chip c-alc">알코올(술)</span><span class="arrow">+</span>
+    <span class="chip c-gas">이산화탄소(거품)</span>
+  </div>
+  <p class="say"><b>아이들에게</b> "우리가 밥을 먹으면 힘이 나고 방귀가 나오지요? 효모도 똑같아요. 설탕을 먹으면 살아갈 힘을 얻고, 남는 찌꺼기로 술이랑 뽀글뽀글 방귀(이산화탄소)를 내놓아요."</p>
+  <div class="note">
+    <span class="tag">선생님 메모</span>
+    <p>교재의 '미생물의 3대 발효' 표에서 알코올발효 줄에 해당해요. 미생물은 효모, 먹이는 당, 부산물은 알코올과 탄산가스, 온도는 22–25℃, 공기 조건은 통성혐기성이에요. 이 페이지는 이 한 줄을 풀어서 설명해요.</p>
+  </div>
+</section>
+
+<section>
+  <span class="eyebrow">주인공 소개</span>
+  <h2>효모는 어떤 친구일까?</h2>
+  <p>효모는 곰팡이, 버섯과 같은 집안(균류)에 속하는 아주 작은 생물이에요. 너무 작아서 현미경으로만 보여요. 빵을 부풀리고 막걸리와 포도주를 만드는 게 바로 효모예요.</p>
+  <div class="facts">
+    <div class="fact"><span class="k">크기</span><span class="v">약 0.005–0.01mm</span><span>머리카락 굵기의 10분의 1 정도</span></div>
+    <div class="fact"><span class="k">좋아하는 먹이</span><span class="v">당(단맛)</span><span>설탕, 과일의 단맛, 쌀이 바뀐 단맛</span></div>
+    <div class="fact"><span class="k">좋아하는 온도</span><span class="v">22–25℃</span><span>사람이 지내기 좋은 봄날 정도</span></div>
+    <div class="fact"><span class="k">우리 주변에서</span><span class="v">빵 · 막걸리 · 와인</span><span>교재: "빵, 술 → 효모"</span></div>
+  </div>
+  <p class="say"><b>아이들에게</b> "빵이 폭신한 건 효모가 뀐 방귀(이산화탄소)가 반죽 속에 갇혀서예요. 빵을 구우면 술 성분은 날아가서 빵에서는 술맛이 안 나요."</p>
+</section>
+
+<section>
+  <span class="eyebrow">직접 해 보기</span>
+  <h2>효모 병 실험실</h2>
+  <p>설탕, 온도, 공기를 바꿔 보면서 병 속 효모가 어떻게 되는지 보세요. 수업 시간에 화면에 띄워 아이들이 직접 골라 보게 해도 좋아요.</p>
+  <div class="lab">
+    <div class="lab-grid">
+      <div class="ctrls">
+        <fieldset>
+          <legend>설탕은 얼마나?</legend>
+          <div class="seg">
+            <input type="radio" name="sugar" id="s0" value="0"><label for="s0">없음</label>
+            <input type="radio" name="sugar" id="s1" value="1" checked><label for="s1">알맞게 (약 20브릭스)</label>
+            <input type="radio" name="sugar" id="s2" value="2"><label for="s2">아주 많이 (50브릭스 넘게)</label>
+          </div>
+        </fieldset>
+        <fieldset>
+          <legend>온도는?</legend>
+          <div class="seg">
+            <input type="radio" name="temp" id="t0" value="0"><label for="t0">냉장고 (5℃)</label>
+            <input type="radio" name="temp" id="t1" value="1" checked><label for="t1">따뜻한 방 (25℃)</label>
+            <input type="radio" name="temp" id="t2" value="2"><label for="t2">뜨거운 물 (60℃)</label>
+          </div>
+        </fieldset>
+        <fieldset>
+          <legend>공기는?</legend>
+          <div class="seg">
+            <input type="radio" name="air" id="a0" value="0"><label for="a0">뚜껑 열고 자주 젓기</label>
+            <input type="radio" name="air" id="a1" value="1" checked><label for="a1">뚜껑 닫기 (공기 차단)</label>
+          </div>
+        </fieldset>
+        <div class="verdict" id="verdict" aria-live="polite"><h3></h3><p></p><p class="why"></p></div>
+        <button class="btn" id="reset" type="button">병 새로 담기</button>
+      </div>
+      <div style="display:grid;gap:10px;min-width:0">
+        <canvas id="jar" width="400" height="500" aria-label="병 속 효모와 거품 그림"></canvas>
+        <div class="meters">
+          <div class="meter" id="mY"><span>효모 수</span><div class="bar"><i></i></div></div>
+          <div class="meter" id="mG"><span>거품(CO₂)</span><div class="bar"><i></i></div></div>
+          <div class="meter" id="mA"><span>알코올</span><div class="bar"><i></i></div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="note">
+    <span class="tag">선생님 메모 · '통성혐기성'이 무슨 뜻일까?</span>
+    <p>효모는 공기가 있어도 살고 없어도 살 수 있어요. 이걸 <b>통성혐기성</b>이라고 해요. 다만 하는 일이 달라져요.</p>
+    <p><b>공기가 있으면</b> 숨을 쉬어서 힘을 많이 얻고, 그 힘으로 <b>숫자를 늘려요</b>. 이때는 거품만 나고 술은 거의 안 생겨요.<br><b>공기가 없으면</b> 숨을 못 쉬니까 설탕을 반쯤만 쪼개 쓰고, 그 찌꺼기로 <b>알코올</b>이 남아요. 이게 알코올 발효예요.</p>
+    <p>그래서 술이나 식초용 술을 만들 때는 처음에 효모를 늘린 뒤 에어락을 달아 공기를 막아요. 에어락은 거품은 빠져나가고 바깥 공기는 못 들어오게 하는 마개예요.</p>
+  </div>
+</section>
+
+<section>
+  <span class="eyebrow">교재와 연결하기</span>
+  <h2>헷갈리는 부분, 이렇게 이해해요</h2>
+
+  <details open>
+    <summary>발효액을 담글 때 처음 4–7일은 왜 뚜껑을 열고 저어 주나요?</summary>
+    <div class="a">
+      <p>공기를 넣어 주면 효모가 술을 만들지 않고 숨을 쉬며 숫자만 늘려요. 교재에 "일주일 이상 저어 주어야 알코올 발효가 안 된 발효액이 된다"고 나오는 게 이 원리예요.</p>
+      <p class="kid">아이들에게: "효모한테 숨 쉴 공기를 주면 술을 안 만들어요. 술은 숨이 막혔을 때만 만들거든요."</p>
+    </div>
+  </details>
+
+  <details>
+    <summary>50브릭스가 넘으면 왜 발효액이 아니라 '청'이 되나요?</summary>
+    <div class="a">
+      <p>설탕이 너무 진하면 효모 몸속의 물이 밖으로 빠져나가요. 배추를 소금에 절이면 물이 빠지는 것(삼투압)과 같아요. 효모가 말라 버려서 일을 못 하니, 발효가 안 되고 설탕에 절여진 '청'이 돼요.</p>
+      <p class="kid">아이들에게: "너무 짠 바닷물을 마시면 목이 더 마르죠? 효모도 너무 단 물에 빠지면 몸이 쪼그라들어요."</p>
+    </div>
+  </details>
+
+  <details>
+    <summary>과일식초를 만들 때 왜 알코올 발효를 먼저 하나요?</summary>
+    <div class="a">
+      <p>식초를 만드는 초산균은 설탕이 아니라 <b>알코올</b>을 먹어요. 그래서 먼저 효모가 당을 알코올로 바꿔 놓아야 초산균이 그걸 식초로 바꿀 수 있어요. 아래 '발효 이어달리기'를 보세요.</p>
+    </div>
+  </details>
+
+  <details>
+    <summary>식초 쪽 초산균은 왜 반대로 공기를 좋아하나요?</summary>
+    <div class="a">
+      <p>초산균은 <b>호기성</b>이라 공기가 꼭 필요해요. 그래서 공기와 닿는 표면에 하얀 막(초막)을 만들어요. 효모 단계는 뚜껑을 닫고, 초산균 단계는 공기가 통하게 하는 이유예요.</p>
+      <p class="kid">아이들에게: "효모 친구는 숨을 참을 때 술을 만들고, 초산균 친구는 숨을 크게 쉬어야 식초를 만들어요."</p>
+    </div>
+  </details>
+
+  <details>
+    <summary>알코올 발효가 끝났는지 어떻게 알아요?</summary>
+    <div class="a">
+      <p>교재 기준으로는 14–30일쯤 걸려요. 거품이 거의 안 올라오고, 알코올은 물보다 가벼워서 <b>맑은 액이 위로 뜨면</b> 알코올 발효가 끝난 거예요. 걸러서 1주일 더 둔 다음 씨초를 넣어요.</p>
+    </div>
+  </details>
+
+  <details>
+    <summary>건조효모를 넣을 때 왜 바로 세게 저으면 안 되나요?</summary>
+    <div class="a">
+      <p>마른 효모는 물을 빨아들여 원래 모습으로 돌아오기 전까지 충격에 약해요. 35–38℃ 물에 뿌리고 15–20분 가만히 두었다가(재수화) 저어 줘요. 너무 오래 두면 힘을 미리 다 써 버려요.</p>
+      <p class="kid">아이들에게: "자다 깬 효모가 기지개 켤 시간을 15분 주는 거예요."</p>
+    </div>
+  </details>
+
+  <details>
+    <summary>온도는 왜 22–25℃인가요?</summary>
+    <div class="a">
+      <p>너무 차가우면 효모가 느려지고(겨울잠), 너무 뜨거우면 힘들어하다가 60℃쯤에서는 죽어요. 22–25℃는 효모가 술을 깔끔하게 만드는 온도예요. 이보다 높으면 빨리 되지만 냄새가 덜 좋아지고, 30℃ 근처에서는 초산균이 끼어들기 쉬워요.</p>
+    </div>
+  </details>
+</section>
+
+<section>
+  <span class="eyebrow">큰 그림</span>
+  <h2>발효 이어달리기</h2>
+  <p>알코올 발효는 혼자 끝나는 게 아니라 다음 친구에게 바통을 넘겨요. 교재에서 식초를 만드는 순서가 바로 이 이어달리기예요.</p>
+  <div class="relay" role="img" aria-label="곡물이나 과일에서 당, 알코올, 식초로 이어지는 순서">
+    <div class="stop"><b>곡물·과일</b><small>쌀, 사과, 포도</small></div>
+    <div class="who">누룩·엿기름<br>(쌀일 때)</div>
+    <div class="stop"><b>당</b><small>단맛</small></div>
+    <div class="who">효모<br>공기 X</div>
+    <div class="stop"><b>알코올</b><small>술</small></div>
+  </div>
+  <div class="relay" role="img" aria-label="알코올에서 초산균이 식초를 만든다">
+    <div class="stop"><b>알코올</b><small>술</small></div>
+    <div class="who">초산균<br>공기 O</div>
+    <div class="stop"><b>식초</b><small>시큼!</small></div>
+  </div>
+  <p>과일은 처음부터 달아서 효모가 바로 먹을 수 있어요. 쌀 같은 곡물은 녹말이라서 누룩이나 엿기름이 먼저 단맛으로 바꿔 줘야 해요(당화). 식혜가 단 이유도 엿기름이 밥을 단맛으로 바꿨기 때문이에요.</p>
+
+  <h3 style="margin-top:8px">3대 발효 한눈에</h3>
+  <div class="tbl">
+    <table>
+      <thead><tr><th>발효</th><th>일꾼</th><th>먹이 → 만드는 것</th><th>공기</th><th>아이들 말로</th></tr></thead>
+      <tbody>
+        <tr><td>알코올 발효</td><td>효모</td><td>당 → 알코올 + 거품</td><td>없을 때 술을 만듦</td><td>"달콤한 걸 먹고 술이랑 방귀를 내놔요"</td></tr>
+        <tr><td>유산 발효</td><td>유산균</td><td>당 → 젖산</td><td>싫어함</td><td>"김치·요구르트를 새콤하게 만들어요"</td></tr>
+        <tr><td>초산 발효</td><td>초산균</td><td>알코올 → 초산</td><td>꼭 필요함</td><td>"술을 먹고 식초로 바꿔요"</td></tr>
+      </tbody>
+    </table>
+  </div>
+</section>
+
+<section>
+  <span class="eyebrow">수업 실험</span>
+  <h2>풍선 불어 주는 효모</h2>
+  <p>효모가 방귀(이산화탄소)를 뀐다는 걸 눈으로 보는 실험이에요. 20–30분이면 결과가 나와서 수업 한 시간 안에 할 수 있어요.</p>
+  <div class="facts">
+    <div class="fact"><span class="k">병마다</span><span class="v">500ml 페트병 1개</span><span>풍선 1개, 깔때기</span></div>
+    <div class="fact"><span class="k">물</span><span class="v">200ml</span><span>미지근한 물(약 35℃)</span></div>
+    <div class="fact"><span class="k">효모</span><span class="v">건조효모 1작은술</span><span>마트 제빵용</span></div>
+    <div class="fact"><span class="k">설탕</span><span class="v">1큰술</span><span>병에 따라 넣거나 빼기</span></div>
+  </div>
+  <h3>병 세 개를 비교해요</h3>
+  <div class="bottles">
+    <div class="bottle"><b>A. 설탕 없음</b><span>미지근한 물 + 효모</span><span class="res">예상: 풍선 거의 그대로</span></div>
+    <div class="bottle"><b>B. 설탕 넣음</b><span>미지근한 물 + 효모 + 설탕</span><span class="res">예상: 풍선이 가장 크게</span></div>
+    <div class="bottle"><b>C. 차가운 물</b><span>얼음물 + 효모 + 설탕</span><span class="res">예상: 아주 조금만</span></div>
+  </div>
+  <ol class="steps">
+    <li><span>병마다 물을 200ml씩 붓고, B와 C에 설탕 1큰술을 넣어 녹여요.</span></li>
+    <li><span>효모 1작은술씩 넣고 살살 흔들어요. (세게 흔들지 않기)</span></li>
+    <li><span>풍선 입구를 병 주둥이에 씌워요. 미리 풍선을 몇 번 불었다 빼 두면 잘 부풀어요.</span></li>
+    <li><span>따뜻한 곳에 두고 20–30분 뒤 풍선 크기를 비교해요.</span></li>
+    <li><span>병 냄새를 맡아 봐요. 빵 냄새, 살짝 술 냄새가 나요.</span></li>
+  </ol>
+  <div class="note">
+    <span class="tag">안전</span>
+    <p>실험한 물은 마시지 않아요. 술 성분이 조금 생길 수 있어요. 풍선이 터질 정도로 오래 두지 말고, 실험이 끝나면 하수구에 버려요.</p>
+  </div>
+  <p class="say"><b>아이들에게 물어보기</b> "A 풍선은 왜 안 커졌을까?" (먹이가 없어서) · "C는 왜 조금만?" (추워서 효모가 느려서) · "풍선 속에 든 건 뭘까?" (효모 방귀, 이산화탄소)</p>
+</section>
+
+<section>
+  <span class="eyebrow">확인 퀴즈</span>
+  <h2>누가 맞혀 볼까?</h2>
+  <div class="quiz" id="quiz"></div>
+</section>
+
+<section>
+  <span class="eyebrow">40분 수업 예시</span>
+  <h2>이렇게 진행해 보세요</h2>
+  <div class="plan">
+    <div><span class="t">0–5분</span><span>빵과 막걸리를 보여 주며 질문: "빵은 왜 폭신할까? 막걸리는 왜 뽀글뽀글할까?"</span></div>
+    <div><span class="t">5–10분</span><span>주인공 효모 소개, 한 줄 공식 "설탕 → 술 + 방귀"</span></div>
+    <div><span class="t">10–15분</span><span>풍선 실험 A·B·C 병 세팅 (기다리는 동안 다음 활동)</span></div>
+    <div><span class="t">15–25분</span><span>효모 병 실험실 화면으로 설탕·온도·공기 바꿔 보기</span></div>
+    <div><span class="t">25–32분</span><span>풍선 결과 비교, 냄새 맡기, 이유 이야기하기</span></div>
+    <div><span class="t">32–37분</span><span>발효 이어달리기: 술이 식초가 되는 이야기</span></div>
+    <div><span class="t">37–40분</span><span>퀴즈로 마무리</span></div>
+  </div>
+</section>
+
+<footer>생활발효지도사 교재의 '미생물의 3대 발효', '발효액 만들기', '천연발효식초' 단원 내용을 바탕으로 정리했어요.</footer>
+</div>
+
+<script>
+(function(){
+  /* ---------- 결과 판정 ---------- */
+  function judge(s,t,a){
+    if(t===2) return {cls:'bad',h:'앗, 효모가 익어 버렸어요',p:'60℃는 효모에게 너무 뜨거워요. 효모가 죽어서 아무 일도 일어나지 않아요.',w:'교재: 효소는 40℃가 넘으면 단백질이 변하기 시작해요. 효모 재수화 물도 35–38℃까지만.',grow:-1,gas:0,alc:0};
+    if(s===0) return {cls:'bad',h:'배고픈 효모',p:'먹이(당)가 없어서 효모가 일을 못 해요. 거품도 술도 안 생겨요.',w:'풍선 실험의 A병이 이 경우예요.',grow:0,gas:0.02,alc:0};
+    if(s===2) return {cls:'bad',h:'너무 달아서 쪼그라들었어요',p:'설탕이 너무 진하면 효모 몸속 물이 빠져나가 효모가 말라 버려요. 발효가 안 되고 설탕에 절여진 "청"이 돼요.',w:'교재: 50브릭스 이상이면 미생물이 살지 못해 발효액이 아닌 청이 된다.',grow:-0.3,gas:0.03,alc:0.01};
+    if(t===0) return {cls:'grow',h:'추워서 꾸벅꾸벅',p:'효모가 살아는 있지만 아주 느리게 움직여요. 거품이 아주 조금씩만 나와요.',w:'풍선 실험의 C병. 다 만든 발효액을 저온에 숙성하는 것도 발효를 천천히 하려는 거예요.',grow:0.1,gas:0.12,alc:a===1?0.06:0.01};
+    if(a===0) return {cls:'grow',h:'숨 쉬며 쑥쑥 자라요',p:'공기가 있으니 효모가 숨을 쉬면서 숫자를 늘려요. 거품은 나오지만 술은 거의 안 생겨요.',w:'발효액 초기에 뚜껑 열고 저어 주는 이유예요. 알코올 발효를 막아 줘요.',grow:1,gas:0.6,alc:0.03};
+    return {cls:'good',h:'알코올 발효 성공!',p:'공기가 막히자 효모가 설탕을 반쯤만 쪼개 쓰고, 남은 찌꺼기로 술과 거품을 만들어요.',w:'막걸리, 와인, 과일식초의 첫 단계가 이거예요. 22–25℃, 에어락으로 공기 차단.',grow:0.25,gas:1,alc:1};
+  }
+
+  /* ---------- 캔버스 ---------- */
+  const cv=document.getElementById('jar'),cx=cv.getContext('2d');
+  const reduce=matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const css=n=>getComputedStyle(document.documentElement).getPropertyValue(n).trim();
+  let st, yeasts, bubbles, sugarDots, gas, alc, frame=0;
+  const J={x:70,y:90,w:260,h:370}; // 병 안쪽
+  function get(n){return +document.querySelector('input[name='+n+']:checked').value}
+  function reset(){
+    yeasts=[];bubbles=[];sugarDots=[];gas=0;alc=0;
+    for(let i=0;i<14;i++)yeasts.push(newY());
+    const s=get('sugar'), n=s===0?0:s===1?60:160;
+    for(let i=0;i<n;i++)sugarDots.push({x:J.x+10+Math.random()*(J.w-20),y:J.y+70+Math.random()*(J.h-80)});
+    update();
+  }
+  function newY(x,y){return{x:x??J.x+20+Math.random()*(J.w-40),y:y??J.y+90+Math.random()*(J.h-110),r:7+Math.random()*3,vx:(Math.random()-.5)*.4,vy:(Math.random()-.5)*.4,dead:false,shrink:1}}
+  function update(){
+    st=judge(get('sugar'),get('temp'),get('air'));
+    const v=document.getElementById('verdict');
+    v.className='verdict '+st.cls;
+    v.querySelector('h3').textContent=st.h;
+    v.querySelectorAll('p')[0].textContent=st.p;
+    v.querySelector('.why').textContent=st.w;
+    if(reduce) for(let i=0;i<120;i++)step();
+  }
+  function step(){
+    frame++;
+    const t=get('temp'),air=get('air');
+    yeasts.forEach(y=>{
+      if(st.grow<0){ if(get('temp')===2) y.dead=true; else y.shrink=Math.max(.55,y.shrink-.004); }
+      const sp=y.dead?0:(t===0?.15:1);
+      y.x+=y.vx*sp;y.y+=y.vy*sp;
+      if(y.x<J.x+y.r||y.x>J.x+J.w-y.r)y.vx*=-1;
+      if(y.y<J.y+60+y.r||y.y>J.y+J.h-y.r)y.vy*=-1;
+    });
+    if(st.grow>0 && yeasts.length<90 && sugarDots.length && Math.random()<st.grow*.06){
+      const p=yeasts[Math.floor(Math.random()*yeasts.length)];
+      if(!p.dead)yeasts.push(newY(p.x+(Math.random()-.5)*16,p.y+(Math.random()-.5)*16));
+    }
+    if(sugarDots.length && st.gas>0.05 && Math.random()<st.gas*.25){
+      sugarDots.splice(Math.floor(Math.random()*sugarDots.length),1);
+      gas=Math.min(1,gas+.012*st.gas+.004);
+      alc=Math.min(1,alc+.014*st.alc);
+    }
+    const alive=yeasts.filter(y=>!y.dead);
+    if(alive.length && Math.random()<st.gas*.5){
+      const y=alive[Math.floor(Math.random()*alive.length)];
+      bubbles.push({x:y.x,y:y.y,r:2+Math.random()*3});
+    }
+    bubbles.forEach(b=>{b.y-=1.2+b.r*.3;b.x+=Math.sin((b.y+frame)/12)*.3});
+    bubbles=bubbles.filter(b=>b.y>J.y+60);
+    if(air===0 && frame%2===0) yeasts.forEach(y=>{y.vx+=(Math.random()-.5)*.2;y.vy+=(Math.random()-.5)*.2;y.vx=Math.max(-1,Math.min(1,y.vx));y.vy=Math.max(-1,Math.min(1,y.vy))});
+  }
+  function draw(){
+    const ink=css('--ink'),yeast=css('--yeast'),bub=css('--bubble'),sour=css('--sour'),paper=css('--paper'),muted=css('--muted'),ys=css('--yeast-soft');
+    cx.clearRect(0,0,400,500);
+    // 액체
+    const lvl=J.y+60;
+    cx.fillStyle=alc>0.05?mix(css('--bubble-soft'),css('--sour-soft'),alc):css('--bubble-soft');
+    cx.fillRect(J.x,lvl,J.w,J.y+J.h-lvl);
+    // 설탕
+    cx.fillStyle=paper;cx.strokeStyle=muted;cx.lineWidth=1;
+    sugarDots.forEach(d=>{cx.fillRect(d.x-2,d.y-2,4,4);cx.strokeRect(d.x-2,d.y-2,4,4)});
+    // 효모
+    yeasts.forEach(y=>{
+      cx.beginPath();cx.ellipse(y.x,y.y,y.r*y.shrink,y.r*.8*y.shrink,0,0,Math.PI*2);
+      cx.fillStyle=y.dead?muted:yeast;cx.fill();
+      if(!y.dead){cx.beginPath();cx.arc(y.x+y.r*.6*y.shrink,y.y-y.r*.5*y.shrink,y.r*.35*y.shrink,0,Math.PI*2);cx.fillStyle=ys;cx.fill()}
+    });
+    // 거품
+    cx.strokeStyle=bub;cx.lineWidth=1.5;
+    bubbles.forEach(b=>{cx.beginPath();cx.arc(b.x,b.y,b.r,0,Math.PI*2);cx.stroke()});
+    // 거품층
+    if(gas>0.05){cx.fillStyle=paper;for(let i=0;i<Math.floor(gas*26);i++){const x=J.x+8+((i*37)%(J.w-16));cx.beginPath();cx.arc(x,lvl-2+((i*7)%6),4+((i*3)%4),0,Math.PI*2);cx.fill();cx.strokeStyle=bub;cx.stroke()}}
+    // 병
+    cx.strokeStyle=ink;cx.lineWidth=4;
+    cx.beginPath();
+    cx.moveTo(160,20);cx.lineTo(160,60);cx.quadraticCurveTo(J.x,70,J.x,J.y+20);
+    cx.lineTo(J.x,J.y+J.h-16);cx.quadraticCurveTo(J.x,J.y+J.h,J.x+16,J.y+J.h);
+    cx.lineTo(J.x+J.w-16,J.y+J.h);cx.quadraticCurveTo(J.x+J.w,J.y+J.h,J.x+J.w,J.y+J.h-16);
+    cx.lineTo(J.x+J.w,J.y+20);cx.quadraticCurveTo(J.x+J.w,70,240,60);cx.lineTo(240,20);cx.stroke();
+    // 뚜껑 / 에어락
+    if(get('air')===1){
+      cx.fillStyle=ink;cx.fillRect(150,6,100,16);
+      cx.strokeStyle=ink;cx.lineWidth=3;cx.strokeRect(188,-10,24,18);
+    }else{
+      cx.fillStyle=muted;cx.font='600 14px '+css('--data');cx.textAlign='center';cx.fillText('뚜껑 열림 · 공기 들어옴',200,16);
+      const sw=Math.sin(frame/10)*20;cx.strokeStyle=muted;cx.lineWidth=5;cx.lineCap='round';
+      cx.beginPath();cx.moveTo(200+sw*.3,30);cx.lineTo(200+sw,J.y+J.h-40);cx.stroke();
+    }
+    // 온도 라벨
+    const t=get('temp');cx.fillStyle=t===2?css('--warn'):t===0?bub:muted;cx.font='600 15px '+css('--data');cx.textAlign='left';
+    cx.fillText(['5℃','25℃','60℃'][t],J.x+J.w+12,J.y+J.h-10);
+    // 미터
+    const alive=yeasts.filter(y=>!y.dead).length;
+    document.querySelector('#mY i').style.width=Math.min(100,alive/90*100)+'%';
+    document.querySelector('#mG i').style.width=gas*100+'%';
+    document.querySelector('#mA i').style.width=alc*100+'%';
+  }
+  function mix(a,b,t){const p=h=>{h=h.replace('#','');return[0,2,4].map(i=>parseInt(h.substr(i,2),16))};
+    try{const A=p(a),B=p(b);return 'rgb('+A.map((v,i)=>Math.round(v+(B[i]-v)*t)).join(',')+')'}catch(e){return a}}
+  function loop(){step();draw();requestAnimationFrame(loop)}
+  document.querySelectorAll('.ctrls input').forEach(i=>i.addEventListener('change',e=>{if(e.target.name==='sugar')reset();else update(); if(reduce)draw()}));
+  document.getElementById('reset').addEventListener('click',()=>{reset();if(reduce)draw()});
+  reset();
+  if(reduce){draw()}else loop();
+
+  /* ---------- 퀴즈 ---------- */
+  const Q=[
+    {q:'효모가 가장 좋아하는 먹이는?',o:['소금','설탕(당)','식초'],a:1,e:'효모는 단맛(당)을 먹고 술과 거품을 만들어요.'},
+    {q:'풍선을 부풀게 한 기체는?',o:['산소','이산화탄소','수증기'],a:1,e:'효모가 뀐 방귀, 이산화탄소예요. 빵을 폭신하게 만드는 것도 이거예요.'},
+    {q:'효모가 술을 만들려면 공기가…',o:['있어야 해요','없어야 해요'],a:1,e:'공기가 있으면 숨 쉬며 자라기만 하고, 공기가 없을 때 술을 만들어요.'},
+    {q:'술을 먹고 식초로 바꾸는 친구는?',o:['유산균','초산균','효모'],a:1,e:'초산균은 알코올을 먹고 식초를 만들어요. 공기를 좋아해요.'},
+    {q:'60℃ 뜨거운 물에 효모를 넣으면?',o:['더 빨리 일해요','죽어서 일을 못 해요'],a:1,e:'효모는 22–25℃를 좋아하고, 너무 뜨거우면 죽어요.'}
+  ];
+  const box=document.getElementById('quiz');
+  Q.forEach((it,qi)=>{
+    const d=document.createElement('div');d.className='q';
+    d.innerHTML='<strong>'+(qi+1)+'. '+it.q+'</strong><div class="opts"></div><p class="fb" aria-live="polite"></p>';
+    const opts=d.querySelector('.opts'),fb=d.querySelector('.fb');
+    it.o.forEach((o,oi)=>{const b=document.createElement('button');b.type='button';b.id='q'+qi+'o'+oi;b.textContent=o;
+      b.onclick=()=>{opts.querySelectorAll('button').forEach(x=>x.className='');
+        if(oi===it.a){b.className='right';fb.textContent='정답! '+it.e}else{b.className='wrong';fb.textContent='다시 생각해 볼까요?'}};
+      opts.appendChild(b)});
+    box.appendChild(d);
+  });
+})();
+</script>
