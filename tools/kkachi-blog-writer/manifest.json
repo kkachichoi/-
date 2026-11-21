@@ -1,0 +1,28 @@
+{
+  "manifest_version": 3,
+  "name": "까치카페 블로그 도구",
+  "short_name": "까치 블로그",
+  "version": "1.0.0",
+  "description": "크롬 오른쪽에서 까치카페 블로그 글을 준비하고, Gemini로 원고를 받아 네이버 글쓰기로 옮기는 도구",
+  "icons": {
+    "16": "icons/icon16.png",
+    "32": "icons/icon32.png",
+    "48": "icons/icon48.png",
+    "128": "icons/icon128.png"
+  },
+  "action": {
+    "default_title": "까치카페 블로그 도구 열기",
+    "default_icon": {
+      "16": "icons/icon16.png",
+      "32": "icons/icon32.png"
+    }
+  },
+  "background": {
+    "service_worker": "background.js"
+  },
+  "side_panel": {
+    "default_path": "sidepanel.html"
+  },
+  "permissions": ["sidePanel", "storage", "unlimitedStorage", "scripting"],
+  "host_permissions": ["https://gemini.google.com/*"]
+}

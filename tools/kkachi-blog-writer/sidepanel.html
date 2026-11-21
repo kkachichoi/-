@@ -1,0 +1,194 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>까치카페 블로그 도구</title>
+<link rel="stylesheet" href="sidepanel.css">
+</head>
+<body>
+<header class="top">
+  <div class="brand"><img src="icons/icon32.png" alt="" width="22" height="22"><span>까치카페 블로그 도구</span></div>
+  <button type="button" class="link" id="btn-new">새 글</button>
+</header>
+
+<nav class="steps" aria-label="작업 단계">
+  <button type="button" data-step="1"><b>1</b><span>주제</span></button>
+  <button type="button" data-step="2"><b>2</b><span>사진</span></button>
+  <button type="button" data-step="3"><b>3</b><span>원고</span></button>
+  <button type="button" data-step="4"><b>4</b><span>네이버</span></button>
+  <button type="button" data-step="5"><b>5</b><span>발행 확인</span></button>
+</nav>
+
+<div class="confirm" id="confirm-new" hidden>
+  <p>지금 쓰던 주제·사진·원고를 모두 비울까요? 필요하면 먼저 3단계에서 <b>글 파일로 저장</b>하세요.</p>
+  <div class="row">
+    <button type="button" class="btn danger" id="btn-new-yes">비우고 새 글</button>
+    <button type="button" class="btn" id="btn-new-no">취소</button>
+  </div>
+</div>
+
+<main>
+  <!-- 1단계 -->
+  <section class="panel" data-panel="1">
+    <p class="eyebrow">1 / 5 단계 · 글 준비</p>
+    <h1>오늘은 어떤 글을 쓸까요?</h1>
+
+    <div class="field">
+      <span class="label">글 목적</span>
+      <div class="chips" id="purpose" role="radiogroup" aria-label="글 목적">
+        <button type="button" role="radio" data-v="가게 소개">가게 소개</button>
+        <button type="button" role="radio" data-v="메뉴 소개">메뉴 소개</button>
+        <button type="button" role="radio" data-v="정보 정리">정보 정리</button>
+        <button type="button" role="radio" data-v="경험 기록">경험 기록</button>
+      </div>
+    </div>
+
+    <label class="field" for="topic"><span class="label">오늘 쓸 주제 <em>필수</em></span>
+      <textarea id="topic" rows="2" placeholder="예) 11월 제철 메뉴 홍시 라떼 소개"></textarea>
+    </label>
+
+    <label class="field" for="keyword"><span class="label">노리는 검색어 <small>(선택)</small></span>
+      <input id="keyword" type="text" placeholder="예) 하안동 베이글">
+    </label>
+
+    <label class="field" for="facts"><span class="label">직접 확인한 사실</span>
+      <textarea id="facts" rows="4" placeholder="한 줄에 하나씩. 예) 홍시 라떼 6,000원&#10;11월 한 달만 판매"></textarea>
+      <span class="hint">여기와 아래 가게 기본 정보에 적힌 것만 글에 들어가요.</span>
+    </label>
+
+    <div class="field">
+      <span class="label">말투</span>
+      <div class="chips" id="tone" role="radiogroup" aria-label="말투">
+        <button type="button" role="radio" data-v="자연스럽게">자연스럽게</button>
+        <button type="button" role="radio" data-v="친근하게">친근하게</button>
+        <button type="button" role="radio" data-v="차분하게">차분하게</button>
+      </div>
+    </div>
+    <div class="field">
+      <span class="label">길이</span>
+      <div class="chips" id="length" role="radiogroup" aria-label="길이">
+        <button type="button" role="radio" data-v="짧게">짧게</button>
+        <button type="button" role="radio" data-v="보통">보통</button>
+      </div>
+      <span class="hint">말투·길이는 다음 부탁문부터 반영돼요. 이미 받은 원고는 바뀌지 않아요.</span>
+    </div>
+
+    <details class="shop" id="shop-box">
+      <summary>
+        <label class="inline" for="use-shop"><input type="checkbox" id="use-shop"> 가게 기본 정보 넣기</label>
+        <span class="small">펼쳐서 고치기</span>
+      </summary>
+      <textarea id="shop" rows="11" aria-label="가게 기본 정보"></textarea>
+      <button type="button" class="link" id="btn-shop-reset">처음 내용으로 되돌리기</button>
+    </details>
+  </section>
+
+  <!-- 2단계 -->
+  <section class="panel" data-panel="2" hidden>
+    <p class="eyebrow">2 / 5 단계 · 사진</p>
+    <h1>글에 넣을 사진을 골라요</h1>
+    <p class="muted">순서대로 [사진1], [사진2]… 자리가 원고에 표시돼요. 사진 없이 다음으로 가도 돼요.</p>
+    <label class="drop" for="photo-input">
+      <input type="file" id="photo-input" accept="image/*" multiple>
+      <span>사진 추가하기</span><small>여러 장 한 번에 골라도 돼요</small>
+    </label>
+    <ol class="photos" id="photos"></ol>
+  </section>
+
+  <!-- 3단계 -->
+  <section class="panel" data-panel="3" hidden>
+    <p class="eyebrow">3 / 5 단계 · 원고</p>
+    <h1>Gemini로 원고를 받아요</h1>
+
+    <div class="card" id="gem-card">
+      <div class="gem-row">
+        <span class="dot" id="gem-dot"></span>
+        <span id="gem-status">Gemini가 연결되지 않았어요.</span>
+      </div>
+      <select id="gem-tabs" aria-label="연결할 Gemini 탭" hidden></select>
+      <div class="row">
+        <button type="button" class="btn" id="btn-gem-connect">Gemini 연결</button>
+        <button type="button" class="btn" id="btn-gem-open">Gemini 열기</button>
+      </div>
+    </div>
+
+    <div class="row">
+      <button type="button" class="btn primary grow" id="btn-generate">원고 만들기</button>
+    </div>
+    <p class="msg" id="gen-msg" aria-live="polite"></p>
+
+    <details class="prompt-box">
+      <summary>부탁문 보기 · 직접 복사하기</summary>
+      <textarea id="prompt" rows="9" readonly aria-label="부탁문"></textarea>
+      <div class="row">
+        <button type="button" class="btn" id="btn-prompt-make">부탁문 만들기</button>
+        <button type="button" class="btn" id="btn-prompt-copy">부탁문 복사</button>
+      </div>
+      <span class="hint">연결이 안 될 때: 부탁문을 복사해 Gemini에 붙여 넣고, 받은 글을 아래 제목·본문 칸에 나눠 붙이세요.</span>
+    </details>
+
+    <h2>원고 보관</h2>
+    <label class="field" for="title"><span class="label">제목</span>
+      <input id="title" type="text">
+    </label>
+    <label class="field" for="body"><span class="label">본문</span>
+      <textarea id="body" rows="12"></textarea>
+    </label>
+    <button type="button" class="btn primary full" id="btn-save">원고 저장</button>
+    <p class="msg" id="save-msg" aria-live="polite"></p>
+    <div class="row">
+      <button type="button" class="btn grow" id="btn-copy-title">제목 복사</button>
+      <button type="button" class="btn grow" id="btn-copy-body">본문 복사</button>
+    </div>
+    <button type="button" class="btn full" id="btn-file">글 파일로 저장</button>
+  </section>
+
+  <!-- 4단계 -->
+  <section class="panel" data-panel="4" hidden>
+    <p class="eyebrow">4 / 5 단계 · 네이버</p>
+    <h1>네이버 글쓰기로 옮겨요</h1>
+    <ol class="howto">
+      <li><button type="button" class="btn full" id="btn-naver">네이버 글쓰기 열기</button></li>
+      <li><button type="button" class="btn full" id="btn-copy-title2">① 제목 복사</button><span class="hint">네이버 제목 칸을 누르고 Ctrl+V</span></li>
+      <li><button type="button" class="btn full" id="btn-copy-body2">② 본문 복사</button><span class="hint">본문 빈 곳을 누르고 Ctrl+V. 소제목 앞 ## 표시는 빼고 복사돼요.</span></li>
+      <li><span>③ <b>[사진1]</b> 같은 글자를 지우고, 그 자리에 네이버 <b>사진</b> 버튼으로 같은 번호의 사진을 넣어요.</span></li>
+    </ol>
+    <ol class="photos small-list" id="photos-naver"></ol>
+    <p class="msg" id="naver-msg" aria-live="polite"></p>
+  </section>
+
+  <!-- 5단계 -->
+  <section class="panel" data-panel="5" hidden>
+    <p class="eyebrow">5 / 5 단계 · 발행 확인</p>
+    <h1>발행 전에 마지막으로 봐요</h1>
+    <ul class="checks" id="checks">
+      <li><label><input type="checkbox" data-k="facts"> 가격·시간 같은 사실이 맞다</label></li>
+      <li><label><input type="checkbox" data-k="photos"> 사진을 제자리에 넣었다 ([사진] 글자 지움)</label></li>
+      <li><label><input type="checkbox" data-k="category"> 카테고리를 골랐다</label></li>
+      <li><label><input type="checkbox" data-k="tags"> 태그를 넣었다</label></li>
+      <li><label><input type="checkbox" data-k="map"> 지도(장소)를 넣었다</label></li>
+      <li><label><input type="checkbox" data-k="open"> 공개 설정을 확인했다</label></li>
+    </ul>
+    <div class="card">
+      <span class="label">발행 상태</span>
+      <div class="chips" id="pub" role="radiogroup" aria-label="발행 상태">
+        <button type="button" role="radio" data-v="아직">아직</button>
+        <button type="button" role="radio" data-v="임시저장">네이버 임시저장</button>
+        <button type="button" role="radio" data-v="발행함">내가 발행함</button>
+      </div>
+      <span class="hint">발행은 네이버에서 직접 눌러요. 이 도구는 발행 버튼을 대신 누르지 않아요.</span>
+    </div>
+  </section>
+</main>
+
+<footer class="bottom">
+  <button type="button" class="btn" id="btn-prev">← 이전</button>
+  <span class="small" id="autosave">자동 저장됨</span>
+  <button type="button" class="btn primary" id="btn-next">다음 →</button>
+</footer>
+
+<script src="gemini.js"></script>
+<script src="sidepanel.js"></script>
+</body>
+</html>
