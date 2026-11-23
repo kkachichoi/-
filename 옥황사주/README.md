@@ -8,3 +8,10 @@
 | 03_닭띠귀인_릴스.mp4 | 닭띠 11월 기해월 천을귀인, 50.7초 |
 
 - 상담가 목소리: 01 영상의 첫 장면 목소리를 기준으로 맞춤
+
+## 다음 작업할 때 (Claude에게 알려줄 정보)
+- 힉스필드 상담가 캐릭터 이미지: `34e120bb-370d-4bd4-a7bf-33ba02e62ade` (image_references)
+- 힉스필드 상담가 목소리 샘플: `26ab3bab-f54b-431b-841b-89308e06b6e0` (audio_references, Seedance/seed_audio)
+- 편집 파일: `video-tools/remotion/my-video/src/Saju.tsx`, `Dak.tsx`
+- 영상 규칙: 세로 9:16, 아래 1/3은 자막 자리, 화면에 AI 글자 넣지 않기
+- 사주 내용은 꼭 확인하고, 확실하지 않으면 (추정) 표시
