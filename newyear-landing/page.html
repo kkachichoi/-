@@ -1,0 +1,388 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<title>까치카페 2027 신년 상세페이지</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700;900&family=Noto+Serif+KR:wght@300;400;600;700;900&display=block" rel="stylesheet">
+<style>
+:root{
+  --red:#B5121B; --red2:#8E0B12; --gold:#E3901F; --gold2:#C9761A;
+  --cream:#F7F1E6; --ink:#231C18; --muted:#7A6E66; --line:#D9C9AE;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+body{width:860px;background:#fff;font-family:'Noto Sans KR',sans-serif;color:var(--ink);-webkit-font-smoothing:antialiased;word-break:keep-all}
+.serif{font-family:'Noto Serif KR',serif}
+section{position:relative;width:860px;overflow:hidden}
+.center{text-align:center}
+.pill{display:inline-block;background:#fff;color:var(--ink);font-weight:700;font-size:32px;padding:30px 0;width:720px;border-radius:999px;box-shadow:0 10px 30px rgba(0,0,0,.25)}
+.pill.red{background:var(--red);color:#fff}
+.eyebrow{font-size:28px;letter-spacing:.02em}
+
+/* 01 HERO */
+#s01{background:var(--cream)}
+#s01 .top{padding:70px 0 40px;text-align:center}
+#s01 .logo{width:120px;height:120px;border-radius:50%;object-fit:cover;display:block;margin:0 auto 26px}
+#s01 .brand{font-family:'Noto Serif KR';font-size:30px;letter-spacing:.3em;color:var(--muted)}
+#s01 .sub{font-family:'Noto Serif KR';font-size:34px;color:#5d524b;margin-top:26px}
+#s01 .title{font-family:'Noto Serif KR';font-size:62px;font-weight:600;color:#3d332d;margin-top:8px}
+#s01 .hero{position:relative;height:1200px;background:url(assets/08.jpg) center 40%/cover}
+#s01 .hero:before{content:"";position:absolute;inset:0;background:linear-gradient(180deg,rgba(142,11,18,.92) 0%,rgba(142,11,18,.55) 45%,rgba(60,6,8,.85) 100%)}
+#s01 .hero .in{position:relative;padding:80px 50px 0;color:#fff;text-align:center}
+#s01 .box{display:inline-block;background:#fff;color:var(--red);font-size:50px;padding:14px 30px;margin:26px 0 40px;font-weight:500}
+#s01 .box b{font-weight:900}
+#s01 h1{font-size:64px;line-height:1.38;font-weight:500}
+#s01 h1 b{font-weight:900}
+#s01 h1 u{text-decoration:none;border-bottom:4px solid #fff}
+#s01 .cta{position:absolute;left:0;right:0;bottom:90px;text-align:center}
+
+/* 02 OWNER */
+#s02{background:#141110;color:#fff}
+#s02 .photo{height:1150px;background:url(assets/09.jpg) center 20%/cover;position:relative}
+#s02 .photo:after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,rgba(20,17,16,0) 40%,rgba(20,17,16,.85) 75%,rgba(20,17,16,1) 100%)}
+#s02 .txt{position:relative;margin-top:-330px;padding:0 56px 110px}
+#s02 .big{font-family:'Noto Serif KR';font-size:68px;line-height:1.3;font-weight:400}
+#s02 .name{display:inline-block;font-family:'Noto Serif KR';font-size:30px;color:var(--gold);border-left:3px solid var(--gold);padding-left:16px;margin-bottom:24px}
+#s02 .desc{font-family:'Noto Serif KR';font-size:32px;line-height:1.6;color:#cfc6bf;margin-top:50px}
+
+/* 03 EMPATHY */
+#s03{background:#1E1A18;color:#fff;padding:120px 60px 130px}
+#s03 .q{font-size:32px;color:#bdb3ab;text-align:center}
+#s03 h2{font-family:'Noto Serif KR';font-size:58px;font-weight:600;text-align:center;line-height:1.4;margin-top:20px}
+.chat{margin-top:70px;display:flex;flex-direction:column;gap:26px}
+.bub{max-width:600px;background:#2F2926;border-radius:34px;padding:26px 36px;font-size:32px;line-height:1.45;color:#eee}
+.bub.r{align-self:flex-end;background:#3A302B}
+.bub.dim{opacity:.55}
+#s03 .dots{text-align:center;font-size:40px;color:#776c64;margin:40px 0}
+#s03 .re{font-family:'Noto Serif KR';font-size:50px;line-height:1.5;text-align:center}
+#s03 .re b{color:var(--gold);font-weight:700}
+#s03 .re2{text-align:center;font-size:34px;color:#cfc6bf;margin-top:40px}
+
+/* 04 COMPARE */
+#s04{background:var(--cream);padding:120px 50px 120px}
+#s04 .eyebrow{color:var(--red);text-align:center;font-weight:700}
+#s04 h2{font-family:'Noto Serif KR';font-size:58px;line-height:1.4;text-align:center;margin-top:18px;font-weight:600}
+.cmp{display:grid;grid-template-columns:1fr 1fr;gap:24px;margin-top:70px}
+.col{border-radius:28px;padding:40px 34px 44px}
+.col.a{background:#E9E2D6;color:#6f655d}
+.col.b{background:var(--red);color:#fff;box-shadow:0 18px 40px rgba(181,18,27,.3)}
+.col h3{font-size:34px;font-weight:700;margin-bottom:28px;text-align:center}
+.col li{list-style:none;font-size:29px;line-height:1.45;padding:22px 0;border-top:1px solid rgba(0,0,0,.08)}
+.col.b li{border-top:1px solid rgba(255,255,255,.25)}
+.col li small{display:block;font-size:24px;opacity:.75;margin-top:6px}
+#s04 .foot{font-family:'Noto Serif KR';text-align:center;font-size:40px;line-height:1.5;margin-top:80px}
+#s04 .foot b{color:var(--red)}
+
+/* 05 MENU (gold) */
+#s05{background:var(--gold);color:#fff;padding:110px 50px 120px}
+#s05 .tag{font-size:26px;letter-spacing:.3em;text-align:center;opacity:.85}
+#s05 h2{font-family:'Noto Serif KR';font-size:60px;font-weight:400;text-align:center;line-height:1.35;margin-top:20px}
+#s05 .num{text-align:center;font-family:'Noto Serif KR';font-size:260px;line-height:1;font-weight:300;margin-top:30px}
+#s05 .num span{font-size:56px;font-family:'Noto Sans KR'}
+#s05 .note{text-align:center;font-size:28px;opacity:.9;margin-top:16px}
+.mcard{display:flex;gap:30px;background:rgba(255,255,255,.14);border:2px solid rgba(255,255,255,.35);border-radius:28px;padding:28px;margin-top:34px;align-items:center}
+.mcard img{width:220px;height:220px;object-fit:cover;border-radius:20px;flex:none}
+.mcard .k{font-size:24px;opacity:.9}
+.mcard .t{font-size:42px;font-weight:700;margin:8px 0 12px}
+.mcard .t em{font-style:normal;font-size:26px;background:#fff;color:var(--gold2);padding:4px 14px;border-radius:99px;vertical-align:middle;margin-left:10px}
+.mcard .d{font-size:28px;line-height:1.5}
+.mcard.blur .body{filter:blur(9px)}
+.mcard.blur{position:relative}
+.mcard.blur .lock{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;font-size:36px;font-weight:700;text-shadow:0 2px 10px rgba(0,0,0,.25)}
+.checkbox{margin-top:60px;border:3px solid #fff;border-radius:30px;padding:44px 50px;background:rgba(255,255,255,.08)}
+.checkbox h4{text-align:center;font-size:34px;margin-bottom:26px}
+.checkbox li{list-style:none;font-size:31px;padding:13px 0;display:flex;gap:18px;align-items:center}
+.ck{width:40px;height:40px;border-radius:50%;background:#fff;color:var(--gold2);display:inline-flex;align-items:center;justify-content:center;font-size:26px;font-weight:900;flex:none}
+
+/* 06 BENEFIT (red) */
+#s06{background:linear-gradient(180deg,#D3121C,#9C0C13);color:#fff;padding:120px 50px 120px}
+#s06 .q{text-align:center;font-family:'Noto Serif KR';font-size:40px;opacity:.95}
+#s06 h2{text-align:center;font-family:'Noto Serif KR';font-size:62px;font-weight:400;margin-top:14px}
+#s06 .num{text-align:center;font-family:'Noto Serif KR';font-size:260px;line-height:1;font-weight:300;margin-top:30px}
+#s06 .num span{font-size:56px;font-family:'Noto Sans KR'}
+.bcard{background:rgba(255,255,255,.13);border-radius:26px;padding:40px 44px;margin-top:34px}
+.bcard .k{font-size:25px;opacity:.85}
+.bcard .t{font-size:46px;font-weight:900;margin:12px 0}
+.bcard .d{font-size:29px;line-height:1.5;opacity:.95}
+#s06 .dl{margin-top:70px;text-align:center;font-size:54px;font-weight:900;line-height:1.4}
+#s06 .dl2{text-align:center;font-size:31px;margin-top:22px;opacity:.95}
+#s06 .cta{text-align:center;margin-top:70px}
+#s06 .pill{color:var(--red)}
+
+/* 07 PROCESS */
+#s07{background:#fff;padding:120px 50px 110px}
+#s07 .eyebrow{text-align:center;color:var(--gold2);font-weight:700}
+#s07 h2{text-align:center;font-family:'Noto Serif KR';font-size:58px;font-weight:600;line-height:1.4;margin-top:16px}
+.step{margin-top:70px}
+.step img{width:100%;height:560px;object-fit:cover;border-radius:28px;display:block}
+.step .no{display:inline-block;margin-top:34px;font-family:'Noto Serif KR';font-size:28px;color:#fff;background:var(--ink);border-radius:99px;padding:6px 22px}
+.step h3{font-size:44px;font-weight:700;margin-top:18px}
+.step p{font-size:30px;line-height:1.6;color:#5b514a;margin-top:14px}
+
+/* 08 STORY */
+#s08{background:#1B1715;color:#fff;padding:120px 0 120px}
+#s08 .in{padding:0 56px}
+#s08 .eyebrow{color:#bfb4ab;text-align:center}
+#s08 h2{font-family:'Noto Serif KR';font-size:62px;font-weight:300;text-align:center;line-height:1.4;margin-top:20px}
+.collage{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin:70px 56px 0}
+.collage img{width:100%;height:440px;object-fit:cover;border-radius:18px;display:block}
+.collage img.wide{grid-column:span 2;height:420px}
+#s08 .body{font-family:'Noto Serif KR';font-size:32px;line-height:1.8;color:#d7cec6;margin-top:70px;text-align:center}
+#s08 .body b{color:#fff;font-weight:600}
+.stats{display:grid;grid-template-columns:1fr 1fr 1fr;margin:80px 40px 0;text-align:center}
+.stats div{padding:10px 0;border-left:1px solid #3d3531}
+.stats div:first-child{border:0}
+.stats .n{font-family:'Noto Serif KR';font-size:62px;color:var(--gold)}
+.stats .l{font-size:25px;color:#bfb4ab;margin-top:8px}
+
+/* 09 SPACE */
+#s09{background:var(--cream);padding:120px 50px 120px}
+#s09 .eyebrow{text-align:center;color:var(--muted)}
+#s09 h2{text-align:center;font-family:'Noto Serif KR';font-size:58px;font-weight:400;line-height:1.4;margin-top:16px}
+.gal{display:grid;grid-template-columns:1.25fr 1fr;gap:18px;margin-top:70px}
+.gal img{width:100%;object-fit:cover;border-radius:22px;display:block}
+.gal .tall{height:900px;grid-row:span 2}
+.gal .half{height:441px}
+#s09 .cap{text-align:center;font-family:'Noto Serif KR';font-size:34px;line-height:1.7;color:#5b514a;margin-top:60px}
+
+/* 10 OFFER */
+#s10{background:#fff;padding:120px 50px 120px}
+.offer{border:3px solid var(--red);border-radius:34px;padding:60px 50px 56px;text-align:center}
+.offer .k{font-size:30px;color:var(--red);font-weight:700}
+.offer h2{font-family:'Noto Serif KR';font-size:60px;font-weight:600;margin-top:14px}
+.offer .date{display:inline-block;margin-top:30px;background:var(--red);color:#fff;font-size:32px;font-weight:700;padding:12px 30px;border-radius:12px}
+.offer ul{text-align:left;margin:50px 10px 0}
+.offer li{list-style:none;font-size:32px;padding:20px 0;border-top:1px solid #eee;display:flex;gap:18px;align-items:center}
+.offer li .ck{background:var(--red);color:#fff}
+.offer .cta{margin-top:50px}
+.offer .pill{width:100%}
+.offer .small{font-size:26px;color:var(--muted);margin-top:24px}
+.info{margin-top:70px;background:var(--cream);border-radius:28px;padding:44px 48px}
+.info div{display:flex;font-size:29px;padding:14px 0}
+.info dt{width:170px;color:var(--muted);flex:none}
+
+/* 11 LETTER */
+#s11{background:var(--red2);color:#fff;padding:130px 70px 140px}
+#s11 .ttl{font-family:'Noto Serif KR';font-size:46px;text-align:center;font-weight:600}
+#s11 .line{width:60px;height:2px;background:#fff;opacity:.6;margin:40px auto 50px}
+#s11 p{font-family:'Noto Serif KR';font-size:33px;line-height:1.9;margin-bottom:34px;color:#f4e7e3}
+#s11 .sign{text-align:right;font-family:'Noto Serif KR';font-size:34px;margin-top:20px}
+#s11 .end{margin-top:110px;text-align:center}
+#s11 .end img{width:150px;height:150px;border-radius:50%;object-fit:cover}
+#s11 .end h3{font-family:'Noto Serif KR';font-size:56px;font-weight:600;margin-top:30px}
+#s11 .end .s{font-size:30px;opacity:.85;margin-top:16px}
+#s11 .cta{margin-top:60px}
+#s11 .pill{color:var(--red2)}
+</style>
+</head>
+<body>
+
+<!-- 01 HERO -->
+<section id="s01">
+  <div class="top">
+    <img class="logo" src="assets/11.png">
+    <div class="brand">KKACHI COFFEE</div>
+    <div class="sub">13년 한자리, 미대 출신 사장님이 만든</div>
+    <div class="title">2027 신년 한정 메뉴</div>
+  </div>
+  <div class="hero"><div class="in">
+    <div class="eyebrow">정미년, 붉은 양의 해를 여는 한 잔</div>
+    <div class="box">새해 <b>첫 잔</b>, 어디서 드실래요?</div>
+    <h1>2027 정미년, <u>붉은 양의 해</u>.<br><b>올해 첫 커피는</b><br><b>까치카페</b>에서.</h1>
+  </div>
+  <div class="cta"><span class="pill">2027 신년 한정 메뉴 보기</span></div>
+  </div>
+</section>
+
+<!-- 02 OWNER -->
+<section id="s02">
+  <div class="photo"></div>
+  <div class="txt">
+    <div class="name">까치카페 사장님</div>
+    <div class="big">작품을 빚던 손으로<br>커피를 내립니다</div>
+    <div class="desc">미술대학 우수 졸업생에서 13년째 한자리 카페 사장님으로.<br>직접 볶고, 직접 굽고, 직접 내립니다.</div>
+  </div>
+</section>
+
+<!-- 03 EMPATHY -->
+<section id="s03">
+  <div class="q">연말, 달력을 넘기다 보면</div>
+  <h2>올해도 정신없이<br>지나가 버린 것 같은 기분...</h2>
+  <div class="chat">
+    <div class="bub">올해 나한테 쓴 시간이 있긴 했나…</div>
+    <div class="bub r">아침은 늘 편의점 커피로 대충</div>
+    <div class="bub">새해엔 좀 천천히 살고 싶은데</div>
+    <div class="bub r">카페는 많은데, 마음 편히 앉을 곳은 없더라</div>
+    <div class="bub dim">내년도 올해랑 똑같으면 어떡하지</div>
+  </div>
+  <div class="dots">⋮</div>
+  <div class="re">바빴던 게 문제가 아니라,<br><b>잠깐 멈출 자리</b>가 없었을 뿐이에요.</div>
+  <div class="re2">새해 첫 쉼표, 까치카페에서 찍어 보세요.</div>
+</section>
+
+<!-- 04 COMPARE -->
+<section id="s04">
+  <div class="eyebrow">같은 커피, 다른 한 잔</div>
+  <h2>어디서나 마시는 커피와<br>까치카페의 한 잔은 달라요</h2>
+  <div class="cmp">
+    <div class="col a"><h3>흔한 한 잔</h3><ul>
+      <li>언제 볶았는지 모르는 원두<small>향이 빠진 채로 추출</small></li>
+      <li>공장에서 온 빵<small>데워서 나오는 디저트</small></li>
+      <li>어디서나 같은 종이컵<small>빨리 마시고 나가는 자리</small></li>
+    </ul></div>
+    <div class="col b"><h3>까치카페의 한 잔</h3><ul>
+      <li>매장에서 직접 볶은 원두<small>향이 살아 있을 때 내려요</small></li>
+      <li>매일 아침 굽는 스콘·베이글<small>그날 반죽해서 그날 구워요</small></li>
+      <li>까치가 그려진 머그<small>천천히 머물다 가는 자리</small></li>
+    </ul></div>
+  </div>
+  <div class="foot">새해 첫 잔은,<br><b>정성이 보이는 곳</b>에서.</div>
+</section>
+
+<!-- 05 MENU -->
+<section id="s05">
+  <div class="tag">NEW YEAR ONLY</div>
+  <h2>2027 정미년에만 만나는<br>신년 한정 메뉴</h2>
+  <div class="num">3<span>가지</span></div>
+  <div class="note">(입춘 전까지만 판매해요)</div>
+
+  <div class="mcard"><img src="assets/09.jpg" style="object-position:60% 75%"><div class="body">
+    <div class="k">신년 한정 첫 번째</div>
+    <div class="t">붉은 양 라떼<em>시그니처</em></div>
+    <div class="d">직접 볶은 원두에 붉은 빛 시럽을 더한 새해 첫 라떼.</div>
+  </div></div>
+  <div class="mcard"><img src="assets/05.jpg" style="object-position:50% 70%"><div class="body">
+    <div class="k">신년 한정 두 번째</div>
+    <div class="t">정미년 복 스콘<em>베이커리</em></div>
+    <div class="d">매일 아침 굽는 스콘에 새해 복을 담은 한정 레시피.</div>
+  </div></div>
+  <div class="mcard blur"><img src="assets/08.jpg" style="filter:blur(8px)"><div class="body">
+    <div class="k">신년 한정 세 번째</div>
+    <div class="t">까치 머그 세트<em>한정</em></div>
+    <div class="d">새해 선물로 좋은 세트 구성, 매장에서 공개합니다.</div>
+  </div><div class="lock">🔒 세 번째 메뉴는 매장에서 공개</div></div>
+
+  <div class="checkbox">
+    <h4>매장에서 이렇게 더 준비했어요</h4>
+    <ul>
+      <li><span class="ck">✓</span>그날 볶은 원두로 내리는 한 잔</li>
+      <li><span class="ck">✓</span>매일 아침 굽는 스콘·베이글</li>
+      <li><span class="ck">✓</span>새해 선물용 까치 머그</li>
+      <li><span class="ck">✓</span>천천히 머물다 가는 자리</li>
+    </ul>
+  </div>
+</section>
+
+<!-- 06 BENEFIT -->
+<section id="s06">
+  <div class="q">입춘 전에 오셔야 받을 수 있어요.</div>
+  <h2>놓치면 아까운 신년 혜택</h2>
+  <div class="num">2<span>가지</span></div>
+
+  <div class="bcard">
+    <div class="k">신년 혜택 첫 번째</div>
+    <div class="t">스탬프 2배 적립</div>
+    <div class="d">신년 한정 메뉴를 드시면 스탬프를 두 개 찍어 드려요.</div>
+  </div>
+  <div class="bcard">
+    <div class="k">신년 혜택 두 번째</div>
+    <div class="t">까치 머그 구매 시 첫 잔 무료</div>
+    <div class="d">머그를 사시면 그 머그에 첫 잔을 담아 드려요.</div>
+  </div>
+
+  <div class="dl">2027년 2월 4일 입춘까지,<br>딱 한 시즌만.</div>
+  <div class="dl2">입춘이 지나면 신년 메뉴와 혜택이 끝나요.</div>
+  <div class="cta"><span class="pill">신년 혜택 받으러 가기</span></div>
+</section>
+
+<!-- 07 PROCESS -->
+<section id="s07">
+  <div class="eyebrow">매일 아침, 문 열기 전</div>
+  <h2>한 잔이 나오기까지<br>이렇게 준비해요</h2>
+  <div class="step"><img src="assets/06.jpg" style="object-position:50% 45%">
+    <span class="no">STEP 1</span><h3>원두를 직접 볶아요</h3>
+    <p>매장에서 직접 로스팅해서, 향이 살아 있을 때 내려 드려요.</p></div>
+  <div class="step"><img src="assets/05.jpg" style="object-position:50% 62%">
+    <span class="no">STEP 2</span><h3>스콘과 베이글을 구워요</h3>
+    <p>매일 아침 반죽해서, 그날 구운 빵만 진열장에 올려요.</p></div>
+  <div class="step"><img src="assets/09.jpg" style="object-position:50% 72%">
+    <span class="no">STEP 3</span><h3>한 잔씩 손으로 내려요</h3>
+    <p>조각을 다듬던 손으로, 우유 거품 하나까지 정성껏.</p></div>
+</section>
+
+<!-- 08 STORY -->
+<section id="s08">
+  <div class="in">
+    <div class="eyebrow">까치카페 사장님 이야기</div>
+    <h2>작품을 만드는 일과<br>커피를 만드는 일은<br>참 닮았어요</h2>
+  </div>
+  <div class="collage">
+    <img src="assets/03.jpg">
+    <img src="assets/10.jpg" style="object-position:50% 60%">
+    <img class="wide" src="assets/01.jpg" style="object-position:50% 40%">
+  </div>
+  <div class="in"><div class="body">
+    미술대학에서 흙을 빚고, 작품을 걸고,<br>전시를 준비하던 날들이 있었어요.<br><br>
+    <b>재료를 고르고, 손으로 다듬고,<br>누군가의 앞에 내놓는 일.</b><br><br>
+    그 마음 그대로, 이제는 커피를 내립니다.
+  </div></div>
+  <div class="stats">
+    <div><div class="n">13년</div><div class="l">한자리를 지킨 시간</div></div>
+    <div><div class="n">매일</div><div class="l">아침마다 굽는 빵</div></div>
+    <div><div class="n">직접</div><div class="l">볶는 원두</div></div>
+  </div>
+</section>
+
+<!-- 09 SPACE -->
+<section id="s09">
+  <div class="eyebrow">까치카페에서 보내는 새해 첫 오후</div>
+  <h2>잠깐 멈춰 가도<br>괜찮은 자리</h2>
+  <div class="gal">
+    <img class="tall" src="assets/07.jpg" style="object-position:30% 50%">
+    <img class="half" src="assets/08.jpg">
+    <img class="half" src="assets/06.jpg" style="object-position:50% 30%">
+  </div>
+  <div class="cap">따뜻한 조명, 직접 그린 까치, 손에 잡히는 머그.<br>새해 첫 쉼표를 여기서 찍어 보세요.</div>
+</section>
+
+<!-- 10 OFFER -->
+<section id="s10">
+  <div class="offer">
+    <div class="k">2027 신년 한정</div>
+    <h2>까치카페 신년 시즌</h2>
+    <div class="date">~ 2027년 2월 4일 (입춘)까지</div>
+    <ul>
+      <li><span class="ck">✓</span>신년 한정 메뉴 3가지</li>
+      <li><span class="ck">✓</span>스탬프 2배 적립</li>
+      <li><span class="ck">✓</span>까치 머그 구매 시 첫 잔 무료</li>
+      <li><span class="ck">✓</span>매일 아침 굽는 스콘·베이글</li>
+    </ul>
+    <div class="cta"><span class="pill red">매장 위치 확인하기</span></div>
+    <div class="small">마감은 입춘 하루뿐 · 재료 소진 시 조기 마감</div>
+  </div>
+  <div class="info">
+    <div><dt>매장</dt><dd>까치카페 (光明 Coffee Kkachi)</dd></div>
+    <div><dt>주소</dt><dd>[주소를 입력하세요]</dd></div>
+    <div><dt>영업시간</dt><dd>[영업시간을 입력하세요]</dd></div>
+    <div><dt>문의</dt><dd>[전화번호 또는 인스타그램]</dd></div>
+  </div>
+</section>
+
+<!-- 11 LETTER -->
+<section id="s11">
+  <div class="ttl">2027년을 여는 당신에게</div>
+  <div class="line"></div>
+  <p>정신없이 달려온 한 해였다면, 그건 당신이 부족해서가 아니라 잠깐 멈출 자리가 없었기 때문일지도 몰라요.</p>
+  <p>13년 동안 같은 자리에서 커피를 내리며 알게 된 건, 따뜻한 한 잔 앞에서는 누구나 조금 느려져도 괜찮다는 것이에요.</p>
+  <p>2027년의 첫 잔, 까치카페에서 함께 시작해요.</p>
+  <div class="sign">까치카페 사장 드림</div>
+  <div class="end">
+    <img src="assets/11.png">
+    <h3>새해 첫 잔은 까치카페</h3>
+    <div class="s">입춘이 되기 전에, 당신의 2027년이 시작되기 전에.</div>
+    <div class="cta"><span class="pill">신년 한정 메뉴 맛보러 가기</span></div>
+  </div>
+</section>
+
+</body>
+</html>
